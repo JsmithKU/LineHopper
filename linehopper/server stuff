@@ -1,1 +1,31 @@
-.
+const express = require('express')
+const bodyParser = require('body-parser')
+const app = express()
+const port = 3000
+
+//Initialize routes
+app.get('/', (req, res) => {
+    res.end('Hello World!');
+  });
+//Post routes for reports
+app.post('/createreport', (req, res) => {
+
+
+
+});
+//
+app.get('/recievereport', (req, res) => {
+
+
+
+});
+//Trusted user post report
+app.post('/publishreport', (req, res) => {
+
+
+
+});
+//Verify application is running (node api.js)
+app.listen(port, () => {
+    console.log(`App running on port ${port}.`)
+  })
