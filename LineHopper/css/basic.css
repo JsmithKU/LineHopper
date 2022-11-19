@@ -1,0 +1,50 @@
+/* Basic Styling */
+
+*{
+  box-sizing: border-box;
+}
+
+@media (max-width: 900px){
+  div{ width: 50%;}
+}
+@media (max-width: 400px) {
+  div{ width: 50%;}
+}
+body{
+  margin: 0;
+  /* Grab font here */ 
+
+}
+
+/*Left side panel */
+div.primary-heading{
+  height: 100%;
+  background-color: #3284F0;
+  width: 30rem;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+}
+
+h1.top-heading{
+  color: #000;
+}
+nav.navBar{
+
+}
+
+/*Right side panel */
+div.primary-form-welcome{
+  margin-left: 30rem;
+  padding-left: 2rem;
+}
+div.primary-content{
+  background-color: #C3DAF8;
+  border-radius: 1rem;
+  /* margin-top: 15rem;
+  margin-right: 1rem; */
+  margin: 15rem 2rem;
+  padding: 0.2rem 1rem ;
+}

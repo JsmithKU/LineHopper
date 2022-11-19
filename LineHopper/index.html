@@ -1,35 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Line Hopper</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-	<script src="index.js"></script>
-  
-	  <div id = "main> 
-		     <h1> Line Hopper </h1>
-		     
-		     <!---Navigation Bar--->
-		     <nav id = "navBar">
-		     <a href =#signUp>Sign Up</a>
-		     <a href = #login>Login</a>
-		     <a href = #submit>Submit report</a>
-		     
-		     
-		     
-		     </nav>
-		     
-		     
-		     
-		     </div>
 
+<head>
+	<meta author="Alex, Chris, Jake">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Line Hopper</title>
+	<!-- Basic Layout Styling -->
+	<link rel="stylesheet" href="./css/basic.css">
 
+</head>
 
+<body>
+	<!-- Main Script for client -->
+	<script src="index.js" type="module"></script>
 
+	<div class="primary-heading" id="main">
+		<h1 class="top-heading"> Line Hopper </h1>
+		<!---Navigation Bar--->
+		<nav id="navBar">
+			<a href=#signUp>Sign Up</a>
+			<a href=#login>Login</a>
+			<a href=#submit>Submit report</a>
+		</nav>
+	</div>
+
+	<div class="primary-form-welcome" id="welcome">
+		<!-- Create Form here -->
+		<div class="primary-content">
+			<h2 class="content-heading"> Place Holder</h2>
+			<form onsubmit="mysubmission(); return false;">
+				<label> Username: </label>
+				<input type="text">
+				<br>
+				<label> Password: </label>
+				<input type="password">
+				<br>
+				<input type="button" value="Login">
+				
+			</form>
+		</div>
+		
+	</div>
 
 </body>
+
 </html>
+<!-- 
+	To-Dos: 
+	- Login Form 
+	- Sign-in Footer
+	- Top Nav
+-->
