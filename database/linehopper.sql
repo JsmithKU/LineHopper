@@ -38,7 +38,7 @@ CREATE TABLE public.finalizedreports (
 --
 
 CREATE TABLE public.location (
-    restaurantsid bigint NOT NULL,
+    restaurantid bigint NOT NULL,
     address character varying,
     hoursopen character varying
 );
@@ -114,7 +114,7 @@ ALTER TABLE ONLY public.finalizedreports
 --
 
 ALTER TABLE ONLY public.location
-    ADD CONSTRAINT location_pkey PRIMARY KEY (restaurantsid);
+    ADD CONSTRAINT location_pkey PRIMARY KEY (restaurantid);
 
 
 --

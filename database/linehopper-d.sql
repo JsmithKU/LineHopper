@@ -39,7 +39,7 @@ CREATE TABLE public.finalizedreports (
 --
 
 CREATE TABLE public.location (
-    restaurantsid bigint NOT NULL,
+    restaurantid bigint NOT NULL,
     address character varying,
     hoursopen character varying
 );
@@ -84,7 +84,7 @@ COPY public.finalizedreports (reportid, restaurantid, cleanrank, busyrank, pictu
 -- Data for Name: location; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.location (restaurantsid, address, hoursopen) FROM stdin;
+COPY public.location (restaurantid, address, hoursopen) FROM stdin;
 1	123 street A	1am-10pm
 2	McFarland Student Building	7am-7pm
 3	Schaeffer Ln	10:30am-2pm
@@ -143,7 +143,7 @@ ALTER TABLE ONLY public.finalizedreports
 --
 
 ALTER TABLE ONLY public.location
-    ADD CONSTRAINT location_pkey PRIMARY KEY (restaurantsid);
+    ADD CONSTRAINT location_pkey PRIMARY KEY (restaurantid);
 
 
 --
