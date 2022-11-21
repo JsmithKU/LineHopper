@@ -29,16 +29,22 @@
 	<div class="primary-form-welcome" id="welcome">
 		<!-- Create Form here -->
 		<div class="primary-content">
-			<h2 class="content-heading"> Place Holder</h2>
-			<form onsubmit="mysubmission(); return false;">
-				<label> Username: </label>
-				<input type="text">
+			<h2 class="content-heading"> Create Location </h2>
+			<form action="/createlocation" method="post"> <!-- Route: createlocation-->
+				<label> Name: </label>
+				<input type="text" id="aName">
 				<br>
-				<label> Password: </label>
-				<input type="password">
+				<label> Address: </label>
+				<input type="text" id="lAddress">
 				<br>
-				<input type="button" value="Login">
-				
+				<label> Hours Open: </label>
+				<input type="text" id="lHours">
+				<br>
+				<!--  ****************************************
+					aName: restaurant table, lAddress: location table, lHours: location table 
+					Needs to generate a restaurant ID for both tables that are the same 
+				 		  ****************************************  -->
+				<input type="button" value="Create" id="locCreate">
 			</form>
 		</div>
 		
