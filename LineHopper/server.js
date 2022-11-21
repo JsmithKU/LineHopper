@@ -13,7 +13,7 @@ app.get('/uncheckedreports', db.getUncheckedReport)
 
 app.get('/location', db.getLocation)
 
-app.post('/uncheckedreports',db.createReport)
+//app.post('/uncheckedreports',db.createReport)
 //Verify application is running (node api.js)
 app.listen(port, () => {
     console.log(`App running on port ${port}.`)
