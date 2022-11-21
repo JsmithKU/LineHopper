@@ -24,7 +24,7 @@ SET default_table_access_method = heap;
 -- Name: finalizedreports; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.finalizedreports (
+CREATE TABLE if not exists public.finalizedreports (
     reportid bigint NOT NULL,
     restaurantid bigint,
     cleanrank numeric,
@@ -38,7 +38,7 @@ CREATE TABLE public.finalizedreports (
 -- Name: location; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.location (
+CREATE TABLE if not exists public.location (
     restaurantid bigint NOT NULL,
     address character varying,
     hoursopen character varying
@@ -49,7 +49,7 @@ CREATE TABLE public.location (
 -- Name: restaurant; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.restaurant (
+CREATE TABLE if not exists public.restaurant (
     restaurantid bigint NOT NULL,
     name character varying,
     cleanavg numeric,
@@ -61,7 +61,7 @@ CREATE TABLE public.restaurant (
 -- Name: uncheckedreports; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.uncheckedreports (
+CREATE TABLE if not exists public.uncheckedreports (
     reportid bigint NOT NULL,
     restaurantid bigint,
     cleanrank numeric,
