@@ -1,31 +1,20 @@
+//db is named postgres
 const express = require('express')
+const db = require('./queries')
 const bodyParser = require('body-parser')
 const app = express()
 const port = 3000
 
+
+
+
 //Initialize routes
-app.get('/', (req, res) => {
-    res.end('Line Hoppa home page');
-  });
-//Post routes for reports
-app.post('/reports/create', (req, res) => {
+app.get('/uncheckedreports', db.getUncheckedReport)
 
+app.get('/location', db.getLocation)
 
-
-});
-//
-app.get('/reports/recieve', (req, res) => {
-
-
-
-});
-//Trusted user post report
-app.post('/reports/publish', (req, res) => {
-
-
-
-});
+app.post('/uncheckedreports',db.createReport)
 //Verify application is running (node api.js)
 app.listen(port, () => {
     console.log(`App running on port ${port}.`)
-  })
+})
