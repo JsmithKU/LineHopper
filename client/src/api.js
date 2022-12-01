@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = 'http://localhost:3000/location/'
+const url = 'http://localhost:3000/'
 
 class api{
   // get content 
@@ -23,7 +23,7 @@ class api{
   // }
   static locations(){
       // create a promise for the axios request
-      const promise = axios.get(`${url}`)
+      const promise = axios.get(`${url}location/`)
 
       // using .then, create a new promise which extracts the data
       const dataPromise = promise.then((response) => response.data)
@@ -31,8 +31,25 @@ class api{
       // return it
       return dataPromise
   }
-  // post content
+  static getlocation(id){
+    // create a promise for the axios request
+    const promise = axios.get(`${url}location/${id}`)
 
+    // using .then, create a new promise which extracts the data
+    const dataPromise = promise.then((response) => response.data)
+
+    // return it
+    return dataPromise
+}
+  // post content
+  static postreport(form){
+    const res = axios.post(`${url}uncheckedreports`,form, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    return res.data.data
+  }
   // etc 
   // to-dos
 }

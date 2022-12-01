@@ -1,6 +1,6 @@
 <template>
   <img alt="logo or something" src="./assets/logo.png">
-  <LandingPage msg="LineHopper"/>
+  <LandingPage msg="Prototype UI"/>
 </template>
 
 <script>

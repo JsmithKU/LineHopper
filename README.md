@@ -7,7 +7,7 @@ YOU WILL NEED TO MATCH THE DB INFO IN Server/queries.js to match your log in.
 
 ### RUN THESE IN ORDER
 ```
-cd <main>
+cd <main LineHopper Folder>
 npm install 
 cd ./client 
 npm install 

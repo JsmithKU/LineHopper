@@ -3,39 +3,45 @@
     <h1>{{ msg }}</h1>
   </div>
   <div class="container">
+    <h2>Restaurant</h2>
+    <div class="" v-for="l in slocation" v-bind:key="l.restaurantsid">
+      <p class="name">{{l.name}}</p>
+      <p>{{l.address}}</p>
+      <p>{{l.hoursopen}}</p>
+      <p>{{l.restaurantsid}}</p>
+      <button class="btn-report" @click="toggleshowform()">Toggle Report Form</button>
+      <addreport v-show="showForm" @submit-report="postReport" />
+    </div>
+  </div>
+  <div class="container">
     <h2>Locations</h2>
-    <hr>
-    <!-- <div class="locations">
-      <div class="location" 
-        v-for="(location, index) in locations" 
-        v-bind:item="location" 
-        v-bind:index="index" 
-        v-bind:key="location.restaurantsid">
-        <p class="address">{{location.address}}</p>
-      </div>
-    </div> -->
-    <!-- <p>{{locations}}</p> -->
-    <div class="locations" v-for="location in locations" v-bind:key="location.restaurantsid">
-      <p>{{location.name}}</p>
+    <div @click="onClick(location.restaurantsid); toggleshowformcloser()" class="locations" v-for="location in locations" v-bind:key="location.restaurantsid">
+      <p class="name">{{location.name}}</p>
       <p>{{location.address}}</p>
       <p>{{location.hoursopen}}</p>
       <p>{{location.restaurantsid}}</p>
     </div>
   </div>
+
 </template>
 
 <script>
 import api from '../api.js';
+import addreport from './addreport.vue';
 
 export default {
+  components: { addreport },
   name: 'LandingPage',
   props: {
-    msg: String
+    msg: String,
+
   },
   data(){
     return {
       locations: [],
+      slocation:[],
       error: '',
+      showForm: false,
     }
   },
   async created(){
@@ -44,6 +50,30 @@ export default {
     }catch(err){
       this.error = "borked."
     }
+  },
+  methods:{
+
+    async onClick(id){
+      try{
+        this.slocation = await api.getlocation(id)
+      }catch(err){
+        this.error = "borked."
+      }
+    },
+    async postReport(form){
+      try{
+        let formdata = JSON.stringify(form)
+        api.postreport(formdata)
+      }catch(err){
+        this.error = "borked."
+      }
+    },
+    toggleshowform(){
+    this.showForm = !this.showForm
+    },
+    toggleshowformcloser(){
+    this.showForm = false // really bad way of closing on new location selection
+    },
   }
 }
 </script>
@@ -64,7 +94,25 @@ li {
 a {
   color: #42b983;
 }
+.container{
+  border: 2px solid black;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  align-items: center;
+  justify-content: center;
+}
 .locations{
   border: 2px solid black;
+  float: left;
+  width: 150px;
+  height: 300px;
+  margin: 10px 10px;
+}
+.name{
+  font-size: 1.8rem;
+}
+.btn-report{
+  margin: 10px 10px;
 }
 </style>
