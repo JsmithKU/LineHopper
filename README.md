@@ -14,11 +14,11 @@ npm install
 cd ..
 
 ```
-### Node
+### Node (Api)
 ```
 npm start
 ```
-### Client
+### Client (frontend)
 ```
 npm run client
 ```
