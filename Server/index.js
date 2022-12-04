@@ -33,6 +33,9 @@ app.get('/finalizedReports/:restaurantid', db.getFinalizedReportById)
 
 app.post('/uncheckedreports', db.createReport)
 
+app.delete('/uncheckedreports/:reportid',db.deleteUncheckedReport)
+
+app.get('/locationstats/:restaurantid', db.getlocationstat)
 
 //Verify application is running (node api.js)
 app.listen(port, () => {

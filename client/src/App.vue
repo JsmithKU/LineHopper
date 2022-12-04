@@ -1,15 +1,14 @@
 <template>
+
   <img alt="logo or something" src="./assets/logo.png">
-  <LandingPage msg="Prototype UI"/>
+  <router-view ></router-view>
 </template>
 
 <script>
-import LandingPage from './components/LandingPage.vue'
 
 export default {
   name: 'App',
   components: {
-    LandingPage
   }
 }
 </script>

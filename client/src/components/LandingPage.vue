@@ -6,11 +6,11 @@
     <h2>Restaurant</h2>
     <div class="" v-for="l in slocation" v-bind:key="l.restaurantsid">
       <p class="name">{{l.name}}</p>
-      <p>{{l.address}}</p>
-      <p>{{l.hoursopen}}</p>
-      <p>{{l.restaurantsid}}</p>
-      <button class="btn-report" @click="toggleshowform()">Toggle Report Form</button>
-      <addreport v-show="showForm" @submit-report="postReport" />
+      <p>Address: {{l.address}}</p>
+      <p>Hours: {{l.hoursopen}}</p>
+        <locationStat :rid="l.restaurantsid"/>
+      <button class="btn-report" @click="toggleshowform()">Submit Report</button>
+      <addreport :rid="l.restaurantsid" v-show="showForm"  @submit-report="postReport" />
     </div>
   </div>
   <div class="container">
@@ -19,7 +19,6 @@
       <p class="name">{{location.name}}</p>
       <p>{{location.address}}</p>
       <p>{{location.hoursopen}}</p>
-      <p>{{location.restaurantsid}}</p>
     </div>
   </div>
 
@@ -28,9 +27,10 @@
 <script>
 import api from '../api.js';
 import addreport from './addreport.vue';
+import locationStat from './locationstatus.vue';
 
 export default {
-  components: { addreport },
+  components: { addreport, locationStat },
   name: 'LandingPage',
   props: {
     msg: String,
@@ -63,10 +63,12 @@ export default {
     async postReport(form){
       try{
         let formdata = JSON.stringify(form)
+        //console.log(formdata)
         api.postreport(formdata)
       }catch(err){
         this.error = "borked."
       }
+      this.toggleshowformcloser()
     },
     toggleshowform(){
     this.showForm = !this.showForm

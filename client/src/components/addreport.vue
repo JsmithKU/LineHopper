@@ -1,7 +1,5 @@
 <template>
   <form @submit="onSubmit">
-    <label>Restaurant id: </label>
-      <input type="text" v-model="restaurantid" name="text" placeholder="Restaurant id"/>
       <div>
   <input type="range" v-model="cleanrank" id="cleanrank" name="cleanrank" 
          min="0.0" max="5.0" step="0.5">
@@ -18,15 +16,19 @@
 </template>
 
 <script>
+
 export default {
   name: 'AddReport',
+  props:{
+    rid: String,
+  },
   data(){
 //reportid, restaurantid, cleanrank, busyrank, picture, submissiontime 
     return{
-      reportid: Math.floor((Date.now() / 1000) / 2) + Math.floor(Date.now() / 1000),
-      restaurantid: '',
-      cleanrank: '',
-      busyrank: '',
+      reportid: parseInt(Math.floor((Date.now() / 1000)) + '' + 1), // really dumb temp fix DO NOT DO THIS IN PROD LOLs
+      restaurantid: this.rid,
+      cleanrank: '2.5',
+      busyrank: '2.5',
       picture: false,
       submissiontime: new Date().toLocaleString(),
 
@@ -50,7 +52,8 @@ export default {
       }
       this.$emit('submit-report', newReport)
       // reset report form
-      this.restaurantid = ''
+      this.reportid = parseInt(Math.floor((Date.now() / 1000)) + '' + 1) // really dumb temp fix DO NOT DO THIS IN PROD LOLs
+      this.restaurantid = this.rid
       this.cleanrank = ''
       this.busyrank = ''
 

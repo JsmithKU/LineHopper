@@ -50,8 +50,51 @@ class api{
     })
     return res.data.data
   }
-  // etc 
-  // to-dos
+
+  static uncheckedreports(){
+    // create a promise for the axios request
+    const promise = axios.get(`${url}uncheckedreports/`)
+
+    // using .then, create a new promise which extracts the data
+    const dataPromise = promise.then((response) => response.data)
+
+    // return it
+    return dataPromise
+}
+  static uncheckreportbyid(id){
+        // create a promise for the axios request
+        const promise = axios.get(`${url}uncheckedreports/${id}`)
+
+        // using .then, create a new promise which extracts the data
+        const dataPromise = promise.then((response) => response.data)
+    
+        // return it
+        return dataPromise
+  }
+  static deleteunchecked(id){
+    const res = axios.delete(`${url}uncheckedreports/${id}`)
+    return res.status
+  }
+
+  static approvereport(form){
+    const res = axios.post(`${url}finalizedreports`,form, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    return res.data
+  }
+  
+  static getlocationstat(id){
+            // create a promise for the axios request
+            const promise = axios.get(`${url}locationstats/${id}`)
+
+            // using .then, create a new promise which extracts the data
+            const dataPromise = promise.then((response) => response.data)
+        
+            // return it
+            return dataPromise
+  }
 }
 
 export default api
