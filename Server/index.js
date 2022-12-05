@@ -37,6 +37,9 @@ app.delete('/uncheckedreports/:reportid',db.deleteUncheckedReport)
 
 app.get('/locationstats/:restaurantid', db.getlocationstat)
 
+//getlocationlatest
+app.get('/locationlatest/:restaurantid', db.getlocationlatest)
+
 //Verify application is running (node api.js)
 app.listen(port, () => {
     console.log(`App running on port ${port}.`)

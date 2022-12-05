@@ -95,6 +95,17 @@ class api{
             // return it
             return dataPromise
   }
+
+  static getlocationlatest(id){
+    // create a promise for the axios request
+    const promise = axios.get(`${url}locationlatest/${id}`)
+
+    // using .then, create a new promise which extracts the data
+    const dataPromise = promise.then((response) => response.data)
+
+    // return it
+    return dataPromise
+}
 }
 
 export default api

@@ -14,6 +14,12 @@
     <div id="busyprogress">
       <div id="busynessBar"></div>
     </div>
+    <div v-for="l in latest" v-bind:key="l.restaurantid">
+      <h1> Latest Report </h1>
+      <p>Latest Cleanliness: {{l.cleanrank}} / 5</p>
+      <p>Latest Busyness: {{l.busyrank}} / 5</p>
+      <p> Submission at {{l.shour}}:{{l.sminute}} on {{l.smonth}}/{{l.sday}}</p>
+    </div>
   </div>
   </div>
 
@@ -40,6 +46,7 @@ export default{
     try{
       // do stuff
       this.status = await api.getlocationstat(this.rid)
+      this.latest = await api.getlocationlatest(this.rid)
       if(this.status[0].cleanavg == 0){
         this.status[0].cleanavg = 0
       }
@@ -78,7 +85,7 @@ export default{
   background-color: #ddd;
   position: absolute;
   left: 50%;
-  transform: translate(-50%, -110px);
+  transform: translate(-50%, -115px);
   margin-right: 5px;
   border: 1px solid black;
   z-index: -100;
@@ -88,7 +95,7 @@ export default{
   background-color: #ddd;
   position: absolute;
   left: 50%;
-  transform: translate(-50%, -42px);
+  transform: translate(-50%, -47px);
   border: 1px solid black;
   z-index: -100;
 }

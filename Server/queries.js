@@ -135,7 +135,6 @@ with reportsum as (
             date_trunc('week',CURRENT_TIMESTAMP) - interval '1 week'
     group by restaurantid
     ),
-    -- stinky 10pm brain fog solve
     counter as (
     select restaurantid, count(*) as totalreports
     from finalizedreports
@@ -154,10 +153,37 @@ with reportsum as (
     group by rs.restaurantid, cleanavg, busyavg
     ;
 `;
-//Get a finalized reports by restaurant id
+let getLatest = `
+with latest as (
+    select restaurantid, cleanrank, busyrank, submissiontime,
+      rank() OVER (PARTITION BY restaurantid order by submissiontime desc) as counter
+    from finalizedreports
+    order by submissiontime 
+  )
+  select restaurantid, cleanrank, busyrank, 
+    EXTRACT(MONTH FROM submissiontime) as smonth,
+    EXTRACT(DAY FROM submissiontime) as sday,
+    EXTRACT(HOUR FROM submissiontime) as shour,
+    EXTRACT(MINUTE FROM submissiontime) as sminute
+  from latest 
+  where counter = 1 AND 
+        restaurantid = $1
+  order by submissiontime desc;
+`;
+// get locations avg stats
 const getlocationstat = (req, res) => {
     const id = req.params.restaurantid
     pool.query(getStat, [id], (error, results) => {
+        if (error) {
+            throw error
+        }
+        res.status(200).json(results.rows)
+    })
+}
+//Get a finalized latest report 
+const getlocationlatest = (req, res) => {
+    const id = req.params.restaurantid
+    pool.query(getLatest, [id], (error, results) => {
         if (error) {
             throw error
         }
@@ -178,4 +204,6 @@ module.exports = {
     getUncheckedReportById,
     deleteUncheckedReport,
     getlocationstat,
+    getlocationlatest,
+
 }

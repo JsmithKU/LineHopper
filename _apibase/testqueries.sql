@@ -24,3 +24,17 @@ from reportsum as rs
 --where rs.restaurantid = 1
 group by rs.restaurantid, cleanavg, busyavg
 ;
+
+
+
+with latest as (
+  select restaurantid, cleanrank, busyrank, submissiontime,
+    rank() OVER (PARTITION BY restaurantid order by submissiontime desc) as counter
+  from finalizedreports
+  order by submissiontime 
+)
+select restaurantid, cleanrank, busyrank, submissiontime
+from latest 
+where counter = 1 AND 
+        restaurantid = 1
+order by submissiontime desc;
