@@ -161,10 +161,10 @@ with latest as (
     order by submissiontime 
   )
   select restaurantid, cleanrank, busyrank, 
-    EXTRACT(MONTH FROM submissiontime) as smonth,
-    EXTRACT(DAY FROM submissiontime) as sday,
-    EXTRACT(HOUR FROM submissiontime) as shour,
-    EXTRACT(MINUTE FROM submissiontime) as sminute
+    to_char(submissiontime, 'Month') as smonth,
+    to_char(submissiontime, 'DDth') as sday,
+    to_char(submissiontime, 'HH24') as shour,
+    to_char(submissiontime, 'MI') as sminute
   from latest 
   where counter = 1 AND 
         restaurantid = $1

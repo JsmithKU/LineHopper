@@ -18,7 +18,7 @@
       <h1> Latest Report </h1>
       <p>Latest Cleanliness: {{l.cleanrank}} / 5</p>
       <p>Latest Busyness: {{l.busyrank}} / 5</p>
-      <p> Submission at {{l.shour}}:{{l.sminute}} on {{l.smonth}}/{{l.sday}}</p>
+      <p> Submission at {{l.shour}}:{{l.sminute}} on {{l.smonth}} {{l.sday}}</p>
     </div>
   </div>
   </div>
