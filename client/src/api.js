@@ -106,6 +106,17 @@ class api{
     // return it
     return dataPromise
 }
+
+  static getlocationdowreport(id){
+        // create a promise for the axios request
+        const promise = axios.get(`${url}locationdow/${id}`)
+
+        // using .then, create a new promise which extracts the data
+        const dataPromise = promise.then((response) => response.data)
+    
+        // return it
+        return dataPromise
+  }
 }
 
 export default api

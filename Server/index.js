@@ -40,6 +40,10 @@ app.get('/locationstats/:restaurantid', db.getlocationstat)
 //getlocationlatest
 app.get('/locationlatest/:restaurantid', db.getlocationlatest)
 
+// dow
+app.get('/locationdow/:restaurantid', db.getlocationdowreport)
+
+
 //Verify application is running (node api.js)
 app.listen(port, () => {
     console.log(`App running on port ${port}.`)

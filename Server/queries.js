@@ -145,12 +145,14 @@ with reportsum as (
     select
       rs.restaurantid,
       ROUND(rs.cleansum / (c.totalreports),2) as cleanavg, 
-      ROUND(rs.busysum / (c.totalreports),2) as busyavg
+      ROUND(rs.busysum / (c.totalreports),2) as busyavg,
+      ROUND((((rs.cleansum /c.totalreports) * 5)) / 2, 2) as algclean,
+      ROUND((((rs.busysum /c.totalreports) * 5)) / 2, 2) as algbusy
     from reportsum as rs
       inner join counter as c using (restaurantid)
       inner join finalizedreports as fr using (restaurantid)
     where rs.restaurantid = $1
-    group by rs.restaurantid, cleanavg, busyavg
+    group by rs.restaurantid, cleanavg, busyavg, algclean, algbusy
     ;
 `;
 let getLatest = `
@@ -169,6 +171,28 @@ with latest as (
   where counter = 1 AND 
         restaurantid = $1
   order by submissiontime desc;
+`;
+let getdow = `
+-- get reports per restaurant and sort by DOW and TimeOfDay
+with reports as(
+select restaurantid, cleanrank as crank, busyrank as brank, submissiontime as stime,
+  to_char(submissiontime, 'ID') as dowtime, -- Monday(1) Sunday(7)
+  to_char(submissiontime, 'HH24') as timeofday -- 00 - 24 | 05 - 11 Breakfast, 11 - 17 Lunch, 18 - 22 Dinner, 23-04 Other
+from finalizedreports
+),
+countday as (
+  select restaurantid,
+    round(avg(crank),2) as cleanavg, 
+    round(avg(brank),2) as busyavg,
+    dowtime
+  from reports 
+  group by dowtime, restaurantid
+  order by restaurantid, dowtime
+)
+select restaurantid, cleanavg, busyavg, dowtime, to_char(CURRENT_TIMESTAMP, 'Day') as cday
+from countday
+where dowtime = to_char(CURRENT_TIMESTAMP, 'ID') AND
+      restaurantid = $1;
 `;
 // get locations avg stats
 const getlocationstat = (req, res) => {
@@ -190,6 +214,16 @@ const getlocationlatest = (req, res) => {
         res.status(200).json(results.rows)
     })
 }
+//Get a finalized dow report 
+const getlocationdowreport = (req, res) => {
+    const id = req.params.restaurantid
+    pool.query(getdow, [id], (error, results) => {
+        if (error) {
+            throw error
+        }
+        res.status(200).json(results.rows)
+    })
+}
 
 module.exports = {
 
@@ -205,5 +239,6 @@ module.exports = {
     deleteUncheckedReport,
     getlocationstat,
     getlocationlatest,
+    getlocationdowreport,
 
 }
