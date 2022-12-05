@@ -56,6 +56,7 @@ export default {
       this.restaurantid = this.rid
       this.cleanrank = ''
       this.busyrank = ''
+      this.submissiontime = new Date().toLocaleString()
 
     }
 

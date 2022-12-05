@@ -85,7 +85,7 @@ export default{
   background-color: #ddd;
   position: absolute;
   left: 50%;
-  transform: translate(-50%, -115px);
+  transform: translate(-50%, -125px);
   margin-right: 5px;
   border: 1px solid black;
   z-index: -100;
@@ -95,7 +95,7 @@ export default{
   background-color: #ddd;
   position: absolute;
   left: 50%;
-  transform: translate(-50%, -47px);
+  transform: translate(-50%, -50px);
   border: 1px solid black;
   z-index: -100;
 }
