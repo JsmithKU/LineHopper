@@ -14,7 +14,7 @@ npm install
 cd ..
 
 ```
-### Node (Api)
+### Node (Backend / Api)
 ```
 npm start
 ```
@@ -26,7 +26,18 @@ npm run client
 ```
 Install psql 15.1 
 create db under postgres user 
-Update /Server/index.js and /Server/queries.js 
+Update /Server/queries.js 
 to user proper personal login and admin 
+
+const pool = new Pool({
+    //Configs    
+    user: 'postgres',
+    host: 'localhost',
+    database: '', // place db name here
+    password: '', // place default postgres Acc password here
+    port: 5432
+})
+
+
 Good Luck
 ```
