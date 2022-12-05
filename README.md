@@ -24,5 +24,9 @@ npm run client
 ```
 ### Postgresql 
 ```
-Good Luck :)
+Install psql 15.1 
+create db under postgres user 
+Update /Server/index.js and /Server/queries.js 
+to user proper personal login and admin 
+Good Luck
 ```
