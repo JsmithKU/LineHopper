@@ -4,8 +4,7 @@
   "description": "CSC354/355 Team Project.",
   "main": "index.js",
   "scripts": {
-    "start": "node Server/index.js",
-    "client": "cd ./client && npm run serve"
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",

@@ -1,0 +1,42 @@
+version: '3'
+# linehopper composed containers
+services:
+  api:
+    container_name: api
+    build: 
+      context: './api'
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      - user=linehop
+      - pass=admin123
+      - port=5432
+      - host=db
+      - pgdb=linehoptest
+    depends_on:
+      - db
+
+  db:
+    container_name: db
+    image: 'postgres:15'
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=linehop
+      - POSTGRES_PASSWORD=admin123
+      - POSTGRES_DB=linehoptest
+    volumes:
+      - pgdata:/var/lib/postgresql/data # fully q path over rel path
+
+  client:
+    container_name: client
+    build: 
+      context: './client'
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    environment: 
+      - CHOKIDAR_USEPOLLING=true # <---- this enables the hot reloading
+volumes:
+  pgdata: {}
