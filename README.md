@@ -1,43 +1,12 @@
-# LineHopper
-CSC354/355 Team Project. 
+# Dev Environment 
 
-
-## Commands
-YOU WILL NEED TO MATCH THE DB INFO IN Server/queries.js to match your log in. 
-
-### RUN THESE IN ORDER
-```
-cd <main LineHopper Folder>
-npm install 
-cd ./client 
-npm install 
-cd ..
-
-```
-### Node (Backend / Api)
-```
-npm start
-```
-### Client (frontend)
-```
-npm run client
-```
-### Postgresql 
-```
-Install psql 15.1 
-create db under postgres user 
-Update /Server/queries.js 
-to user proper personal login and admin 
-
-const pool = new Pool({
-    //Configs    
-    user: 'postgres',
-    host: 'localhost',
-    database: '', // place db name here
-    password: '', // place default postgres Acc password here
-    port: 5432
-})
-
-
-Good Luck
-```
+## Project Set-up 
+1. Clone Repo 
+  - ``` cd <Path-to-Repo> ```
+2. Run ```docker-compose up -d ```
+3. While DB container is running copy over the dump.sql and run it (Only needs to be done when recreating volume)
+  - ``` docker cp ./db/dump.sql <dockercontainerid>:/dump.sql ```
+  - ``` docker exec -it db psql -U linehop linehoptest -f ./dump.sql ```
+4. When working on the project and loading changes within your environment currently the process is:
+  - Save changes to files 
+  - Run ``` docker-compose up -d --build client --build api ```
