@@ -20,7 +20,7 @@ const getRestaurant = (req, res) => {
     const id = req.params.restaurantsid
     pool.query('select l.restaurantsid, l.address, l.hoursopen, r.name, r.cleanavg, r.busyavg from location as l inner join restaurant as r on (l.restaurantsid = r.restaurantid) where restaurantsid = $1', [id], (error, results) => {
         if(error){
-           res.status(404).send("MISSING DATA")
+           res.status(404).send("0")
         }else{
             res.status(200).json(results.rows)
         }
