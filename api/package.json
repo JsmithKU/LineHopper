@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "CSC354/355 Team Project.",
   "main": "index.js",
+  "type":"commonjs",
   "scripts": {
     "start": "node index.js"
   },

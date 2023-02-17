@@ -1,6 +1,6 @@
 //db is named postgres
 const express = require('express')
-const db = require('./queries')
+const db = require('./queries.js')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
@@ -20,9 +20,22 @@ app.get('/api', (req, res) => {
     res.send('api Page.')
 })
 
+//Users
+
+//Post a user
+app.post('/api/useraccount', db.createUser)
+    //Get a user by email 
+app.get('/api/useraccount/:email', db.getUser)
+
+
+
+//})
+
+
+
 app.get('/api/uncheckedreports', db.getUncheckedReport)
 
-app.get('/api/location/:restaurantsid', db.getRestaurant)
+app.get('/api/location/:restaurantid', db.getRestaurant)
 
 app.get('/api/location', db.getLocation)
 
@@ -36,7 +49,7 @@ app.get('/api/finalizedReports/:restaurantid', db.getFinalizedReportById)
 
 app.post('/api/uncheckedreports', db.createReport)
 
-app.delete('/api/uncheckedreports/:reportid',db.deleteUncheckedReport)
+app.delete('/api/uncheckedreports/:reportid', db.deleteUncheckedReport)
 
 app.get('/api/locationstats/:restaurantid', db.getlocationstat)
 
