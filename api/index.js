@@ -1,6 +1,6 @@
 //db is named postgres
 const express = require('express')
-const db = require('./queries')
+const db = require('./queries.js')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
@@ -22,7 +22,7 @@ app.get('/api', (req, res) => {
 
 app.get('/api/uncheckedreports', db.getUncheckedReport)
 
-app.get('/api/location/:restaurantsid', db.getRestaurant)
+app.get('/api/location/:restaurantid', db.getRestaurant)
 
 app.get('/api/location', db.getLocation)
 

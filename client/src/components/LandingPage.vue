@@ -4,19 +4,19 @@
   </div>
   <div class="container">
     <h2>Restaurant</h2>
-    <div class="" v-for="l in slocation" v-bind:key="l.restaurantsid">
-      <p class="name">{{l.name}}</p>
+    <div class="" v-for="l in slocation" v-bind:key="l.restaurantid">
+      <p class="name">{{l.restaurantname}}</p>
       <p>Address: {{l.address}}</p>
       <p>Hours: {{l.hoursopen}}</p>
-        <locationStat :rid="l.restaurantsid"/>
+        <locationStat :rid="l.restaurantid"/>
       <button class="btn-report" @click="toggleshowform()">Submit Report</button>
-      <addreport :rid="l.restaurantsid" v-show="showForm"  @submit-report="postReport" />
+      <addreport :rid="l.restaurantid" v-show="showForm"  @submit-report="postReport" />
     </div>
   </div>
   <div class="container">
     <h2>Locations</h2>
-    <div @click="onClick(location.restaurantsid); toggleshowformcloser()" class="locations" v-for="location in locations" v-bind:key="location.restaurantsid">
-      <p class="name">{{location.name}}</p>
+    <div @click="onClick(location.restaurantid); toggleshowformcloser()" class="locations" v-for="location in locations" v-bind:key="location.restaurantid">
+      <p class="name">{{location.restaurantname}}</p>
       <p>{{location.address}}</p>
       <p>{{location.hoursopen}}</p>
     </div>
