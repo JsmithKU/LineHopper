@@ -9,6 +9,8 @@ services:
     ports:
       - '3000:3000'
     environment:
+      - ACCESS_TOKEN_SECRET=THEHAPPYDOGWALKSFAST@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@d
+      - REFRESH_TOKEN_SECRET=THESADCATWALKSSLOW!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!q
       - user=linehop
       - pass=admin123
       - port=5432

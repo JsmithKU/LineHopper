@@ -145,6 +145,13 @@ where dowtime = to_char(CURRENT_TIMESTAMP, 'ID') AND
       restaurantid = $1;
 `;
 
+<<<<<<< Updated upstream
+=======
+let createUser = `insert into useraccount (email, password, role) values ($1,$2,$3) `;
+
+let getUser = 'select * from useraccount where email = $1';
+
+>>>>>>> Stashed changes
 module.exports = {
   pool, 
   getStat, 
