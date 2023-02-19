@@ -27,37 +27,6 @@ app.get('/api', (req, res) => {
     res.send('api Page.')
 })
 
-<<<<<<< Updated upstream
-app.get('/api/uncheckedreports', db.getUncheckedReport)
-
-app.get('/api/location/:restaurantid', db.getRestaurant)
-
-app.get('/api/location', db.getLocation)
-
-app.get('/api/uncheckedreports/:reportid', db.getUncheckedReportById)
-
-app.post('/api/finalizedreports', db.finalizeReport)
-
-app.get('/api/finalizedreports', db.getFinalizedReport)
-
-app.get('/api/finalizedReports/:restaurantid', db.getFinalizedReportById)
-
-app.post('/api/uncheckedreports', db.createReport)
-
-app.delete('/api/uncheckedreports/:reportid',db.deleteUncheckedReport)
-
-app.get('/api/locationstats/:restaurantid', db.getlocationstat)
-
-//getlocationlatest
-app.get('/api/locationlatest/:restaurantid', db.getlocationlatest)
-
-// dow
-app.get('/api/locationdow/:restaurantid', db.getlocationdowreport)
-
-
-//Verify application is running (node api.js)
-=======
-
 // auth: auth.authenticateToken,
 // User Routes 
 app.post('/api/useraccount', userRoutes.createUser) // POST a user account
@@ -80,7 +49,6 @@ app.get('/api/locationdow/:restaurantid', coreRoutes.getlocationdowreport) // Ge
 
 
 // Start Backend and console out
->>>>>>> Stashed changes
 app.listen(port, () => {
     console.log(`LineHopper Backend 2023 - CSC355`)
     console.log(`App running on port ${port}.`)
