@@ -147,7 +147,7 @@ where dowtime = to_char(CURRENT_TIMESTAMP, 'ID') AND
 
 let createUser = `insert into useraccount (email, password, role) values ($1,$2,$3) `;
 
-let getUser = 'select * from useraccount where email = $1';
+let getUser = `select * from useraccount where email = $1`;
 
 module.exports = {
   pool, 

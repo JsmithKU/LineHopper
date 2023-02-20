@@ -1,5 +1,5 @@
 // Router for Client
-import {createRouter, createWebHashHistory, createWebHistory} from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 
 // Views 
 import UserHome from '../views/home.vue'
