@@ -3,7 +3,6 @@
  */
 
 const pg = require('pg') 
-
 const { Pool } = pg
 
 // let localPoolconfig = {
@@ -149,20 +148,23 @@ let createUser = `insert into useraccount (email, password, role) values ($1,$2,
 
 let getUser = `select * from useraccount where email = $1`;
 
+let searchLocation = `select restaurantname, restaurantid from restaurant where restaurantname = $1`;
+
 module.exports = {
-  pool, 
-  getStat, 
-  getLatest, 
-  getdow, 
-  restaurantGET, 
-  untrustedreportGET, 
-  locationGET, 
-  reportCreate, 
-  reportTrust, 
-  reportTrustedGet, 
-  reportGetOne, 
-  untrustedreportDelete,
-  createUser, 
-  getUser,
-  
+    pool,
+    getStat,
+    getLatest,
+    getdow,
+    restaurantGET,
+    untrustedreportGET,
+    locationGET,
+    reportCreate,
+    reportTrust,
+    reportTrustedGet,
+    reportGetOne,
+    untrustedreportDelete,
+    createUser,
+    getUser,
+    searchLocation,
+
 }
