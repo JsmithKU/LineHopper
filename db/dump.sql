@@ -59,13 +59,6 @@ CREATE TABLE public.reports (
     trusted boolean
 );
 
-
-<<<<<<< Updated upstream
-ALTER TABLE public.reports OWNER TO postgres;
-
-=======
->>>>>>> Stashed changes
-
 --
 -- TOC entry 3380 (class 0 OID 24616)
 -- Dependencies: 236
@@ -87,7 +80,3 @@ INSERT INTO public.location (locationid, restaurantid, address, openhour, closeh
 --
 -- PostgreSQL database
 --
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
