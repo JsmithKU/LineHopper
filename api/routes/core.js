@@ -16,6 +16,30 @@
 // Libraries
 const dbconnectorJs = require('../dbconnector.js')
 
+//Search a restaurant by name -- TODO: 
+const searchLocation = async(req, res) => {
+    try {
+        const resName = req.params.restaurantname
+        const searchLocation = await dbconnectorJs.pool.query(dbconnectorJs.searchLocation, [resName])
+        if (searchLocation.rows.length === 0) {
+
+            res.json({ nodata: true })
+
+
+        } else {
+
+            res.json({ restaurant: searchLocation.rows })
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+        console.log(error);
+
+    }
+}
+
+
+
+
 
 //Get a restaurant by it's id 
 const getRestaurant = (req, res) => {
@@ -26,30 +50,31 @@ const getRestaurant = (req, res) => {
         } else {
             res.status(200).json(results.rows)
         }
+
     })
 }
 
 //Get ALL unchecked reports 
 //Get ALL unchecked reports 
-const getUncheckedReport = async (req, res) => {
+const getUncheckedReport = async(req, res) => {
     // dbconnectorJs.pool.query(dbconnectorJs.untrustedreportGET, (error, results) => {
     //     if (error) {
     //         res.status(401).json({ error: error.message })
     //     }
     //     res.status(200).json(results.rows)
     // })
-    try{
+    try {
         const uncheckedReports = await dbconnectorJs.pool.query(
-            dbconnectorJs.getUncheckedReport
-        )
-        // Sends res to front-end (no data or data)
-        if(uncheckedReports.rows.length === 0){
-            res.json({nodata: "True"})
-        }else{
-            res.json({reports: uncheckedReports.rows[0]})
+                dbconnectorJs.getUncheckedReport
+            )
+            // Sends res to front-end (no data or data)
+        if (uncheckedReports.rows.length === 0) {
+            res.json({ nodata: "True" })
+        } else {
+            res.json({ reports: uncheckedReports.rows[0] })
         }
-    }catch(error){
-        res.status(500).json({error:error.message})
+    } catch (error) {
+        res.status(500).json({ error: error.message })
     }
 }
 
@@ -78,7 +103,7 @@ const createReport = (req, res) => {
 }
 
 //Get an unchecked report by id
-const getUncheckedReportById =(req, res) => {
+const getUncheckedReportById = (req, res) => {
     const id = req.params.reportid
     dbconnectorJs.pool.query(dbconnectorJs.reportGetOne, [id],
         (error, results) => {
@@ -200,5 +225,6 @@ module.exports = {
     getlocationstat,
     getlocationlatest,
     getlocationdowreport,
+    searchLocation,
 
 }
