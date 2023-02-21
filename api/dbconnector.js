@@ -2,8 +2,7 @@
  * Creating the POOL and other MISC sql for clean code within the queries.js 
  */
 
-const pg = require('pg')
-
+const pg = require('pg') 
 const { Pool } = pg
 
 // let localPoolconfig = {
@@ -14,11 +13,11 @@ const { Pool } = pg
 //   database: '' 
 // }
 let containerPool = {
-    user: process.env.user,
-    host: process.env.host,
-    database: process.env.pgdb,
-    password: process.env.pass,
-    port: process.env.port
+  user: process.env.user,
+  host: process.env.host,
+  database: process.env.pgdb,
+  password: process.env.pass,
+  port: process.env.port
 }
 
 // const poolConfig = process.env.host ? containerPool : localPoolconfig;
@@ -51,7 +50,7 @@ from location as l
 order by l.restaurantid
 `)
 
-let reportCreate = (`
+let reportCreate =(`
 insert into reports(reportid, restaurantid, cleanrank, busyrank, picture, submissiontime, userid, trusted) 
 values ($1,$2,$3,$4,$5,$6,$7,$8)
 `)

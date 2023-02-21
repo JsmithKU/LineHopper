@@ -13,7 +13,9 @@ const auth = require('./utils/authorization.js')
 // create and set express config
 const app = express()
 const port = 3000
-const corsOptions = { credentials: true, origin: '*' }
+const corsOptions = {credentials:true, origin:'*'}
+
+
 app.use(bodyParser.json())
 app.use(cors(corsOptions))
 app.use(cookie())
@@ -34,6 +36,7 @@ app.get('/api/useraccount/:email', userRoutes.getUser) // Get a user account (by
 app.post('/api/login', userRoutes.userLogin) // post to login 
 
 // Core Routes
+
 app.get('/api/locationsearch/:restaurantname', coreRoutes.searchLocation) //Search a location TODO: autofill search functionality
 app.get('/api/uncheckedreports', coreRoutes.getUncheckedReport) // Get ALL reports that are untrusted
 app.get('/api/location/:restaurantid', coreRoutes.getRestaurant) // Get a location by id
