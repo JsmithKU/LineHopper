@@ -8,48 +8,6 @@ CREATE SCHEMA public;
 -- TOC entry 236 (class 1259 OID 24616)
 -- Name: restaurant; Type: TABLE; Schema: public; Owner: postgres
 --
-<<<<<<< Updated upstream
-
-CREATE TABLE public.restaurant (
-    restaurantid bigint NOT NULL PRIMARY KEY,
-    restaurantname character varying,
-    cleanavg numeric,
-    busyavg numeric,
-    dateadded TIMESTAMP
-);
-
-
-ALTER TABLE public.restaurant OWNER TO postgres;
-
-
---
--- TOC entry 235 (class 1259 OID 24611)
--- Name: location; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.location (
-    locationid bigint NOT NULL PRIMARY KEY,
-    restaurantid bigint NOT NULL REFERENCES public.restaurant(restaurantid),
-    address character varying,
-    openhour time,
-    closehour time
-);
-
-
-ALTER TABLE public.location OWNER TO postgres;
-
-
--- User table 
-
-CREATE TABLE public.useraccount(
-    userid bigint PRIMARY key,
-    email CHARACTER VARYING UNIQUE,
-    password CHARACTER VARYING,
-    role CHARACTER VARYING
-);
-
-ALTER TABLE public.useraccount OWNER TO postgres;
-=======
 
 CREATE TABLE public.restaurant (
     restaurantid bigint NOT NULL PRIMARY KEY,
@@ -84,8 +42,6 @@ CREATE TABLE public.useraccount(
     password CHARACTER VARYING,
     role CHARACTER VARYING
 );
-
->>>>>>> Stashed changes
 
 --
 -- TOC entry 237 (class 1259 OID 24621)

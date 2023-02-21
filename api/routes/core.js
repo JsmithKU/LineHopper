@@ -4,6 +4,13 @@
  * Should convert over to try catch 
  * On vue display errors properly (Needs error handling in general)
  * 
+ try{
+  // Empty 
+  //...
+  // 200 Res 
+ }catch(error){
+  res.status(500).json(error:error.message)
+ }
  */
 
 // Libraries
