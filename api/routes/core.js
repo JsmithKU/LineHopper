@@ -23,13 +23,27 @@ const getRestaurant = (req, res) => {
 }
 
 //Get ALL unchecked reports 
-const getUncheckedReport =(req, res) => {
-    dbconnectorJs.pool.query(dbconnectorJs.untrustedreportGET, (error, results) => {
-        if (error) {
-            res.status(401).json({ error: error.message })
+//Get ALL unchecked reports 
+const getUncheckedReport = async (req, res) => {
+    // dbconnectorJs.pool.query(dbconnectorJs.untrustedreportGET, (error, results) => {
+    //     if (error) {
+    //         res.status(401).json({ error: error.message })
+    //     }
+    //     res.status(200).json(results.rows)
+    // })
+    try{
+        const uncheckedReports = await dbconnectorJs.pool.query(
+            dbconnectorJs.getUncheckedReport
+        )
+        // Sends res to front-end (no data or data)
+        if(uncheckedReports.rows.length === 0){
+            res.json({nodata: "True"})
+        }else{
+            res.json({reports: uncheckedReports.rows[0]})
         }
-        res.status(200).json(results.rows)
-    })
+    }catch(error){
+        res.status(500).json({error:error.message})
+    }
 }
 
 //Get ALL restaurant locations

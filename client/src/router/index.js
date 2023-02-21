@@ -1,11 +1,11 @@
 // Router for Client
-import {createRouter, createWebHashHistory, createWebHistory} from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 
 // Views 
 import UserHome from '../views/home.vue'
 import trustedView from '../views/trustedView.vue'
-
-
+import userSignup from '../views/userSignup.vue'
+import userLogin from '../views/userLogin.vue'
 
 // Paths 
 const routes = [
@@ -13,6 +13,16 @@ const routes = [
     path: '/',
     name: 'UserHome',
     component: UserHome,
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: userLogin,
+  },
+  {
+    path: '/signup',
+    name: 'signup',
+    component: userSignup,
   },
   {
     path: '/trust',

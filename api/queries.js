@@ -1,7 +1,7 @@
 const dbconnectorJs = require('./dbconnector.js') 
 
 //Get a restaurant by it's id 
-const getRestaurant = (req, res) => {
+const getRestaurant = async (req, res) => {
     const id = req.params.restaurantid
     dbconnectorJs.pool.query(dbconnectorJs.restaurantGET, [id], (error, results) => {
         if(error){
