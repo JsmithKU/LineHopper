@@ -145,9 +145,11 @@ where dowtime = to_char(CURRENT_TIMESTAMP, 'ID') AND
       restaurantid = $1;
 `;
 
-let createUser = `insert into useraccount (userid, email, password, role) values ($1,$2,$3,$4) `;
+let createUser = `insert into useraccount (email, password, role) values ($1,$2,$3) `;
 
-let getUser = 'select * from useraccount where email = $1';
+let getUser = `select * from useraccount where email = $1`;
+
+let searchLocation = `select restaurantname, restaurantid from restaurant where restaurantname = $1`;
 
 module.exports = {
     pool,
@@ -163,5 +165,7 @@ module.exports = {
     reportGetOne,
     untrustedreportDelete,
     createUser,
-    getUser
+    getUser,
+    searchLocation,
+
 }
