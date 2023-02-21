@@ -17,8 +17,6 @@ CREATE TABLE public.restaurant (
     dateadded TIMESTAMP
 );
 
-
-
 --
 -- TOC entry 235 (class 1259 OID 24611)
 -- Name: location; Type: TABLE; Schema: public; Owner: postgres
@@ -55,7 +53,7 @@ CREATE TABLE public.reports (
     busyrank numeric,
     picture VARCHAR,
     submissiontime timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
-    userid bigint REFERENCES public.useraccount(userid),
+    userid uuid REFERENCES public.useraccount(userid),
     trusted boolean
 );
 

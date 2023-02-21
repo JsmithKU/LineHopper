@@ -37,10 +37,6 @@ const searchLocation = async(req, res) => {
     }
 }
 
-
-
-
-
 //Get a restaurant by it's id 
 const getRestaurant = (req, res) => {
     const id = req.params.restaurantid
@@ -54,7 +50,6 @@ const getRestaurant = (req, res) => {
     })
 }
 
-//Get ALL unchecked reports 
 //Get ALL unchecked reports 
 const getUncheckedReport = async(req, res) => {
     // dbconnectorJs.pool.query(dbconnectorJs.untrustedreportGET, (error, results) => {
