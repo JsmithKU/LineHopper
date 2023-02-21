@@ -117,6 +117,14 @@ class api{
         // return it
         return dataPromise
   }
+  static login(email,password){
+    const promise = axios.post(`${url}login`,{
+    email,password
+    })
+    const dataPromise = promise.then((response) => response.data)
+
+    return dataPromise
+  }
 }
 
 export default api
