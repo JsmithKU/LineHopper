@@ -34,7 +34,8 @@ app.get('/api', (req, res) => {
 app.post('/api/useraccount', userRoutes.createUser) // POST a user account
 app.get('/api/useraccount/:email', userRoutes.getUser) // Get a user account (by Email)
 app.post('/api/login', userRoutes.userLogin) // post to login 
-
+app.get('/api/refresh',userRoutes.userRefresh) // Reset Token for access from refresh token
+app.delete('/api/signout',userRoutes.userSignout) // Sign out
 // Core Routes
 app.get('/api/locationsearch/:restaurantname', coreRoutes.searchLocation) //Search a location TODO: autofill search functionality
 app.get('/api/uncheckedreports', coreRoutes.getUncheckedReport) // Get ALL reports that are untrusted
