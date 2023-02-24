@@ -5,80 +5,115 @@
   <div class="container">
     <h2>Restaurant</h2>
     <div class="" v-for="l in slocation" v-bind:key="l.restaurantid">
-      <p class="name">{{l.restaurantname}}</p>
-      <p>Address: {{l.address}}</p>
-      <p>Hours: {{l.hoursopen}}</p>
-        <!-- <locationStat :rid="l.restaurantid"/> -->
-      <button class="btn-report" @click="toggleshowform()">Submit Report</button>
-      <addreport :rid="l.restaurantid" v-show="showForm"  @submit-report="postReport" />
+      <p class="name">{{ l.restaurantname }}</p>
+      <p>Address: {{ l.address }}</p>
+      <p>Hours: {{ l.hoursopen }}</p>
+      <!-- <locationStat :rid="l.restaurantid"/> -->
+      <button class="btn-report" @click="toggleshowform()">
+        Submit Report
+      </button>
+      <addreport
+        :rid="l.restaurantid"
+        v-show="showForm"
+        @submit-report="postReport"
+      />
     </div>
   </div>
   <div class="container">
+    <h2>Search:</h2>
+    <form autocomplete="off">
+      <div class="autocomplete" style="width: 300px">
+        <input
+          id="myInput"
+          type="text"
+          name="locationSearch"
+          placeholder="Restaurant..."
+        />
+      </div>
+      <input type="submit" v-show="true" />
+    </form>
+  </div>
+  <div class="container">
     <h2>Locations</h2>
-    <div v-for="msg in locations.nodata" v-bind:key="msg.nodata"> <!-- Clean this up-->
-      <p class="name"> No Data</p>
+    <div v-for="msg in locations.nodata" v-bind:key="msg.nodata">
+      <!-- Clean this up-->
+      <p class="name">No Data</p>
     </div>
-    <div @click="onClick(location.restaurantid); toggleshowformcloser()" class="locations" v-for="location in locations.data" v-bind:key="location.restaurantid">
-      <p class="name">{{location.restaurantname}}</p>
-      <p>{{location.address}}</p>
-      <p>{{location.hoursopen}}</p>
+    <div
+      @click="
+        onClick(location.restaurantid);
+        toggleshowformcloser();
+      "
+      class="locations"
+      v-for="location in locations.data"
+      v-bind:key="location.restaurantid"
+    >
+      <p class="name">{{ location.restaurantname }}</p>
+      <p>{{ location.address }}</p>
+      <p>{{ location.hoursopen }}</p>
     </div>
   </div>
 </template>
 
 <script>
-import api from '../api.js';
-import addreport from './addreport.vue';
+import api from "../api.js";
+import addreport from "./addreport.vue";
 // import locationStat from './locationstatus.vue';
 
 export default {
-  components: { addreport}, //, locationStat },
-  name: 'LandingPage',
+  components: { addreport }, //, locationStat },
+  name: "LandingPage",
   props: {
     msg: String,
-
   },
-  data(){
+  data() {
     return {
       locations: [],
-      slocation:[],
-      error: '',
+      slocation: [],
+      locationSearch: [],
+      error: "",
       showForm: false,
-    }
+    };
   },
-  async created(){
-    try{
-      this.locations = await api.locations()
-    }catch(err){
-      this.error = "borked."
-    }
-  },
-  methods:{
+  async created() {
+    try {
+      this.locations = await api.locations();
+      //console.log(this.locations); // sanity check
 
-    async onClick(id){
-      try{
-        this.slocation = await api.getlocation(id)
-      }catch(err){
-        this.error = "borked."
+      //this.locationSearch = await api.locationarray()
+      this.locations.data.forEach((element) =>
+        this.locationSearch.push(element.restaurantname)
+      );
+      //console.log(this.locationSearch)
+    } catch (err) {
+      this.error = "borked.";
+    }
+  },
+  methods: {
+    async onClick(id) {
+      try {
+        this.slocation = await api.getlocation(id);
+      } catch (err) {
+        this.error = "borked.";
       }
     },
-    async postReport(form){
-      try{
-        let formdata = JSON.stringify(form)
+    async postReport(form) {
+      try {
+        let formdata = JSON.stringify(form);
         //console.log(formdata)
-        api.postreport(formdata)
-      }catch(err){
-        this.error = "borked."
+        api.postreport(formdata);
+      } catch (err) {
+        this.error = "borked.";
       }
-      this.toggleshowformcloser()
+      this.toggleshowformcloser();
     },
-    toggleshowform(){
-    this.showForm = !this.showForm
+    toggleshowform() {
+      this.showForm = !this.showForm;
     },
-    toggleshowformcloser(){
-    this.showForm = false // really bad way of closing on new location selection
+    toggleshowformcloser() {
+      this.showForm = false; // really bad way of closing on new location selection
     },
-  }
+  },
 }
 </script>
 
@@ -98,7 +133,7 @@ li {
 a {
   color: #42b983;
 }
-.container{
+.container {
   border: 2px solid black;
   overflow: hidden;
   top: 50%;
@@ -106,17 +141,68 @@ a {
   align-items: center;
   justify-content: center;
 }
-.locations{
+.locations {
   border: 2px solid black;
   float: left;
   width: 150px;
   height: 300px;
   margin: 10px 10px;
 }
-.name{
+.name {
   font-size: 1.8rem;
 }
-.btn-report{
+.btn-report {
   margin: 10px 10px;
+}
+
+.autocomplete {
+  position: relative;
+  display: inline-block;
+}
+input {
+  border: 1px solid transparent;
+  background-color: #f1f1f1;
+  padding: 10px;
+  font-size: 16px;
+}
+
+input[type="text"] {
+  background-color: #f1f1f1;
+  width: 100%;
+}
+
+input[type="submit"] {
+  background-color: DodgerBlue;
+  color: #fff;
+  cursor: pointer;
+}
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
+}
+
+/*when hovering an item:*/
+.autocomplete-items div:hover {
+  background-color: #e9e9e9;
+}
+
+/*when navigating through the items using the arrow keys:*/
+.autocomplete-active {
+  background-color: DodgerBlue !important;
+  color: #ffffff;
 }
 </style>

@@ -42,6 +42,15 @@ class api{
     // return it
     return dataPromise
 }
+static locationarray(){
+  const promise = axios.get(`${url}location/`)
+
+  // using .then, create a new promise which extracts the data
+  const dataPromise = promise.then((response) => response.data)
+  
+  // return it
+  return dataPromise
+}
   // post content
   static postreport(form){
     const res = axios.post(`${url}uncheckedreports`,form, {
