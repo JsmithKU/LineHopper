@@ -27,13 +27,15 @@ export default{
   methods:{
     async handleSubmit(){
       try{
-        await api.login(
+         await api.login(
           this.email,
           this.password
         )
+        this.$router.push('/')
       }catch(err){
         this.error = "HUH"
       }
+
     }
   }
 }

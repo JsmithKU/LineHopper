@@ -60,7 +60,7 @@ const userLogin = async(req,res)=>{
     // JWT 
     let tokens = jwtTokens.jwtTokens(users.rows[0])
     // Set cookie
-    res.cookie('refresh_token', tokens.refreshToken,{httpOnly:true}) // set cookie
+    res.cookie('refresh_token', tokens.refreshToken,{httpOnly:true,sameSite: 'none', secure: true}) // set cookie
     // return tokens
     res.json(tokens)
   }catch(error){
@@ -70,12 +70,13 @@ const userLogin = async(req,res)=>{
 
 const userRefresh = (req,res)=>{
   try{
-    const refreshToken = req.cookies.refreshToken // read from cookie
+    const refreshToken = req.cookies.refresh_token // read from cookie
     if(refreshToken === null) return res.status(401).json({error:'Bad Token? Maybe Relog.'})
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET,(error,user)=>{
       if(error) return res.status(403).json({error:error.message})
-      let tokens = jwtTokens(user)
+      let tokens = jwtTokens.jwtTokens(user)
       res.cookie('refresh_token', tokens.refreshToken,{httpOnly:true,sameSite: 'none', secure: true})
+      res.json(tokens.accessToken) 
     })
   }catch(error){
     res.status(401).json({error:error.message}) // Forbidden

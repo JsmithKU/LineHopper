@@ -10,3 +10,8 @@
 4. When working on the project and loading changes within your environment currently the process is:
   - Save changes to files 
   - Run ``` docker-compose up -d --build client --build api ```
+
+## MISC 
+On linux base if port for pg is bound:
+- You can stop the process by finding the PID with ```lsof -i :5432```
+- and then killing it with ```kill -9 <PID>```

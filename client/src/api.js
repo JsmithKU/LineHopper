@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const url = 'http://localhost:3000/api/'
-
+axios.defaults.headers.common['Authorization'] = 'Bear ' + localStorage.getItem("access_token")
+axios.defaults.withCredentials = true
 class api{
   // get content 
   // static getLocations(){
@@ -27,7 +28,7 @@ class api{
 
       // using .then, create a new promise which extracts the data
       const dataPromise = promise.then((response) => response.data)
-  
+      
       // return it
       return dataPromise
   }
@@ -123,6 +124,20 @@ class api{
     })
     const dataPromise = promise.then((response) => response.data)
 
+    return dataPromise
+  }
+  static refresh(){
+    const promise = axios.get(`${url}refresh`,{
+
+    })
+    const dataPromise = promise.then((response) => response.data)
+    return dataPromise
+  }
+  static signout(){
+    const promise = axios.delete(`${url}signout`,{
+
+    })
+    const dataPromise = promise.then((response)=> response.data)
     return dataPromise
   }
 }

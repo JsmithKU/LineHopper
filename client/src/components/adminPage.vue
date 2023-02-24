@@ -2,7 +2,7 @@
   <h1> {{msg}} </h1>
   <div class="container">
     <h2> Unchecked Reports </h2>
-    <div class="report" v-for="ur in unReports" v-bind:key="ur.reportid">
+    <div class="report" v-for="ur in unReports.data" v-bind:key="ur.reportid">
       <p class="name">Name: {{ur.name}}</p>
       <p> Clean Rank: {{ur.cleanrank}}</p>
       <p>Busy Rank: {{ur.busyrank}}</p>

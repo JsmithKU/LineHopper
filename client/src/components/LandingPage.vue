@@ -8,29 +8,31 @@
       <p class="name">{{l.restaurantname}}</p>
       <p>Address: {{l.address}}</p>
       <p>Hours: {{l.hoursopen}}</p>
-        <locationStat :rid="l.restaurantid"/>
+        <!-- <locationStat :rid="l.restaurantid"/> -->
       <button class="btn-report" @click="toggleshowform()">Submit Report</button>
       <addreport :rid="l.restaurantid" v-show="showForm"  @submit-report="postReport" />
     </div>
   </div>
   <div class="container">
     <h2>Locations</h2>
-    <div @click="onClick(location.restaurantid); toggleshowformcloser()" class="locations" v-for="location in locations" v-bind:key="location.restaurantid">
+    <div v-for="msg in locations.nodata" v-bind:key="msg.nodata"> <!-- Clean this up-->
+      <p class="name"> No Data</p>
+    </div>
+    <div @click="onClick(location.restaurantid); toggleshowformcloser()" class="locations" v-for="location in locations.data" v-bind:key="location.restaurantid">
       <p class="name">{{location.restaurantname}}</p>
       <p>{{location.address}}</p>
       <p>{{location.hoursopen}}</p>
     </div>
   </div>
-
 </template>
 
 <script>
 import api from '../api.js';
 import addreport from './addreport.vue';
-import locationStat from './locationstatus.vue';
+// import locationStat from './locationstatus.vue';
 
 export default {
-  components: { addreport, locationStat },
+  components: { addreport}, //, locationStat },
   name: 'LandingPage',
   props: {
     msg: String,

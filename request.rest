@@ -20,3 +20,8 @@ Content-Type: application/json
   "email": "user@user.com",
   "password": "user"
 }
+
+###
+GET http://localhost:3000/api/location
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI3YmFlZGM0Yy0zNTQ5LTRkOGItYWJhOS1jNWZhYzEzMGI1MzIiLCJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpYXQiOjE2NzcyMTQwNzIsImV4cCI6MTY3ODQyMzY3Mn0.UxLROzhisPzq1MzUenPutS3Lu9A5g1GmhhB2wwybXsk
