@@ -7,7 +7,7 @@
     <input type="text" placeholder="Email:" v-model="email" name="email" required>
 
     <label for="password"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" v-model="password" name="password" required>
+    <input type="password" placeholder="Enter Password" v-model="password"  name="password" required>
     <label for = "verifyPassword"><b>Verify Password</b></label>
     <input type = "password" placeholder = "Verify password" v-model="password" name = "password" required>
 
@@ -21,13 +21,6 @@
 </template>
 
 <style scoped>
-
-
-
-
-
-
-
 </style>
 
 <script>
@@ -38,34 +31,27 @@ export default{
   data(){
 return {
   email:'',
-  password:''
+  password:'',
+  password2:''
 }
-
   },
   methods:{
-
 async handleSubmit(){
   try{
-    await api.createUser(
+    await api.signUp(
       this.email,
       this.password
+      
       )
+      this.$router.push('/login')
+      
   }
 catch(error){
-  this.error = "Invalid email or password. Try again"
-
+  this.error = "Invalid credentials. Please try again"
   }
  }
+//client src api.js -- write out post /api/useraccount
+
 }
-
-
-
  }
-
 </script>
-
-
-
-
-
-
