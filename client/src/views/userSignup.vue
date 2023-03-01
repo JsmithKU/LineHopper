@@ -46,7 +46,7 @@ return {
 
 async handleSubmit(){
   try{
-    await api.userLogin(
+    await api.createUser(
       this.email,
       this.password
       )
