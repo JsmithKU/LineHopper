@@ -8,7 +8,7 @@
       <p class="name">{{ l.restaurantname }}</p>
       <p>Address: {{ l.address }}</p>
       <p>Hours: {{ l.hoursopen }}</p>
-      <!-- <locationStat :rid="l.restaurantid"/> -->
+      <locationStat :rid="l.restaurantid"/>
       <button class="btn-report" @click="toggleshowform()">
         Submit Report
       </button>
@@ -60,10 +60,10 @@
 <script>
 import api from "../api.js";
 import addreport from "./addreport.vue";
-// import locationStat from './locationstatus.vue';
+import locationStat from './locationstatus.vue';
 let refresh = {}
 export default {
-  components: { addreport }, //, locationStat },
+  components: { addreport, locationStat },
   name: "LandingPage",
   props: {
     msg: String,

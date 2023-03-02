@@ -1,6 +1,6 @@
 <template>
   <div class="averages">
-    <h1> Average Stats </h1>
+    <!-- <h1> Average Stats </h1>
     <div v-for="s in status" v-bind:key="s.restaurantid">
       <p>Cleanliness Score: {{s.cleanavg}} / 5</p>
       <br>
@@ -18,7 +18,7 @@
       <h1>{{r.cday}} Averages </h1>
       <p>Cleanliness: {{r.cleanavg}} / 5</p>
       <p>Busyness: {{r.busyavg}} / 5</p>
-    </div>
+    </div> -->
     <div v-for="l in latest" v-bind:key="l.restaurantid">
       <h1> Latest Report </h1>
       <p>Latest Cleanliness: {{l.cleanrank}} / 5</p>
@@ -26,7 +26,7 @@
       <p> Submission at {{l.shour}}:{{l.sminute}} on {{l.smonth}} {{l.sday}}</p>
     </div>
 
-  </div>
+  <!-- </div> -->
   </div>
 
 
@@ -51,9 +51,9 @@ export default{
   async created(){
     try{
       // do stuff
-      this.status = await api.getlocationstat(this.rid)
+      //this.status = await api.getlocationstat(this.rid)
       this.latest = await api.getlocationlatest(this.rid)
-      this.dowreport = await api.getlocationdowreport(this.rid)
+      //this.dowreport = await api.getlocationdowreport(this.rid)
       if(this.status[0].cleanavg == 0){
         this.status[0].cleanavg = 0
       }

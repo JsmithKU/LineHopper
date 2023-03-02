@@ -58,7 +58,6 @@ export default{
           //console.log()
           let data = await api.uncheckreportbyid(id)
           api.approvereport(JSON.stringify(data[0]))
-          this.deleted = await api.deleteunchecked(id)
           alert('ADDED ID: ' + id)
         }
         catch(err){

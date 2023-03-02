@@ -281,9 +281,15 @@ const getlocationlatest = async(req, res) => {
     //     }
     // })
     try{
-        // Empty 
-        //...
-        // 200 Res 
+        const reportlastest= await dbconnectorJs.pool.query(
+            dbconnectorJs.getLatest, 
+            [id]
+        )
+        if(reportlastest.rows.length === 0){
+            res.json({nodata: "True"})
+        }else{
+            res.json({data: reportlastest.rows[0]})
+        }
     }catch(error){
         res.status(500).json({ error: error.message })
     }
