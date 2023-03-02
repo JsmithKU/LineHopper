@@ -16,6 +16,7 @@ services:
       - port=5432
       - host=db
       - pgdb=linehoptest
+      - url=http://localhost
     depends_on:
       - db
 
@@ -39,6 +40,7 @@ services:
     ports:
       - '8080:8080'
     environment: 
+      - url=localhost
       - CHOKIDAR_USEPOLLING=true # <---- this enables the hot reloading
 volumes:
   pgdata: {}

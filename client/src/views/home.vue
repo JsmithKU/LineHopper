@@ -7,6 +7,7 @@
 <script>
 import LandingPage from '../components/LandingPage.vue'
 import api from '../api.js'
+
 export default{
   name: 'UserHome',
   components: {
@@ -15,8 +16,7 @@ export default{
   },
   async created(){
     try{
-        const response = await api.refresh()
-        localStorage.setItem('access_token', response)
+        await api.refresh()
       }catch(err){
         this.$router.push('/login')
         this.error = "HUH"
@@ -26,7 +26,6 @@ export default{
     async signout(){
       try{
         await api.signout()
-        localStorage.removeItem('access_token')
         this.$router.push('/login')
       }catch(error){
         this.error = "No login"

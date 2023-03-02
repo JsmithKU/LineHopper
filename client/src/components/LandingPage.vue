@@ -53,6 +53,7 @@
       <p>{{ location.hoursopen }}</p>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -67,17 +68,21 @@ export default {
     msg: String,
   },
   data() {
+    
     return {
       locations: [],
       slocation: [],
       locationSearch: [],
       error: "",
       showForm: false,
+
     };
   },
   async created() {
     try {
-      this.locations = await api.locations();
+      let access = await api.refresh()
+      //console.log(access)
+      this.locations = await api.locations(access);
       //console.log(this.locations); // sanity check
 
       //this.locationSearch = await api.locationarray()

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const url = 'http://localhost:3000/api/'
-axios.defaults.headers.common['Authorization'] = 'Bear ' + localStorage.getItem("access_token")
+//axios.defaults.headers.common['Authorization'] = 'Bear ' + localStorage.getItem("access_token")
 axios.defaults.withCredentials = true
 class api{
   // get content 
@@ -22,9 +22,11 @@ class api{
   //     }
   //   })
   // }
-  static locations(){
+  static locations(token){
       // create a promise for the axios request
-      const promise = axios.get(`${url}location/`)
+      const promise = axios.get(`${url}location/`,{
+         headers: { Authorization: `Bearer ${token}` }
+      })
 
       // using .then, create a new promise which extracts the data
       const dataPromise = promise.then((response) => response.data)
