@@ -3,10 +3,11 @@
   <div class="container">
     <h2> Unchecked Reports </h2>
     <div class="report" v-for="ur in unReports.data" v-bind:key="ur.reportid">
-      <p class="name">Name: {{ur.name}}</p>
+      <p class="name">Name: {{ur.restaurantname}}</p>
       <p> Clean Rank: {{ur.cleanrank}}</p>
       <p>Busy Rank: {{ur.busyrank}}</p>
       <p>{{ur.submissiontime}}</p>
+      <p>Submitted by: {{ ur.userid }}</p>
       <button class="btn" @click="onClick(`${ur.reportid}`, `approved`)">Approve</button>
       <button class="btn" @click="onClick(`${ur.reportid}`, `rejected`)">Reject</button>
     </div>

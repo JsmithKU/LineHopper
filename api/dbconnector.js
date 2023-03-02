@@ -36,10 +36,10 @@ where restaurantid = $1
 `)
 
 let untrustedreportGET = (`
-SELECT ur.reportid, ur.restaurantid, ur.cleanrank, ur.busyrank, ur.picture, r.name, ur.submissiontime 
+SELECT ur.reportid, ur.restaurantid, ur.cleanrank, ur.busyrank, ur.picture, r.restaurantname, ur.submissiontime, ur.userid 
 from reports as ur 
   inner join restaurant as r using(restaurantid)
-where ur.trusted IS TRUE
+where ur.trusted IS NOT TRUE
 order by reportid asc
 `)
 

@@ -21,6 +21,8 @@ export default {
   name: 'AddReport',
   props:{
     rid: String,
+    uuid: String,
+
   },
   data(){
 //reportid, restaurantid, cleanrank, busyrank, picture, submissiontime 
@@ -31,7 +33,7 @@ export default {
       busyrank: '2.5',
       picture: '',
       submissiontime: new Date().toLocaleString(),
-      userid: '0',
+      userid: this.uuid,
 
     }
   },
@@ -50,6 +52,7 @@ export default {
         busyrank: this.busyrank,
         picture: this.picture,
         submissiontime: this.submissiontime,
+        userid: this.userid,
       }
       this.$emit('submit-report', newReport)
       // reset report form

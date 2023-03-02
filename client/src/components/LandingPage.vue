@@ -14,6 +14,7 @@
       </button>
       <addreport
         :rid="l.restaurantid"
+        :uuid="userid"
         v-show="showForm"
         @submit-report="postReport"
       />
@@ -60,7 +61,7 @@
 import api from "../api.js";
 import addreport from "./addreport.vue";
 // import locationStat from './locationstatus.vue';
-
+let refresh = {}
 export default {
   components: { addreport }, //, locationStat },
   name: "LandingPage",
@@ -75,14 +76,16 @@ export default {
       locationSearch: [],
       error: "",
       showForm: false,
+      userid: "",
 
     };
   },
   async created() {
     try {
-      let access = await api.refresh()
+      refresh = await api.refresh()
       //console.log(access)
-      this.locations = await api.locations(access);
+      this.userid = refresh.userid
+      this.locations = await api.locations(refresh.token)
       //console.log(this.locations); // sanity check
 
       //this.locationSearch = await api.locationarray()
@@ -97,7 +100,7 @@ export default {
   methods: {
     async onClick(id) {
       try {
-        this.slocation = await api.getlocation(id);
+        this.slocation = await api.getlocation(id);//(access, id);
       } catch (err) {
         this.error = "borked.";
       }

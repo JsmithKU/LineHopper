@@ -149,6 +149,7 @@ class api {
 
     return dataPromise
   }
+  
   static refresh() {
     const promise = axios.get(`${url}refresh`, {
 

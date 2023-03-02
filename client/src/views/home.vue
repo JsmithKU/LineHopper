@@ -17,6 +17,8 @@ export default{
   async created(){
     try{
         await api.refresh()
+        //this.$_userid = await api.getemail(this.$_useremail)
+
       }catch(err){
         this.$router.push('/login')
         this.error = "HUH"

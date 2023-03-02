@@ -67,8 +67,9 @@ const userLogin = async (req, res) => {
       sameSite: 'none',
       secure: true
     }) // set cookie
-    // return tokens
-    res.json(tokens)
+    // return tokens and info
+    const user = users.rows[0]
+    res.json({tokens: tokens, uuid: user.userid})
   } catch (error) {
     res.status(401).json({ error: error.message }) // Forbidden Bad login 
   }
@@ -88,7 +89,7 @@ const userRefresh = (req, res) => {
         sameSite: 'none',
         secure: true
       }) // set cookie
-      res.json(tokens.accessToken)
+      res.json({token: tokens.accessToken, useremail: user.email, userid: user.userid})
     })
   } catch (error) {
     res.status(401).json({ error: error.message }) // Forbidden

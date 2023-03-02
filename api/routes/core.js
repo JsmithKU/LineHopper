@@ -53,7 +53,7 @@ const getUncheckedReport = async(req, res) => {
     // })
     try {
         const uncheckedReports = await dbconnectorJs.pool.query(
-                dbconnectorJs.getUncheckedReport
+                dbconnectorJs.untrustedreportGET
             )
             // Sends res to front-end (no data or data)
         if (uncheckedReports.rows.length === 0) {
