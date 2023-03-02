@@ -25,12 +25,13 @@ export default {
   data(){
 //reportid, restaurantid, cleanrank, busyrank, picture, submissiontime 
     return{
-      reportid: parseInt(Math.floor((Date.now() / 1000)) + '' + 1), // really dumb temp fix DO NOT DO THIS IN PROD LOLs
+      reportid: parseInt(Math.floor((Date.now() / 1000)) + '' + 1), 
       restaurantid: this.rid,
       cleanrank: '2.5',
       busyrank: '2.5',
-      picture: false,
+      picture: '',
       submissiontime: new Date().toLocaleString(),
+      userid: '0',
 
     }
   },
@@ -52,7 +53,7 @@ export default {
       }
       this.$emit('submit-report', newReport)
       // reset report form
-      this.reportid = parseInt(Math.floor((Date.now() / 1000)) + '' + 1) // really dumb temp fix DO NOT DO THIS IN PROD LOLs
+      this.reportid = parseInt(Math.floor((Date.now() / 1000)) + '' + 1)
       this.restaurantid = this.rid
       this.cleanrank = ''
       this.busyrank = ''

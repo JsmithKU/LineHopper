@@ -1,20 +1,6 @@
-/*      Notes:
- * Tons of this could be fixed up 
- * Needs a standard format for routes 
- * Should convert over to try catch 
- * On vue display errors properly (Needs error handling in general)
- * 
- try{
-  // Empty 
-  //...
-  // 200 Res 
- }catch(error){
-  res.status(500).json(error:error.message)
- }
- */
-
 // Libraries
 const dbconnectorJs = require('../dbconnector.js')
+
 
 //Search a restaurant by name -- TODO: 
 const searchLocation = async(req, res) => {
@@ -24,7 +10,7 @@ const searchLocation = async(req, res) => {
         if (searchLocation.rows.length === 0) {
             res.json({ nodata: "True" })
         } else {
-            res.json({ restaurant: searchLocation.rows })
+            res.json({ data: searchLocation.rows })
         }
     } catch (error) {
         res.status(500).json({ error: error.message })
@@ -50,7 +36,7 @@ const getRestaurant = async(req, res) => {
         if(restaurantGet.rows.length === 0){
             res.json({nodata: "True"})
         }else{
-            res.json({resturant: restaurantGet.rows[0]})
+            res.json({data: restaurantGet.rows[0]})
         }
     }catch(error){
         res.status(500).json({error: error.message})
@@ -73,7 +59,7 @@ const getUncheckedReport = async(req, res) => {
         if (uncheckedReports.rows.length === 0) {
             res.json({ nodata: "True" })
         } else {
-            res.json({ reports: uncheckedReports.rows })
+            res.json({ data: uncheckedReports.rows })
         }
     } catch (error) {
         res.status(500).json({ error: error.message })
@@ -95,7 +81,7 @@ const getLocation = async(req, res) => {
         if(locationGet.rows.length === 0){
             res.json({nodata: "True"})
         }else{
-            res.json({location: locationGet.rows})
+            res.json({data: locationGet.rows})
         }
     }catch(error){
         res.status(500).json({ error: error.message })
@@ -147,7 +133,7 @@ const getUncheckedReportById = async(req, res) => {
         if(uncheckedReportID.rows.length === 0){
             res.json({nodata: "True"})
         }else{
-            res.json({reports: uncheckedReportID.rows[0]})
+            res.json({data: uncheckedReportID.rows[0]})
         }
     }catch(error){
         res.status(500).json({ error: error.message })
@@ -177,7 +163,7 @@ const finalizeReport = async(req, res) => {
         if(reportTrust.rows.length === 0){
             res.json({nodata: "True"})
         }else{
-            res.json({reports: reportTrust.rows[0]})
+            res.json({data: reportTrust.rows[0]})
         }
     }catch(error){
         res.status(500).json({ error: error.message })
@@ -203,7 +189,7 @@ const getFinalizedReport = async(req, res) => {
         if(reportTrustedGet.rows.length === 0){
             res.json({nodata: "True"})
         }else{
-            res.json({location: reportTrustedGet.rows})
+            res.json({data: reportTrustedGet.rows})
         }
     }catch(error){
         res.status(500).json({ error: error.message })
@@ -230,7 +216,7 @@ const getFinalizedReportById = async(req, res) => {
         if(reportGetOne.rows.length === 0){
             res.json({nodata: "True"})
         }else{
-            res.json({reports: reportGetOne.rows[0]})
+            res.json({data: reportGetOne.rows[0]})
         }
     }catch(error){
         res.status(500).json({ error: error.message })

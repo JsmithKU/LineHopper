@@ -13,7 +13,7 @@ const auth = require('./utils/authorization.js')
 // create and set express config
 const app = express()
 const port = 3000
-const corsOptions = {credentials:true, origin:'*'}
+const corsOptions = {credentials:true, origin: 'http://localhost:8080', exposedHeaders: ['set-cookie']}
 
 
 app.use(bodyParser.json())
@@ -40,7 +40,7 @@ app.delete('/api/signout',userRoutes.userSignout) // Sign out
 app.get('/api/locationsearch/:restaurantname', coreRoutes.searchLocation) //Search a location TODO: autofill search functionality
 app.get('/api/uncheckedreports', coreRoutes.getUncheckedReport) // Get ALL reports that are untrusted
 app.get('/api/location/:restaurantid', coreRoutes.getRestaurant) // Get a location by id
-app.get('/api/location', coreRoutes.getLocation) // Get ALL locations
+app.get('/api/location', auth.authenticateToken, coreRoutes.getLocation) // Get ALL locations
 app.get('/api/uncheckedreports/:reportid', coreRoutes.getUncheckedReportById) // Get a report that is untrusted
 app.post('/api/finalizedreports', coreRoutes.finalizeReport) // POST a report that is trusted
 app.get('/api/finalizedreports', coreRoutes.getFinalizedReport) // Get ALL reports that are trusted
