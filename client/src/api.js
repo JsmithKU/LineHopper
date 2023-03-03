@@ -89,8 +89,8 @@ class api {
     return res.status
   }
 
-  static approvereport(form) {
-    const res = axios.post(`${url}finalizedreports`, form, {
+  static approvereport(id) {
+    const res = axios.put(`${url}finalizedreports/${id}`, {
       headers: {
         'Content-Type': 'application/json'
       }

@@ -56,9 +56,8 @@ export default{
         try{
           //console.log(data[0])
           //console.log()
-          let data = await api.uncheckreportbyid(id)
-          api.approvereport(JSON.stringify(data[0]))
-          alert('ADDED ID: ' + id)
+          api.approvereport(id)
+          alert('APPROVED ID: ' + id)
         }
         catch(err){
           //this.error = "borked."

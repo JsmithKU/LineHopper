@@ -42,7 +42,7 @@ app.get('/api/uncheckedreports', coreRoutes.getUncheckedReport) // Get ALL repor
 app.get('/api/location/:restaurantid', coreRoutes.getRestaurant) // Get a location by id
 app.get('/api/location', auth.authenticateToken, coreRoutes.getLocation) // Get ALL locations
 app.get('/api/uncheckedreports/:reportid', coreRoutes.getUncheckedReportById) // Get a report that is untrusted
-app.post('/api/finalizedreports', coreRoutes.finalizeReport) // POST a report that is trusted
+app.put('/api/finalizedreports/:id', coreRoutes.finalizeReport) // POST a report that is trusted
 app.get('/api/finalizedreports', coreRoutes.getFinalizedReport) // Get ALL reports that are trusted
 app.get('/api/finalizedReports/:restaurantid', coreRoutes.getFinalizedReportById) // GET a report that is trusted
 app.post('/api/uncheckedreports', coreRoutes.createReport) // POST a report that is untrusted

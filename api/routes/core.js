@@ -144,7 +144,7 @@ const getUncheckedReportById = async(req, res) => {
 //Create a finalized report ( CLEAN THIS ) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 const finalizeReport = async(req, res) => {
 
-    const { reportid, restaurantid, cleanrank, busyrank, picture, submissiontime, userid } = req.body
+    const { reportid } = req.body
 
     // dbconnectorJs.pool.query(dbconnectorJs.reportTrust, [reportid, restaurantid, cleanrank, busyrank, picture, submissiontime, userid, "True"],
     //     (error, results) => {
@@ -158,7 +158,7 @@ const finalizeReport = async(req, res) => {
     try{
         const reportTrust = await dbconnectorJs.pool.query(
             dbconnectorJs.reportTrust, 
-            [reportid, restaurantid, cleanrank, busyrank, picture, submissiontime, userid, "True"]
+            [reportid]
         )
         if(reportTrust.rows.length === 0){
             res.json({nodata: "True"})

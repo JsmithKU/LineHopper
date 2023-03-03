@@ -60,8 +60,9 @@ select * from reports where reportid = $1
 `)
 
 let reportTrust = (`
-insert into reports(reportid, restaurantid, cleanrank, busyrank, picture, submissiontime, userid, trusted) 
-values ($1,$2,$3,$4,$5,$6,$7,$8)
+UPDATE reports
+SET(trusted) = ROW(true)
+WHERE reportid = $1;
 `)
 
 let reportTrustedGet = (`

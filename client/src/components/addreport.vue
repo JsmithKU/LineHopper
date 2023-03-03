@@ -56,7 +56,7 @@ export default {
       }
       this.$emit('submit-report', newReport)
       // reset report form
-      this.reportid = parseInt(Math.floor((Date.now() / 1000)) + '' + 1)
+      this.reportid = parseInt(Math.floor((Date.now() / 1000)) + Math.floor((Date.now() / 10000)) + Math.floor((Date.now() / 10000)) )
       this.restaurantid = this.rid
       this.cleanrank = ''
       this.busyrank = ''
