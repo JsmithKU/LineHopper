@@ -2,6 +2,7 @@
   <h1> {{msg}} </h1>
   <div class="container">
     <h2> Unchecked Reports </h2>
+    <h3> Token: {{ token }}</h3>
     <div class="report" v-for="ur in unReports.data" v-bind:key="ur.reportid">
       <p class="name">Name: {{ur.restaurantname}}</p>
       <p> Clean Rank: {{ur.cleanrank}}</p>
@@ -16,7 +17,7 @@
 
 <script>
 import api from '../api.js'
-
+let refresh = {}
 export default{
   name: 'adminPage',
   props: {
@@ -28,11 +29,16 @@ export default{
       unReports: [],
       error: '',
       deleted: '',
+      token: '',
+
     }
   },
   async created(){
     try{
-      this.unReports = await api.uncheckedreports()
+      refresh = await api.refresh()
+      this.userid = refresh.userid
+      this.token = refresh.token
+      this.unReports = await api.uncheckedreports(refresh.token)
     }catch(err){
       this.error = "borked."
     }
@@ -42,7 +48,7 @@ export default{
       if(ans == `rejected`){
         // Do Delete
         try{
-          this.deleted = await api.deleteunchecked(id)
+          this.deleted = await api.deleteunchecked(refresh.token,id)
           alert('REMOVED ID: ' + id)
         }
         catch(err){
@@ -55,8 +61,7 @@ export default{
         // Add to reports
         try{
           //console.log(data[0])
-          //console.log()
-          api.approvereport(id)
+          api.approvereport(refresh.token,id)
           alert('APPROVED ID: ' + id)
         }
         catch(err){
@@ -66,7 +71,7 @@ export default{
       }
       // another really dumb updater function 
       try{
-      this.unReports = await api.uncheckedreports()
+      this.unReports = await api.uncheckedreports(refresh.token)
       }catch(err){
       this.error = "borked."
       }

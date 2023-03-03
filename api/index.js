@@ -37,19 +37,19 @@ app.post('/api/login', userRoutes.userLogin) // post to login
 app.get('/api/refresh',userRoutes.userRefresh) // Reset Token for access from refresh token
 app.delete('/api/signout',userRoutes.userSignout) // Sign out
 // Core Routes
-app.get('/api/locationsearch/:restaurantname', coreRoutes.searchLocation) //Search a location TODO: autofill search functionality
-app.get('/api/uncheckedreports', coreRoutes.getUncheckedReport) // Get ALL reports that are untrusted
-app.get('/api/location/:restaurantid', coreRoutes.getRestaurant) // Get a location by id
+app.get('/api/locationsearch/:restaurantname', auth.authenticateToken, coreRoutes.searchLocation) //Search a location TODO: autofill search functionality
+app.get('/api/uncheckedreports', auth.authenticateToken, coreRoutes.getUncheckedReport) // Get ALL reports that are untrusted
+app.get('/api/location/:restaurantid', auth.authenticateToken, coreRoutes.getRestaurant) // Get a location by id
 app.get('/api/location', auth.authenticateToken, coreRoutes.getLocation) // Get ALL locations
-app.get('/api/uncheckedreports/:reportid', coreRoutes.getUncheckedReportById) // Get a report that is untrusted
-app.put('/api/finalizedreports/:id', coreRoutes.finalizeReport) // POST a report that is trusted
-app.get('/api/finalizedreports', coreRoutes.getFinalizedReport) // Get ALL reports that are trusted
-app.get('/api/finalizedReports/:restaurantid', coreRoutes.getFinalizedReportById) // GET a report that is trusted
-app.post('/api/uncheckedreports', coreRoutes.createReport) // POST a report that is untrusted
-app.delete('/api/uncheckedreports/:reportid', coreRoutes.deleteUncheckedReport) // DELETE a report that is untrusted
-app.get('/api/locationstats/:restaurantid', coreRoutes.getlocationstat) // Get a locations stats
-app.get('/api/locationlatest/:restaurantid', coreRoutes.getlocationlatest) // Get a locations latest report
-app.get('/api/locationdow/:restaurantid', coreRoutes.getlocationdowreport) // Get a locations stat by Day of Week
+app.get('/api/uncheckedreports/:reportid', auth.authenticateToken, coreRoutes.getUncheckedReportById) // Get a report that is untrusted
+app.put('/api/finalizedreports/:id', auth.authenticateToken, coreRoutes.finalizeReport) // POST a report that is trusted
+app.get('/api/finalizedreports', auth.authenticateToken, coreRoutes.getFinalizedReport) // Get ALL reports that are trusted
+app.get('/api/finalizedReports/:restaurantid',auth.authenticateToken, coreRoutes.getFinalizedReportById) // GET a report that is trusted
+app.post('/api/uncheckedreports',auth.authenticateToken, coreRoutes.createReport) // POST a report that is untrusted
+app.delete('/api/uncheckedreports/:reportid',auth.authenticateToken, coreRoutes.deleteUncheckedReport) // DELETE a report that is untrusted
+app.get('/api/locationstats/:restaurantid',auth.authenticateToken, coreRoutes.getlocationstat) // Get a locations stats
+app.get('/api/locationlatest/:restaurantid',auth.authenticateToken, coreRoutes.getlocationlatest) // Get a locations latest report
+app.get('/api/locationdow/:restaurantid',auth.authenticateToken, coreRoutes.getlocationdowreport) // Get a locations stat by Day of Week
 
 
 // Start Backend and console out

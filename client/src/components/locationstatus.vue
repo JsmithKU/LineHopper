@@ -38,7 +38,7 @@ export default{
   name: 'locationStatus',
   props:{
     rid: String,
-
+    token: String,
   },
   data(){
     return{
@@ -52,7 +52,7 @@ export default{
     try{
       // do stuff
       //this.status = await api.getlocationstat(this.rid)
-      this.latest = await api.getlocationlatest(this.rid)
+      this.latest = await api.getlocationlatest(this.token,this.rid)
       //this.dowreport = await api.getlocationdowreport(this.rid)
       if(this.status[0].cleanavg == 0){
         this.status[0].cleanavg = 0

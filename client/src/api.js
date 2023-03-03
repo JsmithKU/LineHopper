@@ -34,9 +34,11 @@ class api {
     // return it
     return dataPromise
   }
-  static getlocation(id) {
+  static getlocation(token,id) {
     // create a promise for the axios request
-    const promise = axios.get(`${url}location/${id}`)
+    const promise = axios.get(`${url}location/${id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
 
     // using .then, create a new promise which extracts the data
     const dataPromise = promise.then((response) => response.data)
@@ -54,18 +56,21 @@ class api {
     return dataPromise
   }
   // post content
-  static postreport(form) {
+  static postreport(token,form) {
     const res = axios.post(`${url}uncheckedreports`, form, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
       }
     })
     return res.data.data
   }
 
-  static uncheckedreports() {
+  static uncheckedreports(token) {
     // create a promise for the axios request
-    const promise = axios.get(`${url}uncheckedreports/`)
+    const promise = axios.get(`${url}uncheckedreports/`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
 
     // using .then, create a new promise which extracts the data
     const dataPromise = promise.then((response) => response.data)
@@ -74,9 +79,11 @@ class api {
     return dataPromise
   }
 
-  static uncheckreportbyid(id) {
+  static uncheckreportbyid(token,id) {
     // create a promise for the axios request
-    const promise = axios.get(`${url}uncheckedreports/${id}`)
+    const promise = axios.get(`${url}uncheckedreports/${id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
 
     // using .then, create a new promise which extracts the data
     const dataPromise = promise.then((response) => response.data)
@@ -84,23 +91,32 @@ class api {
     // return it
     return dataPromise
   }
-  static deleteunchecked(id) {
-    const res = axios.delete(`${url}uncheckedreports/${id}`)
+  static deleteunchecked(token,id) {
+    const res = axios.delete(`${url}uncheckedreports/${id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
     return res.status
   }
 
-  static approvereport(id) {
-    const res = axios.put(`${url}finalizedreports/${id}`, {
+  static approvereport(token, id) {
+    // ok. This is fixed, put requests are as follows: url, param, headers. Even if param is baked into url 
+    // you need the data even if empty.
+    const res = axios.put(`${url}finalizedreports/${id}`,{}, {
       headers: {
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${token}`
       }
     })
     return res.data
   }
 
-  static getlocationstat(id) {
+  static getlocationstat(token,id) {
     // create a promise for the axios request
-    const promise = axios.get(`${url}locationstats/${id}`)
+    const promise = axios.get(`${url}locationstats/`,{
+      params:{
+        id
+      },
+      headers: { Authorization: `Bearer ${token}` }
+    })
 
     // using .then, create a new promise which extracts the data
     const dataPromise = promise.then((response) => response.data)
@@ -109,9 +125,11 @@ class api {
     return dataPromise
   }
 
-  static getlocationlatest(id) {
+  static getlocationlatest(token,id) {
     // create a promise for the axios request
-    const promise = axios.get(`${url}locationlatest/${id}`)
+    const promise = axios.get(`${url}locationlatest/${id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
 
     // using .then, create a new promise which extracts the data
     const dataPromise = promise.then((response) => response.data)
@@ -120,9 +138,11 @@ class api {
     return dataPromise
   }
 
-  static getlocationdowreport(id) {
+  static getlocationdowreport(token,id) {
     // create a promise for the axios request
-    const promise = axios.get(`${url}locationdow/${id}`)
+    const promise = axios.get(`${url}locationdow/`, id,{
+      headers: { Authorization: `Bearer ${token}` }
+    })
 
     // using .then, create a new promise which extracts the data
     const dataPromise = promise.then((response) => response.data)

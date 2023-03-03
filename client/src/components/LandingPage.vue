@@ -8,7 +8,7 @@
       <p class="name">{{ l.restaurantname }}</p>
       <p>Address: {{ l.address }}</p>
       <p>Hours: {{ l.hoursopen }}</p>
-      <locationStat :rid="l.restaurantid"/>
+      <locationStat :rid="l.restaurantid" :token="token"/>
       <button class="btn-report" @click="toggleshowform()">
         Submit Report
       </button>
@@ -77,6 +77,7 @@ export default {
       error: "",
       showForm: false,
       userid: "",
+      token: "",
 
     };
   },
@@ -85,6 +86,7 @@ export default {
       refresh = await api.refresh()
       //console.log(access)
       this.userid = refresh.userid
+      this.token = refresh.token
       this.locations = await api.locations(refresh.token)
       //console.log(this.locations); // sanity check
 
@@ -100,7 +102,7 @@ export default {
   methods: {
     async onClick(id) {
       try {
-        this.slocation = await api.getlocation(id);//(access, id);
+        this.slocation = await api.getlocation(refresh.token,id);//(access, id);
       } catch (err) {
         this.error = "borked.";
       }
@@ -109,7 +111,7 @@ export default {
       try {
         let formdata = JSON.stringify(form);
         //console.log(formdata)
-        api.postreport(formdata);
+        api.postreport(refresh.token,formdata);
       } catch (err) {
         this.error = "borked.";
       }

@@ -71,7 +71,3 @@ export default {
 <style scoped>
 
 </style>
-<!-- 
-  Jake Smith
-
--->
