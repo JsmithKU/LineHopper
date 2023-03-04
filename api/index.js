@@ -36,6 +36,7 @@ app.get('/api/useraccount/:email', userRoutes.getUser) // Get a user account (by
 app.post('/api/login', userRoutes.userLogin) // post to login 
 app.get('/api/refresh', userRoutes.userRefresh) // Reset Token for access from refresh token
 app.delete('/api/signout', userRoutes.userSignout) // Sign out
+app.put('/api/useraccount/forgotpassword', userRoutes.forgotPassword) //Forgot password -- resets password to something new
     // Core Routes
 app.get('/api/locationsearch/:restaurantname', auth.authenticateToken, coreRoutes.searchLocation) //Search a location TODO: autofill search functionality
 app.get('/api/uncheckedreports', auth.authenticateToken, coreRoutes.getUncheckedReport) // Get ALL reports that are untrusted
@@ -49,8 +50,8 @@ app.post('/api/uncheckedreports', auth.authenticateToken, coreRoutes.createRepor
 app.delete('/api/uncheckedreports/:reportid', auth.authenticateToken, coreRoutes.deleteUncheckedReport) // DELETE a report that is untrusted
 app.get('/api/locationstats/:restaurantid', auth.authenticateToken, coreRoutes.getlocationstat) // Get a locations stats
 app.get('/api/locationlatest/:restaurantid', auth.authenticateToken, coreRoutes.getlocationlatest) // Get a locations latest report
-app.get('/api/locationdow/:restaurantid', auth.authenticateToken, coreRoutes.getlocationdowreport)
-app.put('/api/useraccount/forgotPassword', coreRoutes.forgotPassword) // Get a locations stat by Day of Week
+app.get('/api/locationdow/:restaurantid', auth.authenticateToken, coreRoutes.getlocationdowreport) // Get a locations stat by Day of Week
+
 
 
 // Start Backend and console out
