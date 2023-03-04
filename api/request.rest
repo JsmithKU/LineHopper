@@ -1,0 +1,44 @@
+PUT http://localhost:3000/api/useraccount/forgotPassword
+Content-Type: application/json
+
+{
+newPassword: "newpasswordtest",
+email: "test@user.com"
+
+
+
+}
+###
+
+
+POST http://localhost:3000/api/useraccount
+Content-Type: application/json 
+
+
+
+
+{
+  "email":"user@user.com",
+  "password":"user",
+  "role": "user"
+}
+
+###
+GET http://localhost:3000/api/useraccount/user@user.com
+Content-Type: application/json
+
+### Login
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{
+  "email": "user@user.com",
+  "password": "user"
+}
+### Refresh
+GET http://localhost:3000/api/refresh
+Content-Type: application/json
+
+###
+GET http://localhost:3000/api/location
+Content-Type: application/json
