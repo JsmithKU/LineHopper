@@ -20,26 +20,25 @@ const searchLocation = async(req, res) => {
 //Get a restaurant by it's id 
 const getRestaurant = async(req, res) => {
     const id = req.params.restaurantid
-    // dbconnectorJs.pool.query(dbconnectorJs.restaurantGET, [id], (error, results) => {
-    //     if (error) {
-    //         res.status(401).json({ error: error.message })
-    //     } else {
-    //         res.status(200).json(results.rows)
-    //     }
+        // dbconnectorJs.pool.query(dbconnectorJs.restaurantGET, [id], (error, results) => {
+        //     if (error) {
+        //         res.status(401).json({ error: error.message })
+        //     } else {
+        //         res.status(200).json(results.rows)
+        //     }
 
     // })
-    try{
+    try {
         const restaurantGet = await dbconnectorJs.pool.query(
-            dbconnectorJs.restaurantGET,
-            [id]
+            dbconnectorJs.restaurantGET, [id]
         )
-        if(restaurantGet.rows.length === 0){
-            res.json({nodata: "True"})
-        }else{
-            res.json({data: restaurantGet.rows[0]})
+        if (restaurantGet.rows.length === 0) {
+            res.json({ nodata: "True" })
+        } else {
+            res.json({ data: restaurantGet.rows[0] })
         }
-    }catch(error){
-        res.status(500).json({error: error.message})
+    } catch (error) {
+        res.status(500).json({ error: error.message })
     }
 }
 
@@ -74,16 +73,16 @@ const getLocation = async(req, res) => {
     //     }
     //     res.status(200).json(results.rows)
     // })
-    try{
+    try {
         const locationGet = await dbconnectorJs.pool.query(
             dbconnectorJs.locationGET
         )
-        if(locationGet.rows.length === 0){
-            res.json({nodata: "True"})
-        }else{
-            res.json({data: locationGet.rows})
+        if (locationGet.rows.length === 0) {
+            res.json({ nodata: "True" })
+        } else {
+            res.json({ data: locationGet.rows })
         }
-    }catch(error){
+    } catch (error) {
         res.status(500).json({ error: error.message })
     }
 
@@ -92,22 +91,21 @@ const getLocation = async(req, res) => {
 //Create a new report  ( CLEAN THIS ) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 const createReport = async(req, res) => {
     const { reportid, restaurantid, cleanrank, busyrank, picture, submissiontime, userid } = req.body
-    // dbconnectorJs.pool.query(dbconnectorJs.reportCreate, [reportid, restaurantid, cleanrank, busyrank, picture, submissiontime, userid, "False"],
-    //     (error, results) => {
-    //         if (!error) {
-    //             //Send results
-    //             res.status(201).json(results.rows)
-    //         } else {
-    //             res.status(401).json({ error: error.message })
-    //         }
-    //     })
-    try{
+        // dbconnectorJs.pool.query(dbconnectorJs.reportCreate, [reportid, restaurantid, cleanrank, busyrank, picture, submissiontime, userid, "False"],
+        //     (error, results) => {
+        //         if (!error) {
+        //             //Send results
+        //             res.status(201).json(results.rows)
+        //         } else {
+        //             res.status(401).json({ error: error.message })
+        //         }
+        //     })
+    try {
         const reportCreate = await dbconnectorJs.pool.query(
-            dbconnectorJs.reportCreate, 
-            [reportid, restaurantid, cleanrank, busyrank, picture, submissiontime, userid, "False"]
+            dbconnectorJs.reportCreate, [reportid, restaurantid, cleanrank, busyrank, picture, submissiontime, userid, "False"]
         )
         res.json(reportCreate.rows)
-    }catch(error){
+    } catch (error) {
         res.status(500).json({ error: error.message })
     }
 }
@@ -115,27 +113,26 @@ const createReport = async(req, res) => {
 //Get an unchecked report by id
 const getUncheckedReportById = async(req, res) => {
     const id = req.params.reportid
-    // dbconnectorJs.pool.query(dbconnectorJs.reportGetOne, [id],
-    //     (error, results) => {
-    //         if (!error) {
-    //             //Send results
-    //             res.status(200).json(results.rows)
-    //         }
-    //         if (error) {
-    //             res.status(401).json({ error: error.message })
-    //         }
-    //     })
-    try{
+        // dbconnectorJs.pool.query(dbconnectorJs.reportGetOne, [id],
+        //     (error, results) => {
+        //         if (!error) {
+        //             //Send results
+        //             res.status(200).json(results.rows)
+        //         }
+        //         if (error) {
+        //             res.status(401).json({ error: error.message })
+        //         }
+        //     })
+    try {
         const uncheckedReportID = await dbconnectorJs.pool.query(
-            dbconnectorJs.reportGetOne, 
-            [id]
+            dbconnectorJs.reportGetOne, [id]
         )
-        if(uncheckedReportID.rows.length === 0){
-            res.json({nodata: "True"})
-        }else{
-            res.json({data: uncheckedReportID.rows[0]})
+        if (uncheckedReportID.rows.length === 0) {
+            res.json({ nodata: "True" })
+        } else {
+            res.json({ data: uncheckedReportID.rows[0] })
         }
-    }catch(error){
+    } catch (error) {
         res.status(500).json({ error: error.message })
     }
 
@@ -146,17 +143,16 @@ const finalizeReport = async(req, res) => {
 
     const reportid = req.params.id
 
-    try{
+    try {
         const reportTrust = await dbconnectorJs.pool.query(
-            dbconnectorJs.reportTrust, 
-            [reportid]
+            dbconnectorJs.reportTrust, [reportid]
         )
-        if(reportTrust.rows.length === 0){
-            res.json({nodata: "True"})
-        }else{
-            res.json({data: reportTrust.rows[0]})
+        if (reportTrust.rows.length === 0) {
+            res.json({ nodata: "True" })
+        } else {
+            res.json({ data: reportTrust.rows[0] })
         }
-    }catch(error){
+    } catch (error) {
         res.status(500).json({ error: error.message })
     }
 
@@ -173,16 +169,16 @@ const getFinalizedReport = async(req, res) => {
     //         res.status(401).json({ error: error.message })
     //     }
     // })
-    try{
+    try {
         const reportTrustedGet = await dbconnectorJs.pool.query(
             dbconnectorJs.reportTrustedGet
         )
-        if(reportTrustedGet.rows.length === 0){
-            res.json({nodata: "True"})
-        }else{
-            res.json({data: reportTrustedGet.rows})
+        if (reportTrustedGet.rows.length === 0) {
+            res.json({ nodata: "True" })
+        } else {
+            res.json({ data: reportTrustedGet.rows })
         }
-    }catch(error){
+    } catch (error) {
         res.status(500).json({ error: error.message })
     }
 
@@ -191,25 +187,24 @@ const getFinalizedReport = async(req, res) => {
 //Get a finalized reports by restaurant id
 const getFinalizedReportById = async(req, res) => {
     const id = req.params.restaurantid
-    // dbconnectorJs.pool.query(dbconnectorJs.reportGetOne, [id], (error, results) => {
-    //     if (!error) {
-    //         res.status(200).json(results.rows)
-    //     }
-    //     if (error) {
-    //         res.status(401).json({ error: error.message })
-    //     }
-    // })
-    try{
+        // dbconnectorJs.pool.query(dbconnectorJs.reportGetOne, [id], (error, results) => {
+        //     if (!error) {
+        //         res.status(200).json(results.rows)
+        //     }
+        //     if (error) {
+        //         res.status(401).json({ error: error.message })
+        //     }
+        // })
+    try {
         const reportGetOne = await dbconnectorJs.pool.query(
-            dbconnectorJs.reportGetOne, 
-            [id]
+            dbconnectorJs.reportGetOne, [id]
         )
-        if(reportGetOne.rows.length === 0){
-            res.json({nodata: "True"})
-        }else{
-            res.json({data: reportGetOne.rows[0]})
+        if (reportGetOne.rows.length === 0) {
+            res.json({ nodata: "True" })
+        } else {
+            res.json({ data: reportGetOne.rows[0] })
         }
-    }catch(error){
+    } catch (error) {
         res.status(500).json({ error: error.message })
     }
 
@@ -218,22 +213,21 @@ const getFinalizedReportById = async(req, res) => {
 //DELETE an unchecked report
 const deleteUncheckedReport = async(req, res) => {
     const id = req.params.reportid
-    // dbconnectorJs.pool.query(dbconnectorJs.untrustedreportDelete, [id], (error, results) => {
-    //     if (!error) {
-    //         res.status(200).json(`Report number ${id} deleted`)
-    //     }
-    //     if (error) {
-    //         res.status(401).json({ error: error.message })
-    //     }
-    // })
-    try{
+        // dbconnectorJs.pool.query(dbconnectorJs.untrustedreportDelete, [id], (error, results) => {
+        //     if (!error) {
+        //         res.status(200).json(`Report number ${id} deleted`)
+        //     }
+        //     if (error) {
+        //         res.status(401).json({ error: error.message })
+        //     }
+        // })
+    try {
         const untrustedreportDelete = await dbconnectorJs.pool.query(
-            dbconnectorJs.untrustedreportDelete,
-            [id]
+            dbconnectorJs.untrustedreportDelete, [id]
         )
         res.status(200).json(`Report number ${id} deleted`)
 
-    }catch(error){
+    } catch (error) {
         res.status(500).json({ error: error.message })
     }
 
@@ -242,19 +236,19 @@ const deleteUncheckedReport = async(req, res) => {
 // get locations avg stats UPDATED THIS FOR ALG !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 const getlocationstat = async(req, res) => {
     const id = req.params.restaurantid
-    // dbconnectorJs.pool.query(dbconnectorJs.getStat, [id], (error, results) => {
-    //     if (!error) {
-    //         res.status(200).json(results.rows)
-    //     }
-    //     if (error) {
-    //         res.status(401).json({ error: error.message })
-    //     }
-    // })
-    try{
+        // dbconnectorJs.pool.query(dbconnectorJs.getStat, [id], (error, results) => {
+        //     if (!error) {
+        //         res.status(200).json(results.rows)
+        //     }
+        //     if (error) {
+        //         res.status(401).json({ error: error.message })
+        //     }
+        // })
+    try {
         // Empty 
         //...
         // 200 Res 
-    }catch(error){
+    } catch (error) {
         res.status(500).json({ error: error.message })
     }
 
@@ -263,25 +257,24 @@ const getlocationstat = async(req, res) => {
 //Get a finalized latest report UPDATED THIS FOR ALG !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 const getlocationlatest = async(req, res) => {
     const id = req.params.restaurantid
-    // dbconnectorJs.pool.query(dbconnectorJs.getLatest, [id], (error, results) => {
-    //     if (!error) {
-    //         res.status(200).json(results.rows)
-    //     }
-    //     if (error) {
-    //         res.status(401).json({ error: error.message })
-    //     }
-    // })
-    try{
-        const reportlastest= await dbconnectorJs.pool.query(
-            dbconnectorJs.getLatest, 
-            [id]
+        // dbconnectorJs.pool.query(dbconnectorJs.getLatest, [id], (error, results) => {
+        //     if (!error) {
+        //         res.status(200).json(results.rows)
+        //     }
+        //     if (error) {
+        //         res.status(401).json({ error: error.message })
+        //     }
+        // })
+    try {
+        const reportlastest = await dbconnectorJs.pool.query(
+            dbconnectorJs.getLatest, [id]
         )
-        if(reportlastest.rows.length === 0){
-            res.json({nodata: "True"})
-        }else{
-            res.json({data: reportlastest.rows[0]})
+        if (reportlastest.rows.length === 0) {
+            res.json({ nodata: "True" })
+        } else {
+            res.json({ data: reportlastest.rows[0] })
         }
-    }catch(error){
+    } catch (error) {
         res.status(500).json({ error: error.message })
     }
 
@@ -290,23 +283,26 @@ const getlocationlatest = async(req, res) => {
 //Get a finalized dow report  UPDATED THIS FOR ALG !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 const getlocationdowreport = (req, res) => {
     const id = req.params.restaurantid
-    // dbconnectorJs.pool.query(dbconnectorJs.getdow, [id], (error, results) => {
-    //     if (!error) {
-    //         res.status(200).json(results.rows)
-    //     }
-    //     if (error) {
-    //         res.status(401).json({ error: error.message })
-    //     }
-    // })
-    try{
+        // dbconnectorJs.pool.query(dbconnectorJs.getdow, [id], (error, results) => {
+        //     if (!error) {
+        //         res.status(200).json(results.rows)
+        //     }
+        //     if (error) {
+        //         res.status(401).json({ error: error.message })
+        //     }
+        // })
+    try {
         // Empty 
         //...
         // 200 Res 
-    }catch(error){
+    } catch (error) {
         res.status(500).json({ error: error.message })
     }
 
 }
+
+
+
 
 module.exports = {
 
