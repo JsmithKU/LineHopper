@@ -21,18 +21,7 @@
     </div>
   </div>
   <div class="container">
-    <h2>Search:</h2>
-    <form autocomplete="off">
-      <div class="autocomplete" style="width: 300px">
-        <input
-          id="myInput"
-          type="text"
-          name="locationSearch"
-          placeholder="Restaurant..."
-        />
-      </div>
-      <input type="submit" v-show="true" />
-    </form>
+    <search />
   </div>
   <div class="container">
     <h2>Locations</h2>
@@ -61,9 +50,11 @@
 import api from "../api.js";
 import addreport from "./addreport.vue";
 import locationStat from './locationstatus.vue';
+import search from './search.vue';
+
 let refresh = {}
 export default {
-  components: { addreport, locationStat },
+  components: { addreport, locationStat, search},
   name: "LandingPage",
   props: {
     msg: String,
