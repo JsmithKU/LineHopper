@@ -1,5 +1,19 @@
+PUT http://localhost:3000/api/useraccount/forgotPassword
+Content-Type: application/json
+
+{
+"newPassword": "newpasswordtest",
+"email": "test@test.com"
+
+}
+###
+
+
 POST http://localhost:3000/api/useraccount
 Content-Type: application/json 
+
+
+
 
 {
   "email":"user@user.com",

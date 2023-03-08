@@ -29,7 +29,10 @@ const pool = new Pool(containerPool) // poolConfig)
 // SQL 
 
 //Forgot password 
-let forgotPassword = (`UPDATE useraccount set (password) = ROW($1) where email = $2`);
+let forgotPassword = (`
+UPDATE useraccount 
+set(password) = ROW($1)
+where email = $2`);
 
 //Confirm email
 let confirmEmail = (``);

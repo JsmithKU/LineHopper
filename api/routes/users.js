@@ -104,6 +104,25 @@ const userSignout = (req, res) => {
     res.status(401).json({ error: error.message }) // Forbidden
   }
 }
+const forgotPassword = async(req, res) => {
+  //Email is paramaterized for put request -- user specific
+  const { newPassword, email } = req.body
+  const hashedPassword = await bc.hash(newPassword, 10)
+  // const newPassword = req.body.newPassword
+  // const email = req.body.email
+  try {
+      const updatePassword = await dbconnectorJs.pool.query(
+          dbconnectorJs.forgotPassword,
+          [hashedPassword, email]
+      )
+      res.json({ account: updatePassword.rows })
+
+  } catch (error) {
+
+      res.status(500).json({ error: error.message })
+
+  }
+}
 
 module.exports = {
 
@@ -112,5 +131,5 @@ module.exports = {
   userLogin,
   userRefresh,
   userSignout,
-
+  forgotPassword
 }
