@@ -184,6 +184,16 @@ class api {
     const dataPromise = promise.then((response) => response.data)
     return dataPromise
   }
+  static forgot(password, email) {
+    const promise = axios.put(`${url}useraccount/forgotpassword`,{
+      password, email
+    }, {
+      
+    })
+    const dataPromise = promise.then((response) => response.data)
+    return dataPromise
+
+  }
 }
 
 

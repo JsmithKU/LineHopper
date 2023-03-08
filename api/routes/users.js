@@ -6,25 +6,6 @@ const jwt = require('jsonwebtoken') // Jwt library
 // Util helpers 
 const jwtTokens = require('../utils/jwt-helper.js')
 
-const forgotPassword = async(req, res) => {
-    //Email is paramaterized for put request -- user specific
-    const { newPassword, email } = req.body
-    const hashedPassword = await bc.hash(newPassword, 10)
-        // const newPassword = req.body.newPassword
-        // const email = req.body.email
-    try {
-        const updatePassword = await dbconnectorJs.pool.query(
-            dbconnectorJs.forgotPassword, [hashedPassword, email]
-        )
-        res.json({ account: updatePassword.rows })
-
-    } catch (error) {
-
-        res.status(500).json({ error: error.message })
-
-    }
-}
-
 //Post a new user
 const createUser = async(req, res) => {
     try {
@@ -122,8 +103,8 @@ const userSignout = (req, res) => {
 }
 const forgotPassword = async(req, res) => {
   //Email is paramaterized for put request -- user specific
-  const { newPassword, email } = req.body
-  const hashedPassword = await bc.hash(newPassword, 10)
+  const { password, email } = req.body
+  const hashedPassword = await bc.hash(password, 10)
   // const newPassword = req.body.newPassword
   // const email = req.body.email
   try {

@@ -32,7 +32,7 @@ app.get('/api', (req, res) => {
 // auth: auth.authenticateToken,
 // User Routes 
 app.post('/api/useraccount', userRoutes.createUser) // POST a user account
-app.get('/api/useraccount/:email', userRoutes.getUser) // Get a user account (by Email)
+app.get('/api/useraccount/:email', userRoutes.getUser) // Get a user account (by Email) 
 app.post('/api/login', userRoutes.userLogin) // post to login 
 app.get('/api/refresh', userRoutes.userRefresh) // Reset Token for access from refresh token
 app.delete('/api/signout', userRoutes.userSignout) // Sign out

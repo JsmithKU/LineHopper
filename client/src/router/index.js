@@ -6,6 +6,7 @@ import UserHome from '../views/home.vue'
 import trustedView from '../views/trustedView.vue'
 import userSignup from '../views/userSignup.vue'
 import userLogin from '../views/userLogin.vue'
+import forgotUser from '../views/forgotUser.vue'
 
 // Paths 
 const routes = [
@@ -13,6 +14,11 @@ const routes = [
     path: '/',
     name: 'UserHome',
     component: UserHome,
+  },
+  {
+    path: '/trust',
+    name: 'trustedView',
+    component: trustedView,
   },
   {
     path: '/login',
@@ -25,11 +31,10 @@ const routes = [
     component: userSignup,
   },
   {
-    path: '/trust',
-    name: 'trustedView',
-    component: trustedView,
+    path: '/forgot',
+    name: 'forgotpass',
+    component: forgotUser,
   }
-
 ]
 
 const router = createRouter({

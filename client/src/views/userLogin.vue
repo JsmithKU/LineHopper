@@ -29,6 +29,8 @@
     </div>
   </form>
   <router-link to="/signup"> Need An Account? Click Here. </router-link>
+  <br>
+  <router-link to="/forgot"> Forgot Password? Click Here. </router-link>
 </template>
 
 <script>

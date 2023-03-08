@@ -6,15 +6,15 @@
     <label for="email"><b>Email</b></label>
     <input type="text" placeholder="Email:" v-model="email" name="email" required>
 
-    <label for="password"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" v-model="password"  name="password" required>
-    <label for = "verifyPassword"><b>Verify Password</b></label>
-    <input type = "password" placeholder = "Verify password" v-model="password2" name = "verifyPassword" required>
+    <label for="password"><b>New Password</b></label>
+    <input type="password" placeholder="Enter New Password" v-model="password"  name="password" required>
+    <label for = "verifyPassword"><b>Verify New Password</b></label>
+    <input type = "password" placeholder = "Verify New Password" v-model="password2" name ="verifyPassword" required>
 
-    <button type="submit">Create account</button>
+    <button type="submit">Reset account</button>
   </div>
 </form>
-<router-link to="/login">Have An Account? Click Here. </router-link>
+<router-link to="/login">Remember Login? Click Here. </router-link>
 
 
   
@@ -39,18 +39,18 @@ return {
 async handleSubmit(){
   try{
     if(this.password == this.password2){
-      await api.signUp(
-      this.email,
-      this.password
+      await api.forgot(
+      this.password,
+      this.email
       )
       this.$router.push('/login')
     }else{
       alert("Passwords Do Not Match.")
     }
-      
   }
 catch(error){
-  this.error = "Invalid Email. Please try again. Have An account?"
+  this.error = "Invalid credentials. Please try again"
+
   }
  }
 //client src api.js -- write out post /api/useraccount
