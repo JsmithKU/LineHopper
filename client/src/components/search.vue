@@ -1,50 +1,72 @@
 <template>
-      <h2>Search:</h2>
-    <form autocomplete="off">
-      <div class="autocomplete" style="width: 300px">
-        <input
-          id="myInput"
-          type="text"
-          name="locationSearch"
-          placeholder="Restaurant..."
-          @input="showResults(this.value)"
-        />
+  <h2>Search:</h2>
+  <form autocomplete="off">
+    <div class="autocomplete" style="width: 300px">
+      <input
+        v-model="searchValue"
+        id="myInput"
+        type="text"
+        name="locationSearch"
+        placeholder="Restaurant..."
+        @input="
+          showResults(searchValue);
+          updateList();
+        "
+      />
+    </div>
+    <input type="submit" v-show="true" />
+    <ul>
+      <div
+        id="searchResult"
+        v-for="location in locations"
+        v-bind:key="location"
+      >
+        <li class="searchItem" @onClick="ShowRestaurant(location)">{{ location }}</li>
       </div>
-      <input type="submit" v-show="true" />
-      <ul>
-        <div id="searchResult" v-for="location in locations" v-bind:key="location.restaurantid">
-          <li> {{ location.restaurantname }}</li>
-        </div>
-      </ul>
-    </form>
+    </ul>
+  </form>
 </template>
 
 <script>
 export default {
   name: "search",
-  props:{
+  props: {
     searchList: String,
-
   },
-  data(){
-    return{
+  data() {
+    return {
+      tmplocals: [],
       locations: [],
-    }
+    };
   },
-  async created(){
-    console.log(this.searchList)
+  async created() {
     // this.searchList.data.forEach((element) =>
     //   this.locations.push(element)
     // );
     // console.log(this.searchList)
     // console.log(this.locations)
   },
-  methods:{
-    async showResults(values){
-      return values
-    }
-  }
-}
+  methods: {
+    updateList() {
+      this.tmplocals = JSON.parse(this.searchList);
+      let listitems = this.tmplocals.data;
+      return listitems;
+    },
+    showResults(values) {
+      let list = this.updateList();
+      let restNames = [];
+      if (values == "") {
+        this.locations = []
+      } else {
+        list.forEach((element) => restNames.push(element.restaurantname));
+        this.locations = restNames.filter(
+          (location) =>
+            location.toLowerCase().indexOf(values.toLowerCase()) > -1
+        );
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>

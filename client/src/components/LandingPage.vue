@@ -59,12 +59,13 @@ export default {
   props: {
     msg: String,
   },
+  emits: ['showRestaurant'],
   data() {
     
     return {
       locations: [],
       slocation: [],
-      locationSearch: [],
+      locationSearch: "",
       error: "",
       showForm: false,
       userid: "",
@@ -85,7 +86,6 @@ export default {
       //   this.locationSearch.push(element)
       // );
       this.locationSearch = JSON.stringify(this.locations).toString()
-      console.log(`String: ${this.locationSearch}`)
     } catch (err) {
       this.error = "borked.";
     }
