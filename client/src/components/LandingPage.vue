@@ -80,12 +80,12 @@ export default {
       this.token = refresh.token
       this.locations = await api.locations(refresh.token)
       //console.log(this.locations); // sanity check
-
       //this.locationSearch = await api.locationarray()
-      this.locations.data.forEach((element) =>
-        this.locationSearch.push(element)
-      );
-      console.log(this.locationSearch)
+      // this.locations.data.forEach((element) =>
+      //   this.locationSearch.push(element)
+      // );
+      this.locationSearch = JSON.stringify(this.locations).toString()
+      console.log(`String: ${this.locationSearch}`)
     } catch (err) {
       this.error = "borked.";
     }

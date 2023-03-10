@@ -23,7 +23,7 @@
 export default {
   name: "search",
   props:{
-    searchList: Object,
+    searchList: String,
 
   },
   data(){
