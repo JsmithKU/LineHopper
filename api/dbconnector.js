@@ -45,6 +45,11 @@ from location as l
   inner join restaurant as r using(restaurantid)
 where restaurantid = $1
 `)
+let restaurantNameGET = (`
+select restaurantid 
+from restaurant
+where restaurantname = $1
+`)
 
 let untrustedreportGET = (`
 SELECT ur.reportid, ur.restaurantid, ur.cleanrank, ur.busyrank, ur.picture, r.restaurantname, ur.submissiontime, ur.userid 
@@ -180,5 +185,6 @@ module.exports = {
     searchLocation,
     forgotPassword,
     confirmEmail,
-
+    restaurantNameGET,
+    
 }

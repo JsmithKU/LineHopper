@@ -21,7 +21,10 @@
     </div>
   </div>
   <div class="container">
-    <search :searchList="locationSearch"/>
+    <search 
+    :searchList="locationSearch" 
+    @openRestaurant="showRestaurant"
+    />
   </div>
   <div class="container">
     <h2>Locations</h2>
@@ -59,7 +62,6 @@ export default {
   props: {
     msg: String,
   },
-  emits: ['showRestaurant'],
   data() {
     
     return {
@@ -91,6 +93,17 @@ export default {
     }
   },
   methods: {
+    async showRestaurant(id){
+      console.log("ShowRestaurant")
+      try {
+        let getid = await api.getlocationid(refresh.token,id)
+        console.log(getid)
+        console.log(getid.restaurantid)
+        this.slocation = await api.getlocation(refresh.token,getid.data.restaurantid);//(access, id);
+      } catch (err) {
+        this.error = "borked.";
+      }
+    },
     async onClick(id) {
       try {
         this.slocation = await api.getlocation(refresh.token,id);//(access, id);

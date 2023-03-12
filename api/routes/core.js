@@ -42,6 +42,22 @@ const getRestaurant = async(req, res) => {
     }
 }
 
+const getRestaurantbyName = async(req, res) => {
+    const id = req.params.restaurantname
+    try {
+        const restaurantGet = await dbconnectorJs.pool.query(
+            dbconnectorJs.restaurantNameGET, [id]
+        )
+        if (restaurantGet.rows.length === 0) {
+            res.json({ nodata: "True" })
+        } else {
+            res.json({ data: restaurantGet.rows[0] })
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}
+
 //Get ALL unchecked reports 
 const getUncheckedReport = async(req, res) => {
     // dbconnectorJs.pool.query(dbconnectorJs.untrustedreportGET, (error, results) => {
@@ -319,4 +335,6 @@ module.exports = {
     getlocationlatest,
     getlocationdowreport,
     searchLocation,
+    getRestaurantbyName,
+    
 }

@@ -46,6 +46,18 @@ class api {
     // return it
     return dataPromise
   }
+  static getlocationid(token,id) {
+    // create a promise for the axios request
+    const promise = axios.get(`${url}location/name/${id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+
+    // using .then, create a new promise which extracts the data
+    const dataPromise = promise.then((response) => response.data)
+
+    // return it
+    return dataPromise
+  }
   static locationarray() {
     const promise = axios.get(`${url}location/`)
 

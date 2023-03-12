@@ -7,27 +7,27 @@
         id="myInput"
         type="text"
         name="locationSearch"
-        placeholder="Restaurant..."
+        placeholder="Restaurant Name..."
         @input="
           showResults(searchValue);
           updateList();
         "
       />
     </div>
-    <input type="submit" v-show="true" />
     <ul>
       <div
         id="searchResult"
         v-for="location in locations"
         v-bind:key="location"
       >
-        <li class="searchItem" @onClick="ShowRestaurant(location)">{{ location }}</li>
+        <li class="searchItem"><button @click.prevent="ShowRestaurant(location)">{{ location }}</button></li>
       </div>
     </ul>
   </form>
 </template>
 
 <script>
+//import api from '../api.js'
 export default {
   name: "search",
   props: {
@@ -47,6 +47,14 @@ export default {
     // console.log(this.locations)
   },
   methods: {
+    ShowRestaurant(restName){
+      console.log(restName)
+      //let restID = api.getlocationid(this.token,restName)
+      this.$emit('openRestaurant', restName)
+      this.locations = []
+      document.getElementById('myInput').value = ''
+
+    },
     updateList() {
       this.tmplocals = JSON.parse(this.searchList);
       let listitems = this.tmplocals.data;

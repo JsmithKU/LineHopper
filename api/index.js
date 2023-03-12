@@ -51,6 +51,8 @@ app.delete('/api/uncheckedreports/:reportid', auth.authenticateToken, coreRoutes
 app.get('/api/locationstats/:restaurantid', auth.authenticateToken, coreRoutes.getlocationstat) // Get a locations stats
 app.get('/api/locationlatest/:restaurantid', auth.authenticateToken, coreRoutes.getlocationlatest) // Get a locations latest report
 app.get('/api/locationdow/:restaurantid', auth.authenticateToken, coreRoutes.getlocationdowreport)
+app.get('/api/location/name/:restaurantname', auth.authenticateToken,coreRoutes.getRestaurantbyName)
+
 
 
 // Start Backend and console out
