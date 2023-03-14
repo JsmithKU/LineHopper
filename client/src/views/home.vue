@@ -1,27 +1,45 @@
 <template>
   <LandingPage msg="Prototype UI"/>
-  <router-link to="/trust"> Trusted View </router-link>
+  <router-link v-show="showTrust" to="/trust"> Trusted View </router-link>
   <button @click="signout() ">Sign-Out</button>
 </template>
 
 <script>
 import LandingPage from '../components/LandingPage.vue'
 import api from '../api.js'
-
+let refresh = {}
 export default{
   name: 'UserHome',
   components: {
     LandingPage,
 
   },
+  data(){
+    return{
+      role: "",
+      showTrust: false,
+    }
+  },
   async created(){
     try{
-        await api.refresh()
+        refresh = await api.refresh()
         //this.$_userid = await api.getemail(this.$_useremail)
 
       }catch(err){
         this.$router.push('/login')
-        this.error = "HUH"
+        this.error = "No login."
+      }
+      try{
+        //console.log(`Token: ${refresh.token}`)
+        //console.log(`Userid: ${refresh.userid}`)  
+        let roleRes = await api.role(refresh.token, refresh.userid)
+        this.role = roleRes.role[0].role // Clean up in return type row = row[0]
+        if(this.role == "trusted"){
+          this.showTrust = true
+        }
+        //console.log(roleRes.role[0].role)
+      }catch(error){
+        console.log(`Error with: ${error}`)
       }
   },
   methods: {

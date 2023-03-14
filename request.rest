@@ -40,3 +40,13 @@ Content-Type: application/json
 ###
 GET http://localhost:3000/api/location
 Content-Type: application/json
+
+###
+GET http://localhost:3000/api/userrole 
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI3YmFlZGM0Yy0zNTQ5LTRkOGItYWJhOS1jNWZhYzEzMGI1MzIiLCJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpYXQiOjE2Nzg4MzMyOTEsImV4cCI6MTY3ODgzNDE5MX0.OkV5T-aEA-UtZ0z0Ipe78bP5YIZLJj9sWFxzvNZV1CU
+
+{
+  "userid": "7baedc4c-3549-4d8b-aba9-c5fac130b532"
+}
+###

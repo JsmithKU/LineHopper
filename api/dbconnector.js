@@ -167,6 +167,9 @@ let getUser = `select * from useraccount where email = $1`;
 
 let searchLocation = `select restaurantname, restaurantid from restaurant where restaurantname = $1`;
 
+let checkrole = `select role from useraccount where userid = $1`;
+
+
 module.exports = {
     pool,
     getStat,
@@ -186,5 +189,6 @@ module.exports = {
     forgotPassword,
     confirmEmail,
     restaurantNameGET,
+    checkrole,
     
 }
