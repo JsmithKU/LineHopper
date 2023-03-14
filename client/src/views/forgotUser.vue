@@ -58,3 +58,6 @@ catch(error){
 }
  }
 </script>
+<style scoped>
+
+</style>
