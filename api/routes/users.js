@@ -120,6 +120,18 @@ const forgotPassword = async(req, res) => {
 
   }
 }
+const roleCheck = async(req,res) =>{
+    const userid = req.params.userid 
+    try{
+        const role = await dbconnectorJs.pool.query(
+            dbconnectorJs.checkrole,
+            [userid]
+        )
+        res.json({role: role.rows})
+    }catch (error){
+        res.status(500).json({Error: error.message})
+    }
+}
 
 module.exports = {
 
@@ -128,5 +140,7 @@ module.exports = {
   userLogin,
   userRefresh,
   userSignout,
-  forgotPassword
+  forgotPassword,
+  roleCheck,
+
 }

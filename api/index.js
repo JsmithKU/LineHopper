@@ -37,7 +37,9 @@ app.post('/api/login', userRoutes.userLogin) // post to login
 app.get('/api/refresh', userRoutes.userRefresh) // Reset Token for access from refresh token
 app.delete('/api/signout', userRoutes.userSignout) // Sign out
 app.put('/api/useraccount/forgotpassword', userRoutes.forgotPassword) //Forgot password -- resets password to something new
-    // Core Routes
+// User Routes with Auth 
+app.get('/api/userrole/:userid', auth.authenticateToken, userRoutes.roleCheck) // Get user status for role 
+// Core Routes
 app.get('/api/locationsearch/:restaurantname', auth.authenticateToken, coreRoutes.searchLocation) //Search a location TODO: autofill search functionality
 app.get('/api/uncheckedreports', auth.authenticateToken, coreRoutes.getUncheckedReport) // Get ALL reports that are untrusted
 app.get('/api/location/:restaurantid', auth.authenticateToken, coreRoutes.getRestaurant) // Get a location by id

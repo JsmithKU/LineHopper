@@ -206,6 +206,13 @@ class api {
     return dataPromise
 
   }
+  static role(token, userid){
+    const promise = axios.get(`${url}userrole/${userid}`,{
+    headers: { Authorization: `Bearer ${token}` }
+    })
+    const dataPromise = promise.then((response) => response.data)
+    return dataPromise
+  }
 }
 
 
