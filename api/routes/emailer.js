@@ -1,14 +1,15 @@
 const mailjet = require('node-mailjet')
+/// FOR TESTING EMAILS ONLY 
+
 
 const mj = mailjet.apiConnect(
-  process.env.MJ_APIKEY_PUBLIC,
-  process.env.MJ_APIKEY_PRIVATE
+  // process.env.MJ_APIKEY_PUBLIC,
+  // process.env.MJ_APIKEY_PRIVATE
 )
 
 
-
 function sendEmail(emailto, code){
-  const request = mj.post('send', { version: 'v3.1' }).request({
+  mj.post('send', { version: 'v3.1' }).request({
     Messages: [
       {
         From: {
@@ -17,27 +18,21 @@ function sendEmail(emailto, code){
         },
         To: [
           {
-            Email: emailto,
+            Email: `${emailto}`,
             Name: 'You',
           },
         ],
-        Subject: 'LineHopper Verify',
+        Subject: 'LineHopper Verify (CSC355 Project)',
         TextPart: 'Greetings from LH',
         HTMLPart:
           `<h3>Dear User, Your Code: ${code}</h3><br />`,
       },
     ],
-  })
-  request
-    .then(result => {
-      console.log("Server Sending Email: " + result.statusCode)
+  }).then(result => {
+      console.log(result.body)
     })
     .catch(err => {
       console.log(err.statusCode)
     })
 }
-
-export default{
-  sendEmail,
-  
-}
+sendEmail('emailhere', 102933)

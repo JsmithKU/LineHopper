@@ -2,9 +2,45 @@
 const dbconnectorJs = require('../dbconnector.js')
 const bc = require('bcrypt') // Hashing Library
 const jwt = require('jsonwebtoken') // Jwt library
-
+const mailjet = require('node-mailjet')
 // Util helpers 
 const jwtTokens = require('../utils/jwt-helper.js')
+//const emailer = require('./emailer.js')
+
+const mj = mailjet.apiConnect(
+    // process.env.MJ_APIKEY_PUBLIC,
+    // process.env.MJ_APIKEY_PRIVATE
+    '6c9ea700e37a55dbbeb6346560d06b49',
+    '9964dd6e37b655df814b213403bf5dd8'
+)
+
+function sendEmail(emailto, code){
+    mj.post('send', { version: 'v3.1' }).request({
+      Messages: [
+        {
+          From: {
+            Email: 'noreply@linehopperku.com',
+            Name: 'LineHopper(csc355)',
+          },
+          To: [
+            {
+              Email: `${emailto}`,
+              Name: 'You',
+            },
+          ],
+          Subject: 'LineHopper Verify (CSC355 Project)',
+          TextPart: 'Greetings from LH',
+          HTMLPart:
+            `<h3>Dear User, Your Code: ${code}</h3><br />`,
+        },
+      ],
+    }).then(result => {
+        console.log(result.body)
+      })
+      .catch(err => {
+        console.log(err.statusCode)
+      })
+  }
 
 //Post a new user
 const createUser = async(req, res) => {
@@ -14,7 +50,10 @@ const createUser = async(req, res) => {
         const createdUser = await dbconnectorJs.pool.query(
             dbconnectorJs.createUser, [email, hashedPassword, role] // Data from post (Removed User id and replaced with autogen uuid check ./db/dump.sql for more info)
         )
+        //emailer.sendEmail(email, role) //role is code currently
+        sendEmail(email,role)
         res.json({ useraccount: createdUser.rows[0] }) // returns user data on creation ( this should not be given back (contains hash pretty sure) )
+    
     } catch (error) {
         res.status(500).json({ error: error.message })
     }
