@@ -20,11 +20,11 @@ where monthcount > 5;
 
 SELECT cron.schedule (
 '15 0 1 1-12 *',
-INSERT INTO avgarchive (restaurantid, monthclean, monthbusy)
-SELECT restaurantid, cleanavg, busyavg
+INSERT INTO avgarchive (restaurantid, monthcount, monthclean, monthbusy)
+SELECT restaurantid, 1, cleanavg, busyavg
 FROM restaurant;
 )
-
+--
 --(consider changing "archid" from "bigint" to "serial" for incrementing id value)
 --(make "monthcount" a default value of '1')
 
