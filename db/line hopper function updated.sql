@@ -1,5 +1,5 @@
 --Send the subquery (of ONE restaurantid) to a function.
--Iterate through IDs one at a time (make a for loop and iterate based on the max number of restaurants)
+--Iterate through IDs one at a time (make a for loop and iterate based on the max number of restaurants)
 
 
 WITH max_month AS (
