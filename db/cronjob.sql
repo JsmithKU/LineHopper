@@ -6,6 +6,7 @@ UPDATE avgarchive
 set monthcount = monthcount + 1
 SELECT monthcount + 1;
 )
+--Might have to rewrite as "set monthcount = row(monthcount + 1)"
 
 --Delete data with month value > 5:
 
