@@ -30,7 +30,8 @@ FROM restaurant;
 
 --Delete data from reports table once a month:
 
-SELECT cron.schedule (
-'20 0 1 1-12 *',
-DELETE FROM reports
-)
+--SELECT cron.schedule (
+--'20 0 1 1-12 *',
+--DELETE FROM reports
+--)
+--NOT NEEDED (will use timestamps to indicate which reports are deleted)
