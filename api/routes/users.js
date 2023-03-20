@@ -45,13 +45,13 @@ function sendEmail(emailto, code){
 //Post a new user
 const createUser = async(req, res) => {
     try {
-        const { email, password, role } = req.body
+        const { email, password, usercode } = req.body
         const hashedPassword = await bc.hash(password, 10)
         const createdUser = await dbconnectorJs.pool.query(
-            dbconnectorJs.createUser, [email, hashedPassword, role] // Data from post (Removed User id and replaced with autogen uuid check ./db/dump.sql for more info)
+            dbconnectorJs.createUser, [email, hashedPassword, usercode] // Data from post (Removed User id and replaced with autogen uuid check ./db/dump.sql for more info)
         )
         //emailer.sendEmail(email, role) //role is code currently
-        sendEmail(email,role)
+        sendEmail(email,usercode)
         res.json({ useraccount: createdUser.rows[0] }) // returns user data on creation ( this should not be given back (contains hash pretty sure) )
     
     } catch (error) {
@@ -85,6 +85,7 @@ const getUser = async(req, res) => { // authenticateToken, async (req,res)=>{
 // Login (post)
 const userLogin = async(req, res) => {
     try {
+
         const { email, password } = req.body
         const users = await dbconnectorJs.pool.query(
             dbconnectorJs.getUser, [email]
@@ -105,7 +106,12 @@ const userLogin = async(req, res) => {
             }) // set cookie
             // return tokens and info
         const user = users.rows[0]
-        res.json({ tokens: tokens, uuid: user.userid })
+        if(user.role == 'user'){
+            res.json({ tokens: tokens, uuid: user.userid })
+        }
+        else{
+            throw new Error('Account Not Confirmed.')
+        }
     } catch (error) {
         res.status(401).json({ error: error.message }) // Forbidden Bad login 
     }
@@ -165,6 +171,19 @@ const roleCheck = async(req,res) =>{
         const role = await dbconnectorJs.pool.query(
             dbconnectorJs.checkrole,
             [userid]
+        )
+        res.json({role: role.rows})
+    }catch (error){
+        res.status(500).json({Error: error.message})
+    }
+}
+
+const codeCheck = async(req,res) =>{
+    const usercode = req.params.usercode
+    try{
+        const role = await dbconnectorJs.pool.query(
+            dbconnectorJs.codecompare,
+            [usercode]
         )
         res.json({role: role.rows})
     }catch (error){

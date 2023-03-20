@@ -38,7 +38,8 @@ CREATE TABLE public.useraccount(
     userid uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
     email CHARACTER VARYING UNIQUE,
     password CHARACTER VARYING,
-    role CHARACTER VARYING
+    role CHARACTER VARYING,
+    usercode CHARACTER VARYING
 );
 
 --

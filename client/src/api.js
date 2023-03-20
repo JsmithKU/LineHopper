@@ -163,11 +163,11 @@ class api {
     return dataPromise
   }
   static signUp(email, password) {
-    const role = Math.floor(100000 + Math.random() * 900000)
+    const usercode = Math.floor(100000 + Math.random() * 900000)
     const promise = axios.post(`${url}useraccount`, {
       email,
       password,
-      role
+      usercode
     })
     const dataPromise = promise.then((response) => response.data)
     return dataPromise

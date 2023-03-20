@@ -161,7 +161,7 @@ where dowtime = to_char(CURRENT_TIMESTAMP, 'ID') AND
       restaurantid = $1;
 `;
 
-let createUser = `insert into useraccount (email, password, role) values ($1,$2,$3) `;
+let createUser = `insert into useraccount (email, password, usercode) values ($1,$2,$3) `;
 
 let getUser = `select * from useraccount where email = $1`;
 
@@ -169,6 +169,13 @@ let searchLocation = `select restaurantname, restaurantid from restaurant where 
 
 let checkrole = `select role from useraccount where userid = $1`;
 
+let codecompare = 'select usercode from useraccount where email = $1';
+
+let updaterole = (`
+UPDATE useraccount
+SET(role) = ROW('user')
+WHERE email = $1;
+`)
 
 module.exports = {
     pool,
@@ -190,5 +197,7 @@ module.exports = {
     confirmEmail,
     restaurantNameGET,
     checkrole,
+    codecompare,
+    updaterole,
     
 }
