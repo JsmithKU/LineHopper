@@ -10,19 +10,19 @@ WITH max_month AS (
 )
 INSERT INTO weightedavg (restaurantid, weightedclean, weightedbusy)
 select restaurantid,
-	case WHEN long_month = 1 then [schema name].sort_clean_one(restaurantid)
-	WHEN long_month = 2 then [schema name].sort_clean_two(restaurantid)
-	WHEN long_month = 3 then [schema name].sort_clean_three(restaurantid)
-	WHEN long_month = 4 then [schema name].sort_clean_four(restaurantid)
-	WHEN long_month = 5 then [schema name].sort_clean_five(restaurantid)
+	case WHEN long_month = 1 then public.sort_clean_one(restaurantid)
+	WHEN long_month = 2 then public.sort_clean_two(restaurantid)
+	WHEN long_month = 3 then public.sort_clean_three(restaurantid)
+	WHEN long_month = 4 then public.sort_clean_four(restaurantid)
+	WHEN long_month = 5 then public.sort_clean_five(restaurantid)
 	ELSE 0
 	END as weighted_clean,
 
-	case WHEN long_month = 1 then [schema name].sort_busy_one(restaurantid)
-	WHEN long_month = 2 then [schema name].sort_busy_two(restaurantid)
-	WHEN long_month = 3 then [schema name].sort_busy_three(restaurantid)
-	WHEN long_month = 4 then [schema name].sort_busy_four(restaurantid)
-	WHEN long_month = 5 then [schema name].sort_busy_five(restaurantid)
+	case WHEN long_month = 1 then public.sort_busy_one(restaurantid)
+	WHEN long_month = 2 then public.sort_busy_two(restaurantid)
+	WHEN long_month = 3 then public.sort_busy_three(restaurantid)
+	WHEN long_month = 4 then public.sort_busy_four(restaurantid)
+	WHEN long_month = 5 then public.sort_busy_five(restaurantid)
 	ELSE 0
 	END as weighted_busy
 from max_month
