@@ -8,6 +8,7 @@ WITH max_month AS (
 	group by restaurantid
 	order by restaurantid
 )
+INSERT INTO weightedavg (restaurantid, weightedclean, weightedbusy)
 select restaurantid,
 	case WHEN long_month = 1 then [schema name].sort_clean_one(restaurantid)
 	WHEN long_month = 2 then [schema name].sort_clean_two(restaurantid)
