@@ -106,10 +106,12 @@ RETURNS trigger LANGUAGE plpgsql as $$
 DECLARE
     resid bigint;
 BEGIN 
-    UPDATE restaurant
-    SET cleanavg = 1,
-        busyavg = 1
-    WHERE restaurant.restaurantid = resid;
+    resid := TG_ARGV[0]::bigint;
+    RAISE NOTICE 'restaurantid %', resid;
+    -- UPDATE restaurant
+    -- SET cleanavg = 1,
+    --     busyavg = 1
+    -- WHERE restaurant.restaurantid = resid;
     return NEW;
 END;
 $$;
