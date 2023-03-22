@@ -161,3 +161,40 @@ INSERT INTO public.restaurant (restaurantid, restaurantname, cleanavg, busyavg, 
 INSERT INTO public.location (locationid, restaurantid, address, openhour, closehour) VALUES (1, 1, '123 street A', '06:00:00', '22:00:00');
 INSERT INTO public.location (locationid, restaurantid, address, openhour, closehour) VALUES (2, 2, '321 street B', '10:00:00', '23:00:00');
 
+--one month
+INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (1, 1, 1, 2.54, 3.98);
+INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (2, 2, 1, 1.22, 4.32);
+--ID 1 averages: Clean: 2.54 Busy: 3.98
+--ID 2 averages: Clean: 1.22 Busy: 4.32
+--two months
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (1, 1, 1, 4.87, 3.45);
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (2, 1, 2, 3.74, 2.98);
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (3, 2, 1, 1.48, 4.21);
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (4, 2, 2, 3.55, 2.78);
+--ID 1 averages: Clean: 4.4484 Busy: 3.2949
+--ID 2 averages: Clean: 2.1631 Busy: 3.7381
+--three months
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (1, 1, 1, 2.85, 4.43);
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (2, 1, 2, 4.63, 3.56);
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (3, 1, 3, 3.18, 2.53);
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (4, 2, 1, 3.62, 3.11);
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (5, 2, 2, 2.93, 4.03);
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (6, 2, 3, 3.17, 3.98);
+--ID 1 averages: Clean: 3.3445 Busy: 3.9275 
+--ID 2 averages: Clean: 3.38 Busy: 3.4705
+--four months
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (1, 1, 1, 1.46, 4.68);
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (2, 1, 2, 4.12, 3.58);
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (3, 1, 3, 3.87, 2.45);
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (4, 1, 4, 4.65, 4.27);
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (5, 2, 1, 3.49, 2.68);
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (6, 2, 2, 2.52, 3.24);
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (7, 2, 3, 4.41, 4.52);
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (8, 2, 4, 3.27, 4.89);
+--ID 1 averages: Clean: 2.779 Busy: 3.995
+--ID 2 averages: Clean: 3.326 Busy: 3.2345
+--five months
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (9, 1, 5, 2.36, 1.99);
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (10, 2, 5, 1.23, 4.99);
+--ID 1 averages: Clean: 2.9835 Busy: 3.84
+--ID 2 averages: Clean: 3.202 Busy: 3.4605
