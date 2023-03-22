@@ -10,11 +10,11 @@ WITH max_month AS (
 )
 INSERT INTO weightedavg (restaurantid, weightedclean, weightedbusy)
 select restaurantid,
-	case WHEN long_month = 1 then public.sort_clean_one(restaurantid)
-	WHEN long_month = 2 then public.sort_clean_two(restaurantid)
-	WHEN long_month = 3 then public.sort_clean_three(restaurantid)
-	WHEN long_month = 4 then public.sort_clean_four(restaurantid)
-	WHEN long_month = 5 then public.sort_clean_five(restaurantid)
+	case WHEN long_month = 1 then public.sort_clean_1(restaurantid)
+	WHEN long_month = 2 then public.sort_clean_2(restaurantid)
+	WHEN long_month = 3 then public.sort_clean_3(restaurantid)
+	WHEN long_month = 4 then public.sort_clean_4(restaurantid)
+	WHEN long_month = 5 then public.sort_clean_5(restaurantid)
 	ELSE 0
 	END as weighted_clean,
 
@@ -67,8 +67,8 @@ BEGIN
 		ELSE 0
 		END as weighted
 		from avgarchive
-		group by monthcount
 		where restaurantid = restid
+	        group by monthcount, monthclean
 	) as weight (monthcount, weighted);
 	
 	return weighted_clean;
@@ -92,8 +92,8 @@ BEGIN
 		ELSE 0
 		END as weighted
 		from avgarchive
-		group by monthcount
-		where restaurantid = restid
+	        where restaurantid = restid
+		group by monthcount, monthclean
 	) as weight (monthcount, weighted);
 	
 	return weighted_clean;
@@ -118,8 +118,8 @@ BEGIN
 		ELSE 0
 		END as weighted
 		from avgarchive
-		group by monthcount
-		where restaurantid = restid
+	        where restaurantid = restid
+		group by monthcount, monthclean
 	) as weight (monthcount, weighted);
 	
 	return weighted_clean;
@@ -145,8 +145,8 @@ BEGIN
 		ELSE 0
 		END as weighted
 		from avgarchive
-		group by monthcount
-		where restaurantid = restid
+	        where restaurantid = restid
+		group by monthcount, monthclean
 	) as weight (monthcount, weighted);
 
 	return weighted_clean;
@@ -188,8 +188,8 @@ BEGIN
 		ELSE 0
 		END as weighted
 		from avgarchive
-		group by monthcount
-		where restaurantid = restid
+	        where restaurantid = restid
+		group by monthcount, monthbusy
 	) as weight (monthcount, weighted);
 
 	return weighted_busy;
@@ -213,8 +213,8 @@ BEGIN
 		ELSE 0
 		END as weighted
 		from avgarchive
-		group by monthcount
-		where restaurantid = restid
+	        where restaurantid = restid
+		group by monthcount, monthbusy
 	) as weight (monthcount, weighted);
 
 	return weighted_busy;
@@ -239,8 +239,8 @@ BEGIN
 		ELSE 0
 		END as weighted
 		from avgarchive
-		group by monthcount
-		where restaurantid = restid
+	        where restaurantid = restid
+		group by monthcount, monthbusy
 	) as weight (monthcount, weighted);
 
 	return weighted_busy;
@@ -265,8 +265,8 @@ BEGIN
 		ELSE 0
 		END as weighted
 		from avgarchive
-		group by monthcount
-		where restaurantid = restid
+	        where restaurantid = restid
+		group by monthcount, monthbusy
 	) as weight (monthcount, weighted);
 	
 	return weighted_busy;
