@@ -81,10 +81,7 @@ RETURNS decimal
 language plpgsql
 as $$
 BEGIN
-        select avg (cleanrank) as crank
-        from reports
-        where restaurantid = restid;
-        return crank; 
+    return (select avg(cleanrank) from reports where restaurantid = restid);
 END;
 $$;
 
@@ -93,10 +90,7 @@ RETURNS decimal
 language plpgsql
 as $$
 BEGIN
-        select avg (busyrank) as brank
-        from reports
-        where restaurantid = restid;
-        return brank;
+        return (select avg(busyrank) from reports where restaurantid = restid);
 END;
 $$;
 
@@ -106,12 +100,11 @@ RETURNS trigger LANGUAGE plpgsql as $$
 DECLARE
     resid bigint;
 BEGIN 
-    resid := TG_ARGV[0]::bigint;
-    RAISE NOTICE 'restaurantid %', resid;
-    -- UPDATE restaurant
-    -- SET cleanavg = 1,
-    --     busyavg = 1
-    -- WHERE restaurant.restaurantid = resid;
+    resid := new.restaurantid;
+    UPDATE restaurant
+    SET cleanavg = genericavgclean(resid),
+        busyavg = genericavgbusy(resid)
+    WHERE restaurant.restaurantid = resid;
     return NEW;
 END;
 $$;
@@ -121,7 +114,7 @@ CREATE TRIGGER avgrestaurant
     AFTER UPDATE
     ON reports
     FOR EACH ROW 
-    EXECUTE FUNCTION avgrestupdate(restuarantid);
+    EXECUTE FUNCTION avgrestupdate();
 
 
 -- Test data 
