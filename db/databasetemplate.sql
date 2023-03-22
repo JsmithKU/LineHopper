@@ -76,21 +76,56 @@ CREATE TABLE public.weightedavg (
 
 -- function avgRest Data 
 -- take the avg from all trusted reports for a resaurantid 
-create or replace FUNCTION genericavgclean (restid BIGINT)
+-- create or replace FUNCTION genericavgclean (restid BIGINT)
+-- RETURNS decimal
+-- language plpgsql
+-- as $$
+-- BEGIN
+--     return (select avg(cleanrank) from reports where restaurantid = restid);
+-- END;
+-- $$;
+
+-- create or replace FUNCTION genericavgbusy (restid BIGINT)
+-- RETURNS decimal
+-- language plpgsql
+-- as $$
+-- BEGIN
+--         return (select avg(busyrank) from reports where restaurantid = restid);
+-- END;
+-- $$;
+
+--genericavgclean rewrite
+
+create or replace FUNCTION genericavgclean(restid BIGINT)
 RETURNS decimal
 language plpgsql
 as $$
+declare
+    crank decimal;
 BEGIN
-    return (select avg(cleanrank) from reports where restaurantid = restid);
+
+        select avg (cleanrank)
+        into crank
+        from reports
+        where restaurantid = restid;
+        return crank; 
 END;
 $$;
+--genericavgbusy rewrite
 
-create or replace FUNCTION genericavgbusy (restid BIGINT)
+create or replace FUNCTION genericavgbusy(restid BIGINT)
 RETURNS decimal
 language plpgsql
 as $$
+declare
+    brank decimal;
 BEGIN
-        return (select avg(busyrank) from reports where restaurantid = restid);
+
+        select avg (busyrank)
+        into brank
+        from reports
+        where restaurantid = restid;
+        return brank;
 END;
 $$;
 
@@ -116,6 +151,9 @@ CREATE TRIGGER avgrestaurant
     FOR EACH ROW 
     EXECUTE FUNCTION avgrestupdate();
 
+
+-- Enable Trigger
+alter table reports enable trigger all; 
 
 -- Test data 
 INSERT INTO public.restaurant (restaurantid, restaurantname, cleanavg, busyavg, dateadded) VALUES (1, 'North Test Dining Hall', NULL, NULL, NULL);
