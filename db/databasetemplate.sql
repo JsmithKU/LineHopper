@@ -221,6 +221,59 @@ BEGIN
 END;
 $$;
 
+--Sort clean function 4
+create or replace FUNCTION sort_clean_4 (restid BIGINT)
+RETURNS decimal 
+language plpgsql
+as $$
+declare
+	weighted_clean decimal;
+BEGIN
+	select SUM (weighted)
+	into weighted_clean
+	from (select monthcount,
+		case WHEN monthcount = 1 then monthclean * (.5)
+		WHEN monthcount = 2 then monthclean * (.3)
+		WHEN monthcount = 3 then monthclean * (.15)
+		WHEN monthcount = 4 then monthclean * (.05)
+		ELSE 0
+		END as weighted
+		from avgarchive
+	        where restaurantid = restid
+		group by monthcount, monthclean
+	) as weight (monthcount, weighted);
+	
+	return weighted_clean;
+END;
+$$;
+
+--Sort clean function 5
+create or replace FUNCTION sort_clean_5 (restid BIGINT)
+RETURNS decimal 
+language plpgsql
+as $$
+declare
+	weighted_clean decimal;
+BEGIN
+	select SUM (weighted)
+	into weighted_clean
+	from (select monthcount,
+		case WHEN monthcount = 1 then monthclean * (.4)
+		WHEN monthcount = 2 then monthclean * (.3)
+		WHEN monthcount = 3 then monthclean * (.15)
+		WHEN monthcount = 4 then monthclean * (.1)
+		WHEN monthcount = 5 then monthclean * (.05)
+		ELSE 0
+		END as weighted
+		from avgarchive
+	        where restaurantid = restid
+		group by monthcount, monthclean
+	) as weight (monthcount, weighted);
+
+	return weighted_clean;
+END;
+$$;
+
 --Sort busy function 1
 create or replace FUNCTION sort_busy_1 (restid BIGINT)
 RETURNS decimal
@@ -284,7 +337,57 @@ BEGIN
 	return weighted_busy;
 END;
 $$;
+--Sort busy function 4
+create or replace FUNCTION sort_busy_4 (restid BIGINT)
+RETURNS decimal
+language plpgsql
+as $$
+declare
+	weighted_busy decimal;
+BEGIN
+	select SUM (weighted)
+	into weighted_busy
+	from (select monthcount,
+		case WHEN monthcount = 1 then monthbusy * (.5)
+		WHEN monthcount = 2 then monthbusy * (.3)
+		WHEN monthcount = 3 then monthbusy * (.15)
+		WHEN monthcount = 4 then monthbusy * (.05)
+		ELSE 0
+		END as weighted
+		from avgarchive
+	        where restaurantid = restid
+		group by monthcount, monthbusy
+	) as weight (monthcount, weighted);
 
+	return weighted_busy;
+END;
+$$;
+--Sort busy function 5
+create or replace FUNCTION sort_busy_5 (restid BIGINT)
+RETURNS decimal
+language plpgsql
+as $$
+declare
+	weighted_busy decimal;
+BEGIN
+	select SUM (weighted)
+	into weighted_busy
+	from (select monthcount,
+		case WHEN monthcount = 1 then monthbusy * (.4)
+		WHEN monthcount = 2 then monthbusy * (.3)
+		WHEN monthcount = 3 then monthbusy * (.15)
+		WHEN monthcount = 4 then monthbusy * (.10)
+		WHEN monthcount = 5 then monthbusy * (.05)
+		ELSE 0
+		END as weighted
+		from avgarchive
+	        where restaurantid = restid
+		group by monthcount, monthbusy
+	) as weight (monthcount, weighted);
+	
+	return weighted_busy;
+END;
+$$;
 -- Test data 
 INSERT INTO public.restaurant (restaurantid, restaurantname, cleanavg, busyavg, dateadded) VALUES (1, 'North Test Dining Hall', NULL, NULL, NULL);
 INSERT INTO public.restaurant (restaurantid, restaurantname, cleanavg, busyavg, dateadded) VALUES (2, 'South Test Dining Hall', NULL, NULL, NULL);
@@ -306,14 +409,31 @@ INSERT INTO public.location (locationid, restaurantid, address, openhour, closeh
 --ID 2 averages: Clean: 2.1631 Busy: 3.7381
 
 --three months
-INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (1, 1, 1, 2.85, 4.43);
-INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (2, 1, 2, 4.63, 3.56);
-INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (3, 1, 3, 3.18, 2.53);
-INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (4, 2, 1, 3.62, 3.11);
-INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (5, 2, 2, 2.93, 4.03);
-INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (6, 2, 3, 3.17, 3.98);
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (1, 1, 1, 2.85, 4.43);
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (2, 1, 2, 4.63, 3.56);
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (3, 1, 3, 3.18, 2.53);
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (4, 2, 1, 3.62, 3.11);
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (5, 2, 2, 2.93, 4.03);
+--INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (6, 2, 3, 3.17, 3.98);
 --ID 1 averages: Clean: 3.3445 Busy: 3.9275 
 --ID 2 averages: Clean: 3.38 Busy: 3.4705
+
+--four months
+INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (1, 1, 1, 1.46, 4.68);
+INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (2, 1, 2, 4.12, 3.58);
+INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (3, 1, 3, 3.87, 2.45);
+INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (4, 1, 4, 4.65, 4.27);
+INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (5, 2, 1, 3.49, 2.68);
+INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (6, 2, 2, 2.52, 3.24);
+INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (7, 2, 3, 4.41, 4.52);
+INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (8, 2, 4, 3.27, 4.89);
+--ID 1 averages: Clean: 2.779 Busy: 3.995
+--ID 2 averages: Clean: 3.326 Busy: 3.2345
+--five months
+INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (9, 1, 5, 2.36, 1.99);
+INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (10, 2, 5, 1.23, 4.99);
+--ID 1 averages: Clean: 2.9835 Busy: 3.84
+--ID 2 averages: Clean: 3.202 Busy: 3.4605
 
 WITH max_month AS (
 	select restaurantid, max(monthcount) as long_month
@@ -323,36 +443,49 @@ WITH max_month AS (
 )
 INSERT INTO weightedavg (restaurantid, weightedclean, weightedbusy)
 select restaurantid,
-	case WHEN long_month = 1 then public.sort_clean_1(restaurantid)
-	WHEN long_month = 2 then public.sort_clean_2(restaurantid)
-	WHEN long_month = 3 then public.sort_clean_3(restaurantid)
-	--WHEN long_month = 4 then public.sort_clean_4(restaurantid)
-	--WHEN long_month = 5 then public.sort_clean_5(restaurantid)
+	case WHEN long_month = 1 then ROUND(public.sort_clean_1(restaurantid), 2)
+	WHEN long_month = 2 then ROUND(public.sort_clean_2(restaurantid), 2)
+	WHEN long_month = 3 then ROUND(public.sort_clean_3(restaurantid), 2)
+	WHEN long_month = 4 then ROUND(public.sort_clean_4(restaurantid), 2)
+	WHEN long_month = 5 then ROUND(public.sort_clean_5(restaurantid), 2)
 	ELSE 0
 	END as weighted_clean,
 
-	case WHEN long_month = 1 then public.sort_busy_1(restaurantid)
-	WHEN long_month = 2 then public.sort_busy_2(restaurantid)
-	WHEN long_month = 3 then public.sort_busy_3(restaurantid)
-	--WHEN long_month = 4 then public.sort_busy_4(restaurantid)
-	--WHEN long_month = 5 then public.sort_busy_5(restaurantid)
+	case WHEN long_month = 1 then ROUND(public.sort_busy_1(restaurantid), 2)
+	WHEN long_month = 2 then ROUND(public.sort_busy_2(restaurantid), 2)
+	WHEN long_month = 3 then ROUND(public.sort_busy_3(restaurantid), 2)
+	WHEN long_month = 4 then ROUND(public.sort_busy_4(restaurantid), 2)
+	WHEN long_month = 5 then ROUND(public.sort_busy_5(restaurantid), 2)
 	ELSE 0
 	END as weighted_busy
 from max_month
 ;
---four months
---INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (1, 1, 1, 1.46, 4.68);
---INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (2, 1, 2, 4.12, 3.58);
---INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (3, 1, 3, 3.87, 2.45);
---INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (4, 1, 4, 4.65, 4.27);
---INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (5, 2, 1, 3.49, 2.68);
---INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (6, 2, 2, 2.52, 3.24);
---INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (7, 2, 3, 4.41, 4.52);
---INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (8, 2, 4, 3.27, 4.89);
---ID 1 averages: Clean: 2.779 Busy: 3.995
---ID 2 averages: Clean: 3.326 Busy: 3.2345
---five months
---INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (9, 1, 5, 2.36, 1.99);
---INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (10, 2, 5, 1.23, 4.99);
---ID 1 averages: Clean: 2.9835 Busy: 3.84
---ID 2 averages: Clean: 3.202 Busy: 3.4605
+
+--Cron start
+CREATE EXTENSION pg_cron;
+
+--Increment month value by 1:
+
+SELECT cron.schedule (
+'5 0 1 1-12 *', 
+$$UPDATE avgarchive
+set monthcount = monthcount + 1$$
+);
+--Might have to rewrite as "set monthcount = row(monthcount + 1)"
+
+--Delete data with month value > 5:
+
+SELECT cron.schedule (
+'10 0 1 1-12 *',
+$$DELETE FROM avgarchive
+where monthcount > 5$$
+);
+
+--Insert into archive table: 
+
+SELECT cron.schedule (
+'15 0 1 1-12 *',
+$$INSERT INTO avgarchive (restaurantid, monthcount, monthclean, monthbusy)
+SELECT restaurantid, 1, cleanavg, busyavg
+FROM restaurant$$
+);
