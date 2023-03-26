@@ -213,8 +213,6 @@ const emailcheck = async(req,res) =>{
 const codeCheck = async(req,res) =>{
     const usercode = req.params.usercode
     const useremail = req.params.useremail
-    console.log(usercode)
-    console.log(useremail)
     try{
         const truecode = await dbconnectorJs.pool.query(
             dbconnectorJs.codecompare,

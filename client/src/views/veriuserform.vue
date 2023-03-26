@@ -37,7 +37,6 @@ export default {
           const verifyrole = await api.verifyrole(this.email)
           if(verifyrole.role[0].role == null){
             // update role 
-            console.log('WTF')
             await api.updateuserrole(this.email, this.code)
 
           }
