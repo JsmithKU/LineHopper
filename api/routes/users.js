@@ -35,10 +35,11 @@ function sendEmail(emailto, code){
         },
       ],
     }).then(result => {
-        console.log(result.body)
+        //console.log(result.body) // Uncomment for dev checking email status (should be 200 if sent)
+
       })
       .catch(err => {
-        console.log(err.statusCode)
+        console.log(err.statusCode) // catch all error 
       })
   }
 
@@ -146,6 +147,20 @@ const userSignout = (req, res) => {
         res.status(401).json({ error: error.message }) // Forbidden
     }
 }
+
+//mailer code function
+// sendEmail(email,code)
+const emailcode = async(req, res) => {
+    const email = req.body
+    let codegen = Math.floor(100000 + Math.random() * 900000)
+    try{
+        
+        sendEmail(email, codegen)
+    } catch (error){
+        res.json({error: 'Unable To Send Email'}) // I do not know what would cause this other than sendEmail failing. 
+    }
+}
+
 const forgotPassword = async(req, res) => {
   //Email is paramaterized for put request -- user specific
   const { password, email } = req.body
@@ -178,14 +193,65 @@ const roleCheck = async(req,res) =>{
     }
 }
 
+const emailcheck = async(req,res) =>{
+    const {useremail} = req.body
+    try{
+        const user = await dbconnectorJs.pool.query(
+            dbconnectorJs.getUser,
+            [useremail]
+        )
+        if (user.rows.length === 0) { 
+            return res.status(401).json({ error: "Email is Invalid" }) 
+        }else{
+            res.json({verify: 'true'})
+        }
+    }catch (error){
+        res.status(500).json({Error: error.message})
+    }
+}
+
 const codeCheck = async(req,res) =>{
     const usercode = req.params.usercode
+    const useremail = req.params.useremail
+    console.log(usercode)
+    console.log(useremail)
+    try{
+        const truecode = await dbconnectorJs.pool.query(
+            dbconnectorJs.codecompare,
+            [useremail]
+        )
+        console.log(truecode.rows[0].usercode)
+        if(usercode == truecode.rows[0].usercode){
+            res.json({verify: 'true'})
+        }else{
+            res.json({verify: 'false'})
+        }
+    }catch (error){
+        res.status(500).json({Error: error.message})
+    }
+}
+
+const verifyroleCheck = async(req,res) =>{
+    const useremail = req.params.email
     try{
         const role = await dbconnectorJs.pool.query(
-            dbconnectorJs.codecompare,
-            [usercode]
+            dbconnectorJs.verifyrole,
+            [useremail]
         )
         res.json({role: role.rows})
+    }catch (error){
+        res.status(500).json({Error: error.message})
+    }
+}
+const updateroleuser = async(req,res) => {
+    const email = req.params.email
+    const code = req.params.code
+    try{
+        const update = await dbconnectorJs.pool.query(
+            dbconnectorJs.updaterole,
+            [email,code]
+        )
+        res.json({update: update.rows[0]})
     }catch (error){
         res.status(500).json({Error: error.message})
     }
@@ -200,5 +266,9 @@ module.exports = {
   userSignout,
   forgotPassword,
   roleCheck,
-
+  emailcode,
+  codeCheck,
+  emailcheck,
+  verifyroleCheck,
+  updateroleuser
 }

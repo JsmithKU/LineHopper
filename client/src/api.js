@@ -196,9 +196,11 @@ class api {
     const dataPromise = promise.then((response) => response.data)
     return dataPromise
   }
-  static forgot(password, email) {
+  // FORGOT NEEDS CODE 
+  static forgot(password, email){ //, usercode) {
+    //const verifycode = axios.get('')
     const promise = axios.put(`${url}useraccount/forgotpassword`,{
-      password, email
+      password, email 
     }, {
       
     })
@@ -209,6 +211,26 @@ class api {
   static role(token, userid){
     const promise = axios.get(`${url}userrole/${userid}`,{
     headers: { Authorization: `Bearer ${token}` }
+    })
+    const dataPromise = promise.then((response) => response.data)
+    return dataPromise
+  }
+  static codecheck(useremail,usercode){
+    const promise = axios.get(`${url}verify/${useremail}/${usercode}`,{
+    })
+    const dataPromise = promise.then((response) => response.data)
+    return dataPromise
+  }
+  static verifyrole(useremail){
+    const promise = axios.get(`${url}verifyrole/${useremail}`,{
+    })
+    const dataPromise = promise.then((response) => response.data)
+    return dataPromise
+  }
+  static updateuserrole(email, code){
+    const promise = axios.put(`${url}roleupdate/${email}/${code}`,{
+    },{
+
     })
     const dataPromise = promise.then((response) => response.data)
     return dataPromise

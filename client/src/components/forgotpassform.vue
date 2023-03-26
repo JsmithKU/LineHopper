@@ -1,10 +1,15 @@
 <template>
-  <!-- signup Form comp here -->
   <form @submit.prevent="handleSubmit" class = "signup">
   <div class="container">
     <h1>Reset Password</h1>
     <label for="email"><b>Email</b></label>
-    <input type="text" placeholder="Email:" v-model="email" name="email" required>
+    <input type="text" placeholder="Email" v-model="email" name="email" required>
+    <label for="code"><b>Code</b></label>
+    <input type="text" placeholder="Code" v-model="email" name="code" required>
+    <label for="password"><b>New Password</b></label>
+    <input type="password" placeholder="Enter New Password" v-model="password"  name="password" required>
+    <label for = "verifyPassword"><b>Verify New Password</b></label>
+    <input type = "password" placeholder = "Verify New Password" v-model="password2" name ="verifyPassword" required>
     <button type="submit">Reset account</button>
   </div>
 </form>
@@ -34,15 +39,16 @@ async handleSubmit(){
   try{
     // Need to send out email with code in order to get to the full version
     
-    // if(this.password == this.password2){
-    //   await api.forgot(
-    //   this.password,
-    //   this.email
-    //   )
-    //   this.$router.push('/login')
-    // }else{
-    //   alert("Passwords Do Not Match.")
-    // }
+    if(this.password == this.password2){
+      await api.forgot(
+      this.password,
+      this.email,
+      this.code
+      )
+      this.$router.push('/login')
+    }else{
+      alert("Passwords Do Not Match.")
+    }
   }
 catch(error){
   this.error = "Invalid credentials. Please try again"

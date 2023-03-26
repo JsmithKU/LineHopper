@@ -55,7 +55,8 @@ export default {
         if (this.password == this.password2) {
           if(this.validateEmail(this.email)){
             await api.signUp(this.email, this.password);
-          this.$router.push("/login");
+          let crypted = btoa(this.email)
+          this.$router.push(`/confirm/${crypted}`);
           }else{
             alert("Bad Email? Not KU Valid.")
           }

@@ -31,13 +31,9 @@ const pool = new Pool(containerPool) // poolConfig)
 //Forgot password 
 let forgotPassword = (`
 UPDATE useraccount 
-set(password) = ROW($1)
+set password = ROW($1),
+    usercode = null
 where email = $2`);
-
-//Confirm email
-let confirmEmail = (``);
-
-
 
 let restaurantGET = (`
 select l.restaurantid, l.address, r.restaurantname, r.cleanavg, r.busyavg 
@@ -168,13 +164,13 @@ let getUser = `select * from useraccount where email = $1`;
 let searchLocation = `select restaurantname, restaurantid from restaurant where restaurantname = $1`;
 
 let checkrole = `select role from useraccount where userid = $1`;
-
+let verifyrole = `select role from useraccount where email = $1`;
 let codecompare = 'select usercode from useraccount where email = $1';
 
 let updaterole = (`
 UPDATE useraccount
-SET(role) = ROW('user')
-WHERE email = $1;
+SET role = 'user'
+WHERE email = $1 AND usercode = $2;
 `)
 
 module.exports = {
@@ -194,10 +190,10 @@ module.exports = {
     getUser,
     searchLocation,
     forgotPassword,
-    confirmEmail,
     restaurantNameGET,
     checkrole,
     codecompare,
     updaterole,
+    verifyrole,
     
 }

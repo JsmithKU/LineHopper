@@ -7,7 +7,7 @@ import trustedView from '../views/trustedView.vue'
 import userSignup from '../views/userSignup.vue'
 import userLogin from '../views/userLogin.vue'
 import forgotUser from '../views/forgotUser.vue'
-
+import veriuserform from '../views/veriuserform.vue'
 // Paths 
 const routes = [
   {
@@ -34,6 +34,11 @@ const routes = [
     path: '/forgot',
     name: 'forgotpass',
     component: forgotUser,
+  },
+  {
+    path:'/confirm/:email',
+    name: 'veriuserform',
+    component: veriuserform, 
   }
 ]
 
