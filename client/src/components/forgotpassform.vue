@@ -2,8 +2,8 @@
   <form @submit.prevent="handleSubmit" class = "signup">
   <div class="container">
     <h1>Reset Password</h1>
-    <label for="email"><b>Email</b></label>
-    <input type="text" placeholder="Email" v-model="email" name="email" required>
+    <!-- <label for="email"><b>Email</b></label>
+    <input type="text" placeholder="Email" v-model="email" name="email" required> -->
     <label for="code"><b>Code</b></label>
     <input type="text" placeholder="Code" v-model="email" name="code" required>
     <label for="password"><b>New Password</b></label>
@@ -14,9 +14,6 @@
   </div>
 </form>
 <router-link to="/login">Remember Login? Click Here. </router-link>
-
-
-  
 </template>
 
 <style scoped>
@@ -30,7 +27,7 @@ export default{
   data(){
 return {
   email:'',
-  // password:'',
+  password:'',
   // password2:''
 }
   },
@@ -52,7 +49,6 @@ async handleSubmit(){
   }
 catch(error){
   this.error = "Invalid credentials. Please try again"
-
   }
  }
 //client src api.js -- write out post /api/useraccount

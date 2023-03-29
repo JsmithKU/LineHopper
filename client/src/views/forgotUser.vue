@@ -1,6 +1,5 @@
 <template>
-  <!-- signup Form comp here -->
-  <form @submit.prevent="handleSubmit" class = "signup">
+<form @submit.prevent="handleSubmit" class = "signup">
   <div class="container">
     <h1>Reset Password</h1>
     <label for="email"><b>Email</b></label>
@@ -9,19 +8,16 @@
   </div>
 </form>
 <router-link to="/login">Remember Login? Click Here. </router-link>
-
-
-  
 </template>
 
 <style scoped>
 </style>
 
 <script>
-//import api from '../api.js'
+import api from '../api.js'
 export default{
   
-  name: 'userSignup',
+  name: 'forgotUser',
   data(){
 return {
   email:'',
@@ -32,8 +28,14 @@ return {
   methods:{
 async handleSubmit(){
   try{
-    // Need to send out email with code in order to get to the full version
-    
+    // Check if email exists 
+    console.log('Button Pressed...')
+    const emailcheck = await api.verifyrole(this.email)
+    if(emailcheck.role[0].role != null){
+      
+    }else{
+      alert('Email does not exist. Please Sign-Up.')
+    }
     // if(this.password == this.password2){
     //   await api.forgot(
     //   this.password,

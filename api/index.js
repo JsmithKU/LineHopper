@@ -40,6 +40,7 @@ app.put('/api/useraccount/forgotpassword', userRoutes.forgotPassword) //Forgot p
 // User Routes with Auth 
 app.get('/api/userrole/:userid', auth.authenticateToken, userRoutes.roleCheck) // Get user status for role 
 // code check
+app.get('/api/check/:useremail',userRoutes.emailcheck)
 app.get('/api/verify/:useremail/:usercode',userRoutes.codeCheck)
 app.get('/api/verifyrole/:email',userRoutes.verifyroleCheck) // Get user status for role 
 app.put('/api/roleupdate/:email/:code', userRoutes.updateroleuser) // update role

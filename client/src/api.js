@@ -221,6 +221,12 @@ class api {
     const dataPromise = promise.then((response) => response.data)
     return dataPromise
   }
+  static emailcheck(useremail){
+    const promise = axios.get(`${url}check/${useremail}`,{
+    })
+    const dataPromise = promise.then((response) => response.data)
+    return dataPromise
+  }
   static verifyrole(useremail){
     const promise = axios.get(`${url}verifyrole/${useremail}`,{
     })

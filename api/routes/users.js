@@ -154,7 +154,8 @@ const emailcode = async(req, res) => {
     const email = req.body
     let codegen = Math.floor(100000 + Math.random() * 900000)
     try{
-        
+        console.log(email)
+        console.log("Trying to send mail...")
         sendEmail(email, codegen)
     } catch (error){
         res.json({error: 'Unable To Send Email'}) // I do not know what would cause this other than sendEmail failing. 
@@ -218,7 +219,7 @@ const codeCheck = async(req,res) =>{
             dbconnectorJs.codecompare,
             [useremail]
         )
-        console.log(truecode.rows[0].usercode)
+        //console.log(truecode.rows[0].usercode)
         if(usercode == truecode.rows[0].usercode){
             res.json({verify: 'true'})
         }else{
