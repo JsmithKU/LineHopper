@@ -1,12 +1,13 @@
 <template>
-<form @submit.prevent="handleSubmit" class = "signup">
+<form v-if="codeallow" @submit.prevent="handleSubmit" class = "signup">
   <div class="container">
     <h1>Reset Password</h1>
     <label for="email"><b>Email</b></label>
-    <input type="text" placeholder="Email:" v-model="email" name="email" required>
+    <input type="text" placeholder="Email" v-model="email" name="email" required>
     <button type="submit">Reset account</button>
   </div>
 </form>
+<forgotform v-else />
 <router-link to="/login">Remember Login? Click Here. </router-link>
 </template>
 
@@ -15,11 +16,14 @@
 
 <script>
 import api from '../api.js'
+import forgotform from '../components/forgotpassform.vue'
 export default{
+  components: { forgotform },
   
   name: 'forgotUser',
   data(){
 return {
+  codeallow: true,
   email:'',
   // password:'',
   // password2:''
@@ -29,10 +33,15 @@ return {
 async handleSubmit(){
   try{
     // Check if email exists 
-    console.log('Button Pressed...')
-    const emailcheck = await api.verifyrole(this.email)
-    if(emailcheck.role[0].role != null){
-      
+    const emailcheck = await api.emailcheck(this.email)
+    if(emailcheck.verify != null){
+      const sentemail = await api.emailcode(this.email)
+      if(sentemail.status == "true")
+      {
+        // push user 
+        console.log('sent mail.')
+        this.codeallow = !this.codeallow
+      }
     }else{
       alert('Email does not exist. Please Sign-Up.')
     }

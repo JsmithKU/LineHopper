@@ -197,10 +197,10 @@ class api {
     return dataPromise
   }
   // FORGOT NEEDS CODE 
-  static forgot(password, email){ //, usercode) {
+  static forgot(password, email, code){ //, usercode) {
     //const verifycode = axios.get('')
     const promise = axios.put(`${url}useraccount/forgotpassword`,{
-      password, email 
+      password, email, code
     }, {
       
     })
@@ -223,6 +223,12 @@ class api {
   }
   static emailcheck(useremail){
     const promise = axios.get(`${url}check/${useremail}`,{
+    })
+    const dataPromise = promise.then((response) => response.data)
+    return dataPromise
+  }
+  static emailcode(useremail){
+    const promise = axios.get(`${url}sender/${useremail}`,{
     })
     const dataPromise = promise.then((response) => response.data)
     return dataPromise

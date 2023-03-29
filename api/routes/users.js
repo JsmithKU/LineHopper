@@ -151,12 +151,16 @@ const userSignout = (req, res) => {
 //mailer code function
 // sendEmail(email,code)
 const emailcode = async(req, res) => {
-    const email = req.body
+    const email = req.params.email
     let codegen = Math.floor(100000 + Math.random() * 900000)
     try{
-        console.log(email)
-        console.log("Trying to send mail...")
+        console.log("Process: Trying to send mail...")
+        await dbconnectorJs.pool.query(
+            dbconnectorJs.updatecode,
+            [email, codegen]
+        )
         sendEmail(email, codegen)
+        res.json({"status": "true"})
     } catch (error){
         res.json({error: 'Unable To Send Email'}) // I do not know what would cause this other than sendEmail failing. 
     }
@@ -164,22 +168,29 @@ const emailcode = async(req, res) => {
 
 const forgotPassword = async(req, res) => {
   //Email is paramaterized for put request -- user specific
-  const { password, email } = req.body
+  const { password, email, code } = req.body
   const hashedPassword = await bc.hash(password, 10)
   // const newPassword = req.body.newPassword
   // const email = req.body.email
-  try {
-      const updatePassword = await dbconnectorJs.pool.query(
-          dbconnectorJs.forgotPassword,
-          [hashedPassword, email]
-      )
-      res.json({ account: updatePassword.rows })
-
-  } catch (error) {
-
-      res.status(500).json({ error: error.message })
-
+  try{
+    const checkcode1 = await dbconnectorJs.pool.query(
+        dbconnectorJs.codecompare,
+        [code]
+    )
+    if(code == checkcode1.rows[0].usercode){
+        const updatePassword = await dbconnectorJs.pool.query(
+            dbconnectorJs.forgotPassword,
+            [hashedPassword, email]
+        )
+        res.json({ account: updatePassword.rows })
+    }else{
+        throw new Error('Bad Code')
+    }
+  }catch(error)
+  {
+    res.status(500).json({ error: error.message })
   }
+  
 }
 const roleCheck = async(req,res) =>{
     const userid = req.params.userid 
@@ -195,11 +206,11 @@ const roleCheck = async(req,res) =>{
 }
 
 const emailcheck = async(req,res) =>{
-    const {useremail} = req.body
+    const email = req.params.email
     try{
         const user = await dbconnectorJs.pool.query(
             dbconnectorJs.getUser,
-            [useremail]
+            [email]
         )
         if (user.rows.length === 0) { 
             return res.status(401).json({ error: "Email is Invalid" }) 

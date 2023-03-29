@@ -22,7 +22,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/api/useraccount/user@user.com
+GET http://localhost:3000/api/check/jsmit665@live.kutztown.edu
 Content-Type: application/json
 
 ### Login

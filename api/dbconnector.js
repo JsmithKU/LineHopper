@@ -31,7 +31,7 @@ const pool = new Pool(containerPool) // poolConfig)
 //Forgot password 
 let forgotPassword = (`
 UPDATE useraccount 
-set password = ROW($1),
+set password = $1,
     usercode = null
 where email = $2`);
 
@@ -170,7 +170,12 @@ let codecompare = 'select usercode from useraccount where email = $1';
 let updaterole = (`
 UPDATE useraccount
 SET role = 'user'
-WHERE email = $1 AND usercode = $2;
+WHERE email = $1 AND usercode = $2
+`)
+let updatecode = (`
+UPDATE useraccount
+set usercode = $2
+where email = $1
 `)
 
 module.exports = {
@@ -195,5 +200,6 @@ module.exports = {
     codecompare,
     updaterole,
     verifyrole,
-    
+    updatecode,
+
 }

@@ -5,7 +5,7 @@
     <!-- <label for="email"><b>Email</b></label>
     <input type="text" placeholder="Email" v-model="email" name="email" required> -->
     <label for="code"><b>Code</b></label>
-    <input type="text" placeholder="Code" v-model="email" name="code" required>
+    <input type="text" placeholder="Code" v-model="code" name="code" required>
     <label for="password"><b>New Password</b></label>
     <input type="password" placeholder="Enter New Password" v-model="password"  name="password" required>
     <label for = "verifyPassword"><b>Verify New Password</b></label>
@@ -20,15 +20,16 @@
 </style>
 
 <script>
-//import api from '../api.js'
+import api from '../api.js'
 export default{
   
-  name: 'userSignup',
+  name: 'forgotForm',
   data(){
 return {
   email:'',
   password:'',
-  // password2:''
+  code: '',
+  password2:''
 }
   },
   methods:{
