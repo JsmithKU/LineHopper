@@ -53,8 +53,15 @@ export default {
   methods: {
     async handleSubmit() {
       try {
-        await api.login(this.email, this.password);
-        this.$router.push({ path: "/" }); //this.$router.push({name:'/', params: {useremail: this.email}})
+        const logmode = await api.login(this.email, this.password);
+        //console.log(logmode)
+        if(logmode.mode == "trusted"){
+          await api.emailcode(this.email)
+          this.$router.push(`/trustedconfirm/${logmode.uuid}`)
+        }else{
+          this.$router.push({ path: "/" })
+        }
+         //this.$router.push({name:'/', params: {useremail: this.email}})
       } catch (err) {
         if(err == "Account Not Confirmed."){
           alert('Account Not Confirmed.')

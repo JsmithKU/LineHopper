@@ -37,6 +37,9 @@ export default{
         if(this.role == "trusted"){
           this.showTrust = true
         }
+        if(this.role == null){
+          this.$route.push('/login')
+        }
         //console.log(roleRes.role[0].role)
       }catch(error){
         console.log(`Error with: ${error}`)

@@ -107,13 +107,19 @@ const userLogin = async(req, res) => {
             }) // set cookie
             // return tokens and info
         const user = users.rows[0]
+        // console.log(user)
+        // console.log(user.role)
         if(user.role == 'user'){
             res.json({ tokens: tokens, uuid: user.userid })
+        }
+        else if (user.role == 'trusted'){
+            res.json({tokens: tokens, uuid: user.userid, mode: 'trusted'})
         }
         else{
             throw new Error('Account Not Confirmed.')
         }
     } catch (error) {
+        console.log(error)
         res.status(401).json({ error: error.message }) // Forbidden Bad login 
     }
 }
@@ -244,6 +250,25 @@ const codeCheck = async(req,res) =>{
     }
 }
 
+const trustcodeCheck = async(req,res) =>{
+    const uuid = req.params.uuid
+    const usercode = req.params.usercode
+    try{
+        const truecode = await dbconnectorJs.pool.query(
+            dbconnectorJs.trustcompare,
+            [uuid]
+        )
+        //console.log(truecode.rows[0].usercode)
+        if(usercode == truecode.rows[0].usercode){
+            res.json({verify: 'true'})
+        }else{
+            res.json({verify: 'false'})
+        }
+    }catch (error){
+        res.status(500).json({Error: error.message})
+    }
+}
+
 const verifyroleCheck = async(req,res) =>{
     const useremail = req.params.email
     try{
@@ -283,5 +308,6 @@ module.exports = {
   codeCheck,
   emailcheck,
   verifyroleCheck,
-  updateroleuser
+  updateroleuser,
+  trustcodeCheck
 }

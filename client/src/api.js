@@ -221,6 +221,12 @@ class api {
     const dataPromise = promise.then((response) => response.data)
     return dataPromise
   }
+  static trustedcodecheck(uuid,usercode){
+    const promise = axios.get(`${url}verifytrusted/${uuid}/${usercode}`,{
+    })
+    const dataPromise = promise.then((response) => response.data)
+    return dataPromise
+  }
   static emailcheck(useremail){
     const promise = axios.get(`${url}check/${useremail}`,{
     })
@@ -246,6 +252,14 @@ class api {
     })
     const dataPromise = promise.then((response) => response.data)
     return dataPromise
+  }
+  static addlocation(form) {
+    const res = axios.post(`${url}location`, form, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    return res.data.data
   }
 }
 

@@ -166,7 +166,7 @@ let searchLocation = `select restaurantname, restaurantid from restaurant where 
 let checkrole = `select role from useraccount where userid = $1`;
 let verifyrole = `select role from useraccount where email = $1`;
 let codecompare = 'select usercode from useraccount where email = $1';
-
+let trustcompare = 'select usercode from useraccount where userid = $1';
 let updaterole = (`
 UPDATE useraccount
 SET role = 'user'
@@ -176,6 +176,15 @@ let updatecode = (`
 UPDATE useraccount
 set usercode = $2
 where email = $1
+`)
+
+let restaurantCreate = (`
+insert into restaurant(restaurantid, restaurantname) 
+values ($1,$2)
+`)
+let locationCreate = (`
+insert into location(locationid, restaurantid, address, openhour, closehour) 
+values ($1,$2,$3,$4,$5)
 `)
 
 module.exports = {
@@ -201,5 +210,8 @@ module.exports = {
     updaterole,
     verifyrole,
     updatecode,
+    trustcompare,
+    restaurantCreate,
+    locationCreate,
 
 }

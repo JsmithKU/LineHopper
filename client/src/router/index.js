@@ -8,12 +8,18 @@ import userSignup from '../views/userSignup.vue'
 import userLogin from '../views/userLogin.vue'
 import forgotUser from '../views/forgotUser.vue'
 import veriuserform from '../views/veriuserform.vue'
+import trustedconfirm from '../views/trustedconfirm.vue'
 // Paths 
 const routes = [
   {
     path: '/',
     name: 'UserHome',
     component: UserHome,
+  },
+  {
+    path: '/trustedconfirm/:uuid',
+    name: 'trustedConfirm',
+    component: trustedconfirm,
   },
   {
     path: '/trust',

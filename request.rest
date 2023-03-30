@@ -50,3 +50,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI3YmFlZ
   "userid": "7baedc4c-3549-4d8b-aba9-c5fac130b532"
 }
 ###
+
+POST http://localhost:3000/api/location
+Content-Type: application/json 
+{
+  "rid":1111,
+  "rname":"user"
+}
+
+###

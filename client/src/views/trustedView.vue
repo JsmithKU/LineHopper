@@ -1,18 +1,20 @@
 <template>
 <router-link to="/"> Normal View </router-link>
 <adminPage msg="Trusted View"/>
-
+<addlocation />
 </template>
 
 
 <script>
 import api from '../api.js'
 import adminPage from '../components/adminPage.vue'
+import addlocation from '../components/addlocation.vue'
 let refresh = []
 export default{
   name: 'trustedView',
   components: {
     adminPage, 
+    addlocation
   },
   async created(){
     try{
