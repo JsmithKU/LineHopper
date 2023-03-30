@@ -175,8 +175,11 @@ const forgotPassword = async(req, res) => {
   try{
     const checkcode1 = await dbconnectorJs.pool.query(
         dbconnectorJs.codecompare,
-        [code]
+        [email]
     )
+    // console.log(checkcode1.rows)
+    // console.log(checkcode1.rows[0])
+    
     if(code == checkcode1.rows[0].usercode){
         const updatePassword = await dbconnectorJs.pool.query(
             dbconnectorJs.forgotPassword,

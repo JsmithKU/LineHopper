@@ -2,6 +2,7 @@
   <form @submit.prevent="handleSubmit" class = "signup">
   <div class="container">
     <h1>Reset Password</h1>
+    <p> Check your email for your code. (It may be in your spam!)</p>
     <!-- <label for="email"><b>Email</b></label>
     <input type="text" placeholder="Email" v-model="email" name="email" required> -->
     <label for="code"><b>Code</b></label>
@@ -24,6 +25,9 @@ import api from '../api.js'
 export default{
   
   name: 'forgotForm',
+  props:{
+    linkemail: String,
+  },
   data(){
 return {
   email:'',
@@ -36,7 +40,7 @@ return {
 async handleSubmit(){
   try{
     // Need to send out email with code in order to get to the full version
-    
+    this.email = this.linkemail
     if(this.password == this.password2){
       await api.forgot(
       this.password,

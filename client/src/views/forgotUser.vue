@@ -7,7 +7,7 @@
     <button type="submit">Reset account</button>
   </div>
 </form>
-<forgotform v-else />
+<forgotform v-else :linkemail="email"/>
 <router-link to="/login">Remember Login? Click Here. </router-link>
 </template>
 
