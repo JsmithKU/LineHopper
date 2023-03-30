@@ -163,11 +163,11 @@ class api {
     return dataPromise
   }
   static signUp(email, password) {
-
+    const usercode = Math.floor(100000 + Math.random() * 900000)
     const promise = axios.post(`${url}useraccount`, {
-
       email,
-      password
+      password,
+      usercode
     })
     const dataPromise = promise.then((response) => response.data)
     return dataPromise
@@ -196,9 +196,11 @@ class api {
     const dataPromise = promise.then((response) => response.data)
     return dataPromise
   }
-  static forgot(password, email) {
+  // FORGOT NEEDS CODE 
+  static forgot(password, email, code){ //, usercode) {
+    //const verifycode = axios.get('')
     const promise = axios.put(`${url}useraccount/forgotpassword`,{
-      password, email
+      password, email, code
     }, {
       
     })
@@ -212,6 +214,52 @@ class api {
     })
     const dataPromise = promise.then((response) => response.data)
     return dataPromise
+  }
+  static codecheck(useremail,usercode){
+    const promise = axios.get(`${url}verify/${useremail}/${usercode}`,{
+    })
+    const dataPromise = promise.then((response) => response.data)
+    return dataPromise
+  }
+  static trustedcodecheck(uuid,usercode){
+    const promise = axios.get(`${url}verifytrusted/${uuid}/${usercode}`,{
+    })
+    const dataPromise = promise.then((response) => response.data)
+    return dataPromise
+  }
+  static emailcheck(useremail){
+    const promise = axios.get(`${url}check/${useremail}`,{
+    })
+    const dataPromise = promise.then((response) => response.data)
+    return dataPromise
+  }
+  static emailcode(useremail){
+    const promise = axios.get(`${url}sender/${useremail}`,{
+    })
+    const dataPromise = promise.then((response) => response.data)
+    return dataPromise
+  }
+  static verifyrole(useremail){
+    const promise = axios.get(`${url}verifyrole/${useremail}`,{
+    })
+    const dataPromise = promise.then((response) => response.data)
+    return dataPromise
+  }
+  static updateuserrole(email, code){
+    const promise = axios.put(`${url}roleupdate/${email}/${code}`,{
+    },{
+
+    })
+    const dataPromise = promise.then((response) => response.data)
+    return dataPromise
+  }
+  static addlocation(form) {
+    const res = axios.post(`${url}location`, form, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    return res.data.data
   }
 }
 

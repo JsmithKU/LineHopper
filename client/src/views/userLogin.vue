@@ -45,12 +45,7 @@ export default {
     };
   },
   async created() {
-    // try {
-    //   await api.refresh()
-    //   this.$router.push('/')
-    // } catch (err) {
-    //   console.log('') // Fix this !!! (Bad bypass for no error catching)
-    // }
+
   },
   async pusher(){
     
@@ -58,10 +53,20 @@ export default {
   methods: {
     async handleSubmit() {
       try {
-        await api.login(this.email, this.password);
-        this.$router.push({ path: "/" }); //this.$router.push({name:'/', params: {useremail: this.email}})
+        const logmode = await api.login(this.email, this.password);
+        //console.log(logmode)
+        if(logmode.mode == "trusted"){
+          await api.emailcode(this.email)
+          this.$router.push(`/trustedconfirm/${logmode.uuid}`)
+        }else{
+          this.$router.push({ path: "/" })
+        }
+         //this.$router.push({name:'/', params: {useremail: this.email}})
       } catch (err) {
-        this.error = "HUH";
+        if(err == "Account Not Confirmed."){
+          alert('Account Not Confirmed.')
+          this.$router.push({path:'/confirm'});
+        }
       }
     },
     async relog() {

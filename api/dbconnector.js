@@ -31,13 +31,9 @@ const pool = new Pool(containerPool) // poolConfig)
 //Forgot password 
 let forgotPassword = (`
 UPDATE useraccount 
-set(password) = ROW($1)
+set password = $1,
+    usercode = null
 where email = $2`);
-
-//Confirm email
-let confirmEmail = (``);
-
-
 
 let restaurantGET = (`
 select l.restaurantid, l.address, r.restaurantname, r.cleanavg, r.busyavg 
@@ -161,14 +157,35 @@ where dowtime = to_char(CURRENT_TIMESTAMP, 'ID') AND
       restaurantid = $1;
 `;
 
-let createUser = `insert into useraccount (email, password, role) values ($1,$2,$3) `;
+let createUser = `insert into useraccount (email, password, usercode) values ($1,$2,$3) `;
 
 let getUser = `select * from useraccount where email = $1`;
 
 let searchLocation = `select restaurantname, restaurantid from restaurant where restaurantname = $1`;
 
 let checkrole = `select role from useraccount where userid = $1`;
+let verifyrole = `select role from useraccount where email = $1`;
+let codecompare = 'select usercode from useraccount where email = $1';
+let trustcompare = 'select usercode from useraccount where userid = $1';
+let updaterole = (`
+UPDATE useraccount
+SET role = 'user'
+WHERE email = $1 AND usercode = $2
+`)
+let updatecode = (`
+UPDATE useraccount
+set usercode = $2
+where email = $1
+`)
 
+let restaurantCreate = (`
+insert into restaurant(restaurantid, restaurantname) 
+values ($1,$2)
+`)
+let locationCreate = (`
+insert into location(locationid, restaurantid, address, openhour, closehour) 
+values ($1,$2,$3,$4,$5)
+`)
 
 module.exports = {
     pool,
@@ -187,8 +204,14 @@ module.exports = {
     getUser,
     searchLocation,
     forgotPassword,
-    confirmEmail,
     restaurantNameGET,
     checkrole,
-    
+    codecompare,
+    updaterole,
+    verifyrole,
+    updatecode,
+    trustcompare,
+    restaurantCreate,
+    locationCreate,
+
 }

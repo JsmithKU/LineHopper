@@ -39,6 +39,13 @@ app.delete('/api/signout', userRoutes.userSignout) // Sign out
 app.put('/api/useraccount/forgotpassword', userRoutes.forgotPassword) //Forgot password -- resets password to something new
 // User Routes with Auth 
 app.get('/api/userrole/:userid', auth.authenticateToken, userRoutes.roleCheck) // Get user status for role 
+// code check
+app.get('/api/check/:email',userRoutes.emailcheck)
+app.get('/api/sender/:email', userRoutes.emailcode)
+app.get('/api/verify/:useremail/:usercode',userRoutes.codeCheck)
+app.get('/api/verifytrusted/:uuid/:usercode',userRoutes.trustcodeCheck)
+app.get('/api/verifyrole/:email',userRoutes.verifyroleCheck) // Get user status for role 
+app.put('/api/roleupdate/:email/:code', userRoutes.updateroleuser) // update role
 // Core Routes
 app.get('/api/locationsearch/:restaurantname', auth.authenticateToken, coreRoutes.searchLocation) //Search a location TODO: autofill search functionality
 app.get('/api/uncheckedreports', auth.authenticateToken, coreRoutes.getUncheckedReport) // Get ALL reports that are untrusted
@@ -49,6 +56,8 @@ app.put('/api/finalizedreports/:id', auth.authenticateToken, coreRoutes.finalize
 app.get('/api/finalizedreports', auth.authenticateToken, coreRoutes.getFinalizedReport) // Get ALL reports that are trusted
 app.get('/api/finalizedReports/:restaurantid', auth.authenticateToken, coreRoutes.getFinalizedReportById) // GET a report that is trusted
 app.post('/api/uncheckedreports', auth.authenticateToken, coreRoutes.createReport) // POST a report that is untrusted
+app.post('/api/location',coreRoutes.createLocation)
+
 app.delete('/api/uncheckedreports/:reportid', auth.authenticateToken, coreRoutes.deleteUncheckedReport) // DELETE a report that is untrusted
 app.get('/api/locationstats/:restaurantid', auth.authenticateToken, coreRoutes.getlocationstat) // Get a locations stats
 app.get('/api/locationlatest/:restaurantid', auth.authenticateToken, coreRoutes.getlocationlatest) // Get a locations latest report

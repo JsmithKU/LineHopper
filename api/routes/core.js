@@ -126,6 +126,26 @@ const createReport = async(req, res) => {
     }
 }
 
+const createLocation = async(req,res) => {
+    const {rid,lid,rname,raddress,ropen,rclose} = req.body
+    try{
+        await dbconnectorJs.pool.query(
+            dbconnectorJs.restaurantCreate,
+            [rid,rname]
+        )
+    }catch(error){
+        res.status(500).json({ error: error.message })
+    }
+    try{
+        await dbconnectorJs.pool.query(
+            dbconnectorJs.locationCreate,
+            [lid,rid,raddress,ropen,rclose]
+        )
+    }catch(error){
+        res.status(500).json({ error: error.message })
+    }
+}
+
 //Get an unchecked report by id
 const getUncheckedReportById = async(req, res) => {
     const id = req.params.reportid
@@ -336,5 +356,6 @@ module.exports = {
     getlocationdowreport,
     searchLocation,
     getRestaurantbyName,
-    
+    createLocation,
+
 }
