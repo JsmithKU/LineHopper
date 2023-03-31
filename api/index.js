@@ -13,7 +13,12 @@ const auth = require('./utils/authorization.js')
 // create and set express config
 const app = express()
 const port = 3000
-const corsOptions = { credentials: true, origin: 'http://localhost:8080', exposedHeaders: ['set-cookie'] }
+const corsOptions = { 
+    credentials: true, 
+    origin: ['www.linehopperku.com','linehopperku.com','http://linehopperku.com','https://linehopperku.com', 'http://www.linehopperku.com','https://www.linehopperku.com'], 
+    exposedHeaders: ['set-cookie'],
+    methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
+}
 
 
 app.use(bodyParser.json())
