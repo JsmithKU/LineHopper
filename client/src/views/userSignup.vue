@@ -68,7 +68,9 @@ export default {
       }
     },
     validateEmail(email){
-      const regex = /^[a-zA-Z0-9._%+-]+(@live)?.kutztown.edu$/;
+      /* eslint-disable no-useless-escape */
+      //const regex = /^[a-zA-Z0-9._%+-]+(@live)?.kutztown.edu$/;
+      const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       return regex.test(email)
       
     }

@@ -39,7 +39,7 @@ function sendEmail(emailto, code){
 
       })
       .catch(err => {
-        console.log(err.statusCode) // catch all error 
+        console.log(err) // catch all error 
       })
   }
 
