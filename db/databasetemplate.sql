@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-CREATE EXTENSION IF NOT EXISTS "pg_cron";
+--CREATE EXTENSION IF NOT EXISTS "pg_cron";
 CREATE SCHEMA public;
 
 
@@ -138,8 +138,8 @@ DECLARE
 BEGIN 
     resid := new.restaurantid;
     UPDATE restaurant
-    SET cleanavg = genericavgclean(resid),
-        busyavg = genericavgbusy(resid)
+    SET cleanavg = ROUND(genericavgclean(resid), 2),
+        busyavg = ROUND(genericavgbusy(resid), 2)
     WHERE restaurant.restaurantid = resid;
     return NEW;
 END;
@@ -395,6 +395,19 @@ INSERT INTO public.restaurant (restaurantid, restaurantname, cleanavg, busyavg, 
 INSERT INTO public.location (locationid, restaurantid, address, openhour, closehour) VALUES (1, 1, '123 street A', '06:00:00', '22:00:00');
 INSERT INTO public.location (locationid, restaurantid, address, openhour, closehour) VALUES (2, 2, '321 street B', '10:00:00', '23:00:00');
 
+--temporary user account 
+INSERT INTO public.useraccount (userid, email, password, role) VALUES ('1f903602-1e65-495a-9440-419abb17c51e', 'jakespamacc284@gmail.com', '$2b$10$x306nMO4GQzZQUdWsv0RaOy4zno0pkUq.p8XwfSoIKL305ySYFhMK', 'trusted');
+--test data for report average (restaurant 1)
+INSERT INTO public.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2345, 1, 3.54, 2.69, '2022-11-20 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
+INSERT INTO public.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2346, 1, 1.33, 4.53, '2022-11-21 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
+INSERT INTO public.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2347, 1, 2.96, 2.95, '2022-11-22 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
+INSERT INTO public.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2348, 1, 4.41, 1.14, '2022-11-23 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
+--test data for report average (restaurant 2)
+INSERT INTO public.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2349, 2, 3.54, 2.69, '2022-11-24 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
+INSERT INTO public.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2350, 2, 4.95, 3.41, '2022-11-25 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
+INSERT INTO public.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2351, 2, 2.46, 4.11, '2022-11-26 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
+INSERT INTO public.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2352, 2, 3.38, 1.96, '2022-11-27 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
+INSERT INTO public.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2353, 2, 4.05, 1.05, '2022-11-28 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
 --one month
 --INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (1, 1, 1, 2.54, 3.98);
 --INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (2, 2, 1, 1.22, 4.32);
@@ -463,30 +476,28 @@ from max_month
 ;
 
 --Cron start
-CREATE EXTENSION pg_cron;
 
 --Increment month value by 1:
 
-SELECT cron.schedule (
-'5 0 1 1-12 *', 
-$$UPDATE avgarchive
-set monthcount = monthcount + 1$$
-);
+--SELECT cron.schedule (
+--'5 0 1 1-12 *', 
+--$$UPDATE avgarchive
+--set monthcount = monthcount + 1$$
+--);
 --Might have to rewrite as "set monthcount = row(monthcount + 1)"
 
 --Delete data with month value > 5:
 
-SELECT cron.schedule (
-'10 0 1 1-12 *',
-$$DELETE FROM avgarchive
-where monthcount > 5$$
-);
+--SELECT cron.schedule (
+--'10 0 1 1-12 *',
+--$$DELETE FROM avgarchive
+--where monthcount > 5$$
+--);
 
 --Insert into archive table: 
-
-SELECT cron.schedule (
-'15 0 1 1-12 *',
-$$INSERT INTO avgarchive (restaurantid, monthcount, monthclean, monthbusy)
-SELECT restaurantid, 1, cleanavg, busyavg
-FROM restaurant$$
-);
+--SELECT cron.schedule (
+--'15 0 1 1-12 *',
+--$$INSERT INTO avgarchive (restaurantid, monthcount, monthclean, monthbusy)
+--SELECT restaurantid, 1, cleanavg, busyavg
+--FROM restaurant$$
+--);
