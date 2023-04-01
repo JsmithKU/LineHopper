@@ -38,8 +38,9 @@ GET http://localhost:3000/api/refresh
 Content-Type: application/json
 
 ###
-GET http://localhost:3000/api/location
+GET http://localhost:3000/api/locationhistory/1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiIxZjkwMzYwMi0xZTY1LTQ5NWEtOTQ0MC00MTlhYmIxN2M1MWUiLCJlbWFpbCI6Impha2VzcGFtYWNjMjg0QGdtYWlsLmNvbSIsImlhdCI6MTY4MDMwNjgyOCwiZXhwIjoxNjgwMzA3NzI4fQ.yNClkgu_nAZiL8TPesxbLzVkuAT-mP5HOHLC0-mLU2M
 
 ###
 GET http://localhost:3000/api/userrole 

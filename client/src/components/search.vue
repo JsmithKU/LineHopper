@@ -1,5 +1,4 @@
 <template>
-  <h2>Search:</h2>
   <form autocomplete="off">
     <div class="autocomplete" style="width: 300px">
       <input
@@ -13,17 +12,18 @@
           updateList();
         "
       />
+      <ul class="itemlist">
+        <div
+          id="searchResult"
+          v-for="location in locations"
+          v-bind:key="location"
+        >
+          <li><button class="listitems" @click.prevent="ShowRestaurant(location)">{{ location }}</button></li>
+        </div>
+      </ul>
     </div>
-    <ul>
-      <div
-        id="searchResult"
-        v-for="location in locations"
-        v-bind:key="location"
-      >
-        <li class="searchItem"><button @click.prevent="ShowRestaurant(location)">{{ location }}</button></li>
-      </div>
-    </ul>
   </form>
+  
 </template>
 
 <script>
@@ -98,6 +98,25 @@ input[type="submit"] {
   background-color: DodgerBlue;
   color: #fff;
   cursor: pointer;
+}
+.itemlist{
+  list-style-type: none;
+  background-color: #d4d4d4;
+  width: 100%;
+}
+.listitems{
+  border: none;
+  border-bottom: 2px solid rgb(0, 0, 0);
+  color: rgb(122, 121, 121);
+  padding: 15px 10%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  background-color: #d4d4d4;
+}
+.listitems:hover{
+  background-color: #a8a7a7;
 }
 .autocomplete-items {
   position: absolute;
