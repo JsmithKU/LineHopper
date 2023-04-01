@@ -123,10 +123,7 @@ class api {
 
   static getlocationstat(token,id) {
     // create a promise for the axios request
-    const promise = axios.get(`${url}locationstats/`,{
-      params:{
-        id
-      },
+    const promise = axios.get(`${url}locationstats/${id}`,{
       headers: { Authorization: `Bearer ${token}` }
     })
 
@@ -149,10 +146,21 @@ class api {
     // return it
     return dataPromise
   }
+  static getlocationhistory(token,id) {
+    // create a promise for the axios request
+    const promise = axios.get(`${url}locationhistory/${id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
 
+    // using .then, create a new promise which extracts the data
+    const dataPromise = promise.then((response) => response.data)
+
+    // return it
+    return dataPromise
+  }
   static getlocationdowreport(token,id) {
     // create a promise for the axios request
-    const promise = axios.get(`${url}locationdow/`, id,{
+    const promise = axios.get(`${url}locationdow/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
 
