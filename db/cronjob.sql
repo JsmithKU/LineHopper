@@ -35,3 +35,6 @@ FROM restaurant;
 --DELETE FROM reports
 --)
 --NOT NEEDED (will use timestamps to indicate which reports are deleted)
+
+-- change the db in all 
+update cron.job set database = 'linehoptest'; 

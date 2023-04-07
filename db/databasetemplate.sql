@@ -2,7 +2,6 @@
 -- PostgreSQL database dump
 --
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
---CREATE EXTENSION IF NOT EXISTS "pg_cron";
 CREATE SCHEMA public;
 
 
@@ -479,20 +478,20 @@ from max_month
 
 --Increment month value by 1:
 
---SELECT cron.schedule (
---'5 0 1 1-12 *', 
---$$UPDATE avgarchive
---set monthcount = monthcount + 1$$
---);
+SELECT cron.schedule (
+'5 0 1 1-12 *', 
+$$UPDATE public.avgarchive
+set monthcount = monthcount + 1$$
+);
 --Might have to rewrite as "set monthcount = row(monthcount + 1)"
 
 --Delete data with month value > 5:
 
---SELECT cron.schedule (
---'10 0 1 1-12 *',
---$$DELETE FROM avgarchive
---where monthcount > 5$$
---);
+SELECT cron.schedule (
+'10 0 1 1-12 *',
+$$DELETE FROM public.avgarchive
+where monthcount > 5$$
+);
 
 --Insert into archive table: 
 --SELECT cron.schedule (
