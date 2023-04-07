@@ -272,24 +272,36 @@ const deleteUncheckedReport = async(req, res) => {
 // get locations avg stats UPDATED THIS FOR ALG !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 const getlocationstat = async(req, res) => {
     const id = req.params.restaurantid
-        // dbconnectorJs.pool.query(dbconnectorJs.getStat, [id], (error, results) => {
-        //     if (!error) {
-        //         res.status(200).json(results.rows)
-        //     }
-        //     if (error) {
-        //         res.status(401).json({ error: error.message })
-        //     }
-        // })
     try {
-        // Empty 
-        //...
-        // 200 Res 
+        const reportlastest = await dbconnectorJs.pool.query(
+            dbconnectorJs.getStat, [id]
+        )
+        if (reportlastest.rows.length === 0) {
+            res.json({ nodata: "True" })
+        } else {
+            res.json({ data: reportlastest.rows[0] })
+        }
     } catch (error) {
         res.status(500).json({ error: error.message })
     }
 
 }
+const getlocationhistory = async(req, res) => {
+    const id = req.params.restaurantid
+    try {
+        const reportlastest = await dbconnectorJs.pool.query(
+            dbconnectorJs.historyweight, [id]
+        )
+        if (reportlastest.rows.length === 0) {
+            res.json({ nodata: "True" })
+        } else {
+            res.json({ data: reportlastest.rows })
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
 
+}
 //Get a finalized latest report UPDATED THIS FOR ALG !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 const getlocationlatest = async(req, res) => {
     const id = req.params.restaurantid
@@ -317,20 +329,17 @@ const getlocationlatest = async(req, res) => {
 }
 
 //Get a finalized dow report  UPDATED THIS FOR ALG !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-const getlocationdowreport = (req, res) => {
+const getlocationdowreport = async(req, res) => {
     const id = req.params.restaurantid
-        // dbconnectorJs.pool.query(dbconnectorJs.getdow, [id], (error, results) => {
-        //     if (!error) {
-        //         res.status(200).json(results.rows)
-        //     }
-        //     if (error) {
-        //         res.status(401).json({ error: error.message })
-        //     }
-        // })
     try {
-        // Empty 
-        //...
-        // 200 Res 
+        const reportlastest = await dbconnectorJs.pool.query(
+            dbconnectorJs.getdow, [id]
+        )
+        if (reportlastest.rows.length === 0) {
+            res.json({ nodata: "True" })
+        } else {
+            res.json({ data: reportlastest.rows[0] })
+        }
     } catch (error) {
         res.status(500).json({ error: error.message })
     }
@@ -357,5 +366,6 @@ module.exports = {
     searchLocation,
     getRestaurantbyName,
     createLocation,
+    getlocationhistory,
 
 }
