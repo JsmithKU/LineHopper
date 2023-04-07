@@ -15,7 +15,8 @@ const app = express()
 const port = 3000
 const corsOptions = { 
     credentials: true, 
-    origin: ['www.linehopperku.com','linehopperku.com','http://linehopperku.com','https://linehopperku.com', 'http://www.linehopperku.com','https://www.linehopperku.com'], 
+    // origin: ['www.linehopperku.com','linehopperku.com','http://linehopperku.com','https://linehopperku.com', 'http://www.linehopperku.com','https://www.linehopperku.com'], 
+    origin: '*',
     exposedHeaders: ['set-cookie'],
     methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
 }
