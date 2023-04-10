@@ -2,14 +2,14 @@
 -- PostgreSQL database dump
 --
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-CREATE SCHEMA public;
+CREATE SCHEMA linehop;
 
 
 --
--- Name: restaurant; Type: TABLE; Schema: public; Owner: postgres
+-- Name: restaurant; Type: TABLE; Schema: linehop; Owner: postgres
 --
 
-CREATE TABLE public.restaurant (
+CREATE TABLE linehop.restaurant (
     restaurantid bigint NOT NULL PRIMARY KEY,
     restaurantname character varying,
     cleanavg numeric,
@@ -18,12 +18,12 @@ CREATE TABLE public.restaurant (
 );
 
 --
--- Name: location; Type: TABLE; Schema: public; Owner: postgres
+-- Name: location; Type: TABLE; Schema: linehop; Owner: postgres
 --
 
-CREATE TABLE public.location (
+CREATE TABLE linehop.location (
     locationid bigint NOT NULL PRIMARY KEY,
-    restaurantid bigint NOT NULL REFERENCES public.restaurant(restaurantid),
+    restaurantid bigint NOT NULL REFERENCES linehop.restaurant(restaurantid),
     address character varying,
     openhour time,
     closehour time
@@ -33,7 +33,7 @@ CREATE TABLE public.location (
 
 -- User table 
 
-CREATE TABLE public.useraccount(
+CREATE TABLE linehop.useraccount(
     userid uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
     email CHARACTER VARYING UNIQUE,
     password CHARACTER VARYING,
@@ -42,34 +42,34 @@ CREATE TABLE public.useraccount(
 );
 
 --
--- Name: reports; Type: TABLE; Schema: public; Owner: postgres
+-- Name: reports; Type: TABLE; Schema: linehop; Owner: postgres
 --
 
-CREATE TABLE public.reports (
+CREATE TABLE linehop.reports (
     reportid bigint NOT NULL PRIMARY KEY,
-    restaurantid bigint NOT NULL REFERENCES public.restaurant(restaurantid),
+    restaurantid bigint NOT NULL REFERENCES linehop.restaurant(restaurantid),
     cleanrank numeric,
     busyrank numeric,
     picture VARCHAR,
     submissiontime timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
-    userid uuid REFERENCES public.useraccount(userid),
+    userid uuid REFERENCES linehop.useraccount(userid),
     trusted boolean
 );
 
 --
 --  avgarchive 
 --
-CREATE TABLE public.avgarchive (
+CREATE TABLE linehop.avgarchive (
     archid serial not null primary key, 
-    restaurantid bigint NOT NULL REFERENCES public.restaurant(restaurantid),
+    restaurantid bigint NOT NULL REFERENCES linehop.restaurant(restaurantid),
     monthcount BIGINT,
     monthclean numeric, 
     monthbusy numeric
 );
 
-CREATE TABLE public.weightedavg (
+CREATE TABLE linehop.weightedavg (
     weightid serial not null primary key,
-    restaurantid bigint NOT NULL REFERENCES public.restaurant(restaurantid),
+    restaurantid bigint NOT NULL REFERENCES linehop.restaurant(restaurantid),
     weightedclean NUMERIC,
     weightedbusy NUMERIC
 );
@@ -147,13 +147,13 @@ $$;
 -- avg to rest table from report on trusted 
 CREATE TRIGGER avgrestaurant
     AFTER UPDATE
-    ON reports
+    ON linehop.reports
     FOR EACH ROW 
     EXECUTE FUNCTION avgrestupdate();
 
 
 -- Enable Trigger
-alter table reports enable trigger all; 
+alter table linehop.reports enable trigger all; 
 
 --Sort clean function 1
 create or replace FUNCTION sort_clean_1 (restid BIGINT)
@@ -389,62 +389,62 @@ BEGIN
 END;
 $$;
 -- Test data 
-INSERT INTO public.restaurant (restaurantid, restaurantname, cleanavg, busyavg, dateadded) VALUES (1, 'North Test Dining Hall', NULL, NULL, NULL);
-INSERT INTO public.restaurant (restaurantid, restaurantname, cleanavg, busyavg, dateadded) VALUES (2, 'South Test Dining Hall', NULL, NULL, NULL);
-INSERT INTO public.location (locationid, restaurantid, address, openhour, closehour) VALUES (1, 1, '123 street A', '06:00:00', '22:00:00');
-INSERT INTO public.location (locationid, restaurantid, address, openhour, closehour) VALUES (2, 2, '321 street B', '10:00:00', '23:00:00');
+INSERT INTO linehop.restaurant (restaurantid, restaurantname, cleanavg, busyavg, dateadded) VALUES (1, 'North Test Dining Hall', NULL, NULL, NULL);
+INSERT INTO linehop.restaurant (restaurantid, restaurantname, cleanavg, busyavg, dateadded) VALUES (2, 'South Test Dining Hall', NULL, NULL, NULL);
+INSERT INTO linehop.location (locationid, restaurantid, address, openhour, closehour) VALUES (1, 1, '123 street A', '06:00:00', '22:00:00');
+INSERT INTO linehop.location (locationid, restaurantid, address, openhour, closehour) VALUES (2, 2, '321 street B', '10:00:00', '23:00:00');
 
 --temporary user account (Change my email to your email for full testing..)
-INSERT INTO public.useraccount (userid, email, password, role) VALUES ('1f903602-1e65-495a-9440-419abb17c51e', 'jakespamacc284@gmail.com', '$2b$10$x306nMO4GQzZQUdWsv0RaOy4zno0pkUq.p8XwfSoIKL305ySYFhMK', 'trusted');
+INSERT INTO linehop.useraccount (userid, email, password, role) VALUES ('1f903602-1e65-495a-9440-419abb17c51e', 'jakespamacc284@gmail.com', '$2b$10$x306nMO4GQzZQUdWsv0RaOy4zno0pkUq.p8XwfSoIKL305ySYFhMK', 'trusted');
 --test data for report average (restaurant 1)
-INSERT INTO public.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2345, 1, 3.54, 2.69, '2022-11-20 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
-INSERT INTO public.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2346, 1, 1.33, 4.53, '2022-11-21 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
-INSERT INTO public.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2347, 1, 2.96, 2.95, '2022-11-22 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
-INSERT INTO public.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2348, 1, 4.41, 1.14, '2022-11-23 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
+INSERT INTO linehop.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2345, 1, 3.54, 2.69, '2022-11-20 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
+INSERT INTO linehop.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2346, 1, 1.33, 4.53, '2022-11-21 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
+INSERT INTO linehop.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2347, 1, 2.96, 2.95, '2022-11-22 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
+INSERT INTO linehop.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2348, 1, 4.41, 1.14, '2022-11-23 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
 --test data for report average (restaurant 2)
-INSERT INTO public.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2349, 2, 3.54, 2.69, '2022-11-24 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
-INSERT INTO public.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2350, 2, 4.95, 3.41, '2022-11-25 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
-INSERT INTO public.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2351, 2, 2.46, 4.11, '2022-11-26 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
-INSERT INTO public.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2352, 2, 3.38, 1.96, '2022-11-27 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
-INSERT INTO public.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2353, 2, 4.05, 1.05, '2022-11-28 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
+INSERT INTO linehop.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2349, 2, 3.54, 2.69, '2022-11-24 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
+INSERT INTO linehop.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2350, 2, 4.95, 3.41, '2022-11-25 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
+INSERT INTO linehop.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2351, 2, 2.46, 4.11, '2022-11-26 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
+INSERT INTO linehop.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2352, 2, 3.38, 1.96, '2022-11-27 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
+INSERT INTO linehop.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2353, 2, 4.05, 1.05, '2022-11-28 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
 --one month
---INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (1, 1, 1, 2.54, 3.98);
---INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (2, 2, 1, 1.22, 4.32);
+--INSERT INTO linehop.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (1, 1, 1, 2.54, 3.98);
+--INSERT INTO linehop.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (2, 2, 1, 1.22, 4.32);
 --ID 1 averages: Clean: 2.54 Busy: 3.98
 --ID 2 averages: Clean: 1.22 Busy: 4.32
 
 --two months
---INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (1, 1, 1, 4.87, 3.45);
---INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (2, 1, 2, 3.74, 2.98);
---INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (3, 2, 1, 1.48, 4.21);
---INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (4, 2, 2, 3.55, 2.78);
+--INSERT INTO linehop.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (1, 1, 1, 4.87, 3.45);
+--INSERT INTO linehop.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (2, 1, 2, 3.74, 2.98);
+--INSERT INTO linehop.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (3, 2, 1, 1.48, 4.21);
+--INSERT INTO linehop.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (4, 2, 2, 3.55, 2.78);
 --ID 1 averages: Clean: 4.4971 Busy: 3.2949
 --ID 2 averages: Clean: 2.1631 Busy: 3.7381
 
 --three months
---INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (1, 1, 1, 2.85, 4.43);
---INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (2, 1, 2, 4.63, 3.56);
---INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (3, 1, 3, 3.18, 2.53);
---INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (4, 2, 1, 3.62, 3.11);
---INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (5, 2, 2, 2.93, 4.03);
---INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (6, 2, 3, 3.17, 3.98);
+--INSERT INTO linehop.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (1, 1, 1, 2.85, 4.43);
+--INSERT INTO linehop.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (2, 1, 2, 4.63, 3.56);
+--INSERT INTO linehop.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (3, 1, 3, 3.18, 2.53);
+--INSERT INTO linehop.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (4, 2, 1, 3.62, 3.11);
+--INSERT INTO linehop.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (5, 2, 2, 2.93, 4.03);
+--INSERT INTO linehop.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (6, 2, 3, 3.17, 3.98);
 --ID 1 averages: Clean: 3.3445 Busy: 3.9275 
 --ID 2 averages: Clean: 3.38 Busy: 3.4705
 
 --four months
-INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (1, 1, 1, 1.46, 4.68);
-INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (2, 1, 2, 4.12, 3.58);
-INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (3, 1, 3, 3.87, 2.45);
-INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (4, 1, 4, 4.65, 4.27);
-INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (5, 2, 1, 3.49, 2.68);
-INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (6, 2, 2, 2.52, 3.24);
-INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (7, 2, 3, 4.41, 4.52);
-INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (8, 2, 4, 3.27, 4.89);
+INSERT INTO linehop.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (1, 1, 1, 1.46, 4.68);
+INSERT INTO linehop.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (2, 1, 2, 4.12, 3.58);
+INSERT INTO linehop.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (3, 1, 3, 3.87, 2.45);
+INSERT INTO linehop.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (4, 1, 4, 4.65, 4.27);
+INSERT INTO linehop.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (5, 2, 1, 3.49, 2.68);
+INSERT INTO linehop.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (6, 2, 2, 2.52, 3.24);
+INSERT INTO linehop.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (7, 2, 3, 4.41, 4.52);
+INSERT INTO linehop.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (8, 2, 4, 3.27, 4.89);
 --ID 1 averages: Clean: 2.779 Busy: 3.995
 --ID 2 averages: Clean: 3.326 Busy: 3.2345
 --five months
-INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (9, 1, 5, 2.36, 1.99);
-INSERT INTO public.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (10, 2, 5, 1.23, 4.99);
+INSERT INTO linehop.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (9, 1, 5, 2.36, 1.99);
+INSERT INTO linehop.avgarchive (archid, restaurantid, monthcount, monthclean, monthbusy) VALUES (10, 2, 5, 1.23, 4.99);
 --ID 1 averages: Clean: 2.9835 Busy: 3.84
 --ID 2 averages: Clean: 3.202 Busy: 3.4605
 
@@ -456,19 +456,19 @@ WITH max_month AS (
 )
 INSERT INTO weightedavg (restaurantid, weightedclean, weightedbusy)
 select restaurantid,
-	case WHEN long_month = 1 then ROUND(public.sort_clean_1(restaurantid), 2)
-	WHEN long_month = 2 then ROUND(public.sort_clean_2(restaurantid), 2)
-	WHEN long_month = 3 then ROUND(public.sort_clean_3(restaurantid), 2)
-	WHEN long_month = 4 then ROUND(public.sort_clean_4(restaurantid), 2)
-	WHEN long_month = 5 then ROUND(public.sort_clean_5(restaurantid), 2)
+	case WHEN long_month = 1 then ROUND(linehop.sort_clean_1(restaurantid), 2)
+	WHEN long_month = 2 then ROUND(linehop.sort_clean_2(restaurantid), 2)
+	WHEN long_month = 3 then ROUND(linehop.sort_clean_3(restaurantid), 2)
+	WHEN long_month = 4 then ROUND(linehop.sort_clean_4(restaurantid), 2)
+	WHEN long_month = 5 then ROUND(linehop.sort_clean_5(restaurantid), 2)
 	ELSE 0
 	END as weighted_clean,
 
-	case WHEN long_month = 1 then ROUND(public.sort_busy_1(restaurantid), 2)
-	WHEN long_month = 2 then ROUND(public.sort_busy_2(restaurantid), 2)
-	WHEN long_month = 3 then ROUND(public.sort_busy_3(restaurantid), 2)
-	WHEN long_month = 4 then ROUND(public.sort_busy_4(restaurantid), 2)
-	WHEN long_month = 5 then ROUND(public.sort_busy_5(restaurantid), 2)
+	case WHEN long_month = 1 then ROUND(linehop.sort_busy_1(restaurantid), 2)
+	WHEN long_month = 2 then ROUND(linehop.sort_busy_2(restaurantid), 2)
+	WHEN long_month = 3 then ROUND(linehop.sort_busy_3(restaurantid), 2)
+	WHEN long_month = 4 then ROUND(linehop.sort_busy_4(restaurantid), 2)
+	WHEN long_month = 5 then ROUND(linehop.sort_busy_5(restaurantid), 2)
 	ELSE 0
 	END as weighted_busy
 from max_month
@@ -480,7 +480,7 @@ from max_month
 
 SELECT cron.schedule (
 '5 0 1 1-12 *', 
-$$UPDATE public.avgarchive
+$$UPDATE linehop.avgarchive
 set monthcount = monthcount + 1$$
 );
 --Might have to rewrite as "set monthcount = row(monthcount + 1)"
@@ -489,14 +489,17 @@ set monthcount = monthcount + 1$$
 
 SELECT cron.schedule (
 '10 0 1 1-12 *',
-$$DELETE FROM public.avgarchive
+$$DELETE FROM linehop.avgarchive
 where monthcount > 5$$
 );
 
 --Insert into archive table: 
---SELECT cron.schedule (
---'15 0 1 1-12 *',
---$$INSERT INTO avgarchive (restaurantid, monthcount, monthclean, monthbusy)
---SELECT restaurantid, 1, cleanavg, busyavg
---FROM restaurant$$
---);
+SELECT cron.schedule (
+'15 0 1 1-12 *',
+$$INSERT INTO linehop.avgarchive (restaurantid, monthcount, monthclean, monthbusy)
+SELECT restaurantid, 1, cleanavg, busyavg
+FROM restaurant$$
+);
+
+update cron.job set database = 'linehop'; 
+
