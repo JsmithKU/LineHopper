@@ -13,12 +13,13 @@ const auth = require('./utils/authorization.js')
 // create and set express config
 const app = express()
 const port = 3000
-const corsOptions = { 
-    credentials: true, 
+const corsOptions = {
+    credentials: true,
+    origin: 'http://localhost:8080',
     // origin: ['www.linehopperku.com','linehopperku.com','http://linehopperku.com','https://linehopperku.com', 'http://www.linehopperku.com','https://www.linehopperku.com'], 
-    origin: '*',
+    //origin: 'http://localhost',
     exposedHeaders: ['set-cookie'],
-    methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
+    //methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH']
 }
 
 
@@ -43,16 +44,16 @@ app.post('/api/login', userRoutes.userLogin) // post to login
 app.get('/api/refresh', userRoutes.userRefresh) // Reset Token for access from refresh token
 app.delete('/api/signout', userRoutes.userSignout) // Sign out
 app.put('/api/useraccount/forgotpassword', userRoutes.forgotPassword) //Forgot password -- resets password to something new
-// User Routes with Auth 
+    // User Routes with Auth 
 app.get('/api/userrole/:userid', auth.authenticateToken, userRoutes.roleCheck) // Get user status for role 
-// code check
-app.get('/api/check/:email',userRoutes.emailcheck)
+    // code check
+app.get('/api/check/:email', userRoutes.emailcheck)
 app.get('/api/sender/:email', userRoutes.emailcode)
-app.get('/api/verify/:useremail/:usercode',userRoutes.codeCheck)
-app.get('/api/verifytrusted/:uuid/:usercode',userRoutes.trustcodeCheck)
-app.get('/api/verifyrole/:email',userRoutes.verifyroleCheck) // Get user status for role 
+app.get('/api/verify/:useremail/:usercode', userRoutes.codeCheck)
+app.get('/api/verifytrusted/:uuid/:usercode', userRoutes.trustcodeCheck)
+app.get('/api/verifyrole/:email', userRoutes.verifyroleCheck) // Get user status for role 
 app.put('/api/roleupdate/:email/:code', userRoutes.updateroleuser) // update role
-// Core Routes
+    // Core Routes
 app.get('/api/locationsearch/:restaurantname', auth.authenticateToken, coreRoutes.searchLocation) //Search a location TODO: autofill search functionality
 app.get('/api/uncheckedreports', auth.authenticateToken, coreRoutes.getUncheckedReport) // Get ALL reports that are untrusted
 app.get('/api/location/:restaurantid', auth.authenticateToken, coreRoutes.getRestaurant) // Get a location by id
@@ -62,14 +63,15 @@ app.put('/api/finalizedreports/:id', auth.authenticateToken, coreRoutes.finalize
 app.get('/api/finalizedreports', auth.authenticateToken, coreRoutes.getFinalizedReport) // Get ALL reports that are trusted
 app.get('/api/finalizedReports/:restaurantid', auth.authenticateToken, coreRoutes.getFinalizedReportById) // GET a report that is trusted
 app.post('/api/uncheckedreports', auth.authenticateToken, coreRoutes.createReport) // POST a report that is untrusted
-app.post('/api/location',coreRoutes.createLocation)
+app.post('/api/location', coreRoutes.createLocation)
 
 app.delete('/api/uncheckedreports/:reportid', auth.authenticateToken, coreRoutes.deleteUncheckedReport) // DELETE a report that is untrusted
 app.get('/api/locationstats/:restaurantid', auth.authenticateToken, coreRoutes.getlocationstat) // Get a locations stats
 app.get('/api/locationlatest/:restaurantid', auth.authenticateToken, coreRoutes.getlocationlatest) // Get a locations latest report
 app.get('/api/locationdow/:restaurantid', auth.authenticateToken, coreRoutes.getlocationdowreport)
 app.get('/api/locationhistory/:restaurantid', auth.authenticateToken, coreRoutes.getlocationhistory)
-app.get('/api/location/name/:restaurantname', auth.authenticateToken,coreRoutes.getRestaurantbyName)
+app.get('/api/location/name/:restaurantname', auth.authenticateToken, coreRoutes.getRestaurantbyName)
+app.get('/api/chartdow/:restaurantid', coreRoutes.chartdow);
 
 
 
