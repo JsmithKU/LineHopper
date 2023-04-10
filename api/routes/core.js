@@ -126,22 +126,20 @@ const createReport = async(req, res) => {
     }
 }
 
-const createLocation = async(req,res) => {
-    const {rid,lid,rname,raddress,ropen,rclose} = req.body
-    try{
+const createLocation = async(req, res) => {
+    const { rid, lid, rname, raddress, ropen, rclose } = req.body
+    try {
         await dbconnectorJs.pool.query(
-            dbconnectorJs.restaurantCreate,
-            [rid,rname]
+            dbconnectorJs.restaurantCreate, [rid, rname]
         )
-    }catch(error){
+    } catch (error) {
         res.status(500).json({ error: error.message })
     }
-    try{
+    try {
         await dbconnectorJs.pool.query(
-            dbconnectorJs.locationCreate,
-            [lid,rid,raddress,ropen,rclose]
+            dbconnectorJs.locationCreate, [lid, rid, raddress, ropen, rclose]
         )
-    }catch(error){
+    } catch (error) {
         res.status(500).json({ error: error.message })
     }
 }
@@ -287,22 +285,22 @@ const getlocationstat = async(req, res) => {
 
 }
 const getlocationhistory = async(req, res) => {
-    const id = req.params.restaurantid
-    try {
-        const reportlastest = await dbconnectorJs.pool.query(
-            dbconnectorJs.historyweight, [id]
-        )
-        if (reportlastest.rows.length === 0) {
-            res.json({ nodata: "True" })
-        } else {
-            res.json({ data: reportlastest.rows })
+        const id = req.params.restaurantid
+        try {
+            const reportlastest = await dbconnectorJs.pool.query(
+                dbconnectorJs.historyweight, [id]
+            )
+            if (reportlastest.rows.length === 0) {
+                res.json({ nodata: "True" })
+            } else {
+                res.json({ data: reportlastest.rows })
+            }
+        } catch (error) {
+            res.status(500).json({ error: error.message })
         }
-    } catch (error) {
-        res.status(500).json({ error: error.message })
-    }
 
-}
-//Get a finalized latest report UPDATED THIS FOR ALG !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    }
+    //Get a finalized latest report UPDATED THIS FOR ALG !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 const getlocationlatest = async(req, res) => {
     const id = req.params.restaurantid
         // dbconnectorJs.pool.query(dbconnectorJs.getLatest, [id], (error, results) => {
@@ -345,6 +343,22 @@ const getlocationdowreport = async(req, res) => {
     }
 
 }
+const chartdow = async(req, res) => {
+    const id = req.params.restaurantid
+    try {
+        const reportlastest = await dbconnectorJs.pool.query(
+            dbconnectorJs.getdow, [id]
+        )
+        if (reportlastest.rows.length === 0) {
+            res.json({ nodata: "True" })
+        } else {
+            res.json({ data: reportlastest.rows })
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+
+}
 
 
 
@@ -367,5 +381,6 @@ module.exports = {
     getRestaurantbyName,
     createLocation,
     getlocationhistory,
+    chartdow
 
 }
