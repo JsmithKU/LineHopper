@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-// const url = 'http://linehopperku.com/api/'
-const url = 'localhost:3000/api/'
+const url = 'http://localhost:3000/api/'
 
 axios.defaults.withCredentials = true
 class api {
@@ -124,7 +123,10 @@ class api {
 
   static getlocationstat(token,id) {
     // create a promise for the axios request
-    const promise = axios.get(`${url}locationstats/${id}`,{
+    const promise = axios.get(`${url}locationstats/`,{
+      params:{
+        id
+      },
       headers: { Authorization: `Bearer ${token}` }
     })
 
@@ -147,21 +149,10 @@ class api {
     // return it
     return dataPromise
   }
-  static getlocationhistory(token,id) {
-    // create a promise for the axios request
-    const promise = axios.get(`${url}locationhistory/${id}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
 
-    // using .then, create a new promise which extracts the data
-    const dataPromise = promise.then((response) => response.data)
-
-    // return it
-    return dataPromise
-  }
   static getlocationdowreport(token,id) {
     // create a promise for the axios request
-    const promise = axios.get(`${url}locationdow/${id}`, {
+    const promise = axios.get(`${url}locationdow/`, id,{
       headers: { Authorization: `Bearer ${token}` }
     })
 
