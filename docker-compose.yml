@@ -16,7 +16,7 @@ services:
       - port=5432
       - host=db
       - pgdb=linehoptest
-      - url=localhost
+      - url=http://localhost
       - MJ_APIKEY_PUBLIC = 6c9ea700e37a55dbbeb6346560d06b49
       - MJ_APIKEY_PRIVATE = 9964dd6e37b655df814b213403bf5dd8
     depends_on:

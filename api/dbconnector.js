@@ -134,6 +134,7 @@ with latest as (
   order by submissiontime desc;
 `;
 let getdow = `
+-- get reports per restaurant and sort by DOW and TimeOfDay
 with reportsCTE as(
 select restaurantid, cleanrank as crank, busyrank as brank, submissiontime as stime,
   to_char(submissiontime, 'ID') as dowtime, -- Monday(1) Sunday(7)
@@ -152,11 +153,10 @@ countday as (
 )
 select restaurantid, cleanavg, busyavg, dowtime, to_char(CURRENT_TIMESTAMP, 'Day') as cday
 from countday
-where dowtime = to_char(CURRENT_TIMESTAMP, 'ID') AND restaurantid = $1;
+where dowtime = to_char(CURRENT_TIMESTAMP, 'ID') AND
+      restaurantid = $1;
 `;
-let historyweight = `
-select * from avgarchive where restaurantid = $1;
-`;
+
 let createUser = `insert into useraccount (email, password, usercode) values ($1,$2,$3) `;
 
 let getUser = `select * from useraccount where email = $1`;
@@ -213,6 +213,5 @@ module.exports = {
     trustcompare,
     restaurantCreate,
     locationCreate,
-    historyweight,
-    
+
 }
