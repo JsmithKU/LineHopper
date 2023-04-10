@@ -13,7 +13,13 @@ const auth = require('./utils/authorization.js')
 // create and set express config
 const app = express()
 const port = 3000
-const corsOptions = { credentials: true, origin: 'http://localhost:8080', exposedHeaders: ['set-cookie'] }
+const corsOptions = { 
+    credentials: true, 
+    // origin: ['www.linehopperku.com','linehopperku.com','http://linehopperku.com','https://linehopperku.com', 'http://www.linehopperku.com','https://www.linehopperku.com'], 
+    origin: '*',
+    exposedHeaders: ['set-cookie'],
+    methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
+}
 
 
 app.use(bodyParser.json())
@@ -62,6 +68,7 @@ app.delete('/api/uncheckedreports/:reportid', auth.authenticateToken, coreRoutes
 app.get('/api/locationstats/:restaurantid', auth.authenticateToken, coreRoutes.getlocationstat) // Get a locations stats
 app.get('/api/locationlatest/:restaurantid', auth.authenticateToken, coreRoutes.getlocationlatest) // Get a locations latest report
 app.get('/api/locationdow/:restaurantid', auth.authenticateToken, coreRoutes.getlocationdowreport)
+app.get('/api/locationhistory/:restaurantid', auth.authenticateToken, coreRoutes.getlocationhistory)
 app.get('/api/location/name/:restaurantname', auth.authenticateToken,coreRoutes.getRestaurantbyName)
 
 

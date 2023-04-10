@@ -395,7 +395,7 @@ INSERT INTO public.restaurant (restaurantid, restaurantname, cleanavg, busyavg, 
 INSERT INTO public.location (locationid, restaurantid, address, openhour, closehour) VALUES (1, 1, '123 street A', '06:00:00', '22:00:00');
 INSERT INTO public.location (locationid, restaurantid, address, openhour, closehour) VALUES (2, 2, '321 street B', '10:00:00', '23:00:00');
 
---temporary user account 
+--temporary user account (Change my email to your email for full testing..)
 INSERT INTO public.useraccount (userid, email, password, role) VALUES ('1f903602-1e65-495a-9440-419abb17c51e', 'jakespamacc284@gmail.com', '$2b$10$x306nMO4GQzZQUdWsv0RaOy4zno0pkUq.p8XwfSoIKL305ySYFhMK', 'trusted');
 --test data for report average (restaurant 1)
 INSERT INTO public.reports (reportid, restaurantid, cleanrank, busyrank, submissiontime, userid, trusted) VALUES (2345, 1, 3.54, 2.69, '2022-11-20 06:00:00-05', '1f903602-1e65-495a-9440-419abb17c51e', 't');
