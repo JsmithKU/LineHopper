@@ -1,4 +1,5 @@
 <template>
+  <BarChart :rid ="rid" />
   <div class="averages">
     <h1> Average Stats </h1>
     <div v-for="s in status" v-bind:key="s.restaurantid">
@@ -37,8 +38,13 @@
 
 <script>
 import api from '../api'
+import BarChart from './barchart.vue'
+//Import chart component
+//import { Bar } from 'vue-chartjs'
+
 export default{
   name: 'locationStatus',
+  components: { BarChart },
   props:{
     rid: String,
     token: String,
@@ -84,6 +90,7 @@ export default{
     }
   }
 }
+
 </script>
 
 <style scoped>
