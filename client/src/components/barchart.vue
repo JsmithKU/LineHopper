@@ -29,7 +29,7 @@
         
 
 
-      this.chartdata = await api.getChartData(this.rid)
+      this.chartData = await api.getChartData(this.rid)
 
       this.loaded = true
     } catch (e) {
