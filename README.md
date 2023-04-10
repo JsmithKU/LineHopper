@@ -13,6 +13,8 @@
   - ``` docker exec -it db psql -U postgres ```
   - to see all schemas: 
   ```SELECT schema_name FROM information_schema.schemata; ```
+  - to see cron jobs 
+  ``` SELECT * from cron.jobs ```
 4. When working on the project and loading changes within your environment currently the process is:
   - Save changes to files 
   - Run ``` docker-compose up -d --build client --build api ```
