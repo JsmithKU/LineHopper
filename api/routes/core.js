@@ -347,11 +347,12 @@ const chartdow = async(req, res) => {
     const id = req.params.restaurantid
     try {
         const reportlastest = await dbconnectorJs.pool.query(
-            dbconnectorJs.getdow, [id]
+            dbconnectorJs.getdowChart, [id]
         )
         if (reportlastest.rows.length === 0) {
             res.json({ nodata: "True" })
         } else {
+            //let tmpformat = reportlastest.rows
             res.json({ data: reportlastest.rows })
         }
     } catch (error) {
