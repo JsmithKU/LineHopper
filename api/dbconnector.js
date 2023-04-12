@@ -108,8 +108,8 @@ with reportsum as (
       ROUND(rs.busysum / (c.totalreports),2) as busyavg,
       ROUND((((rs.cleansum /c.totalreports) * 5)) / 2, 2) as algclean,
       ROUND((((rs.busysum /c.totalreports) * 5)) / 2, 2) as algbusy
-    from linehop.reportsum as rs
-      inner join linehop.counter as c using (restaurantid)
+    from reportsum as rs
+      inner join counter as c using (restaurantid)
       inner join linehop.reports as fr using (restaurantid)
     where rs.restaurantid = $1 and fr.trusted is True
     group by rs.restaurantid, cleanavg, busyavg, algclean, algbusy
@@ -128,7 +128,7 @@ with latest as (
     to_char(submissiontime, 'DDth') as sday,
     to_char(submissiontime, 'HH24') as shour,
     to_char(submissiontime, 'MI') as sminute
-  from linehop.latest 
+  from latest 
   where counter = 1 AND 
         restaurantid = $1
   order by submissiontime desc;
@@ -146,12 +146,12 @@ countday as (
     round(avg(crank),2) as cleanavg, 
     round(avg(brank),2) as busyavg,
     dowtime
-  from linehop.reportsCTE
+  from reportsCTE
   group by dowtime, restaurantid
   order by restaurantid, dowtime
 )
 select restaurantid, cleanavg, busyavg, dowtime, to_char(CURRENT_TIMESTAMP, 'Day') as cday
-from linehop.countday
+from countday
 where dowtime = to_char(CURRENT_TIMESTAMP, 'ID') AND restaurantid = $1;
 `;
 let historyweight = `
