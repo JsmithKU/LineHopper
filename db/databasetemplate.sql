@@ -284,7 +284,7 @@ declare
 BEGIN
 	select monthbusy 
 	into weighted_busy
-	from avgarchive
+	from linehop.avgarchive
 	where restaurantid = restid;
 
 	return weighted_busy;
@@ -380,7 +380,7 @@ BEGIN
 		WHEN monthcount = 5 then monthbusy * (.05)
 		ELSE 0
 		END as weighted
-		from avgarchive
+		from linehop.avgarchive
 	        where restaurantid = restid
 		group by monthcount, monthbusy
 	) as weight (monthcount, weighted);
@@ -479,22 +479,23 @@ from max_month
 --Increment month value by 1:
 
 SELECT cron.schedule (
-'* * * * *', 
-$$UPDATE linehop.avgarchive set monthcount = monthcount + 1$$
+'5 0 1 1-12 *',
+-- '* * * * *',
+$$UPDATE linehop.avgarchive set monthcount = monthcount + 1;DELETE FROM linehop.avgarchive where monthcount > 5;INSERT INTO linehop.avgarchive (restaurantid, monthcount, monthclean, monthbusy) select restaurantid, 1, cleanavg, busyavg FROM linehop.restaurant $$
 );
 --Might have to rewrite as "set monthcount = row(monthcount + 1)"
 
 --Delete data with month value > 5:
 
-SELECT cron.schedule (
-'* * * * *',
-$$DELETE FROM linehop.avgarchive where monthcount > 5$$
-);
+-- SELECT cron.schedule (
+-- '* * * * *',
+-- $$DELETE FROM linehop.avgarchive where monthcount > 5$$
+-- );
 
 --Insert into archive table: 
-SELECT cron.schedule (
-'* * * * *',
-$$INSERT INTO linehop.avgarchive (restaurantid, monthcount, monthclean, monthbusy) select restaurantid, 1, cleanavg, busyavg FROM restaurant$$
-);
+-- SELECT cron.schedule (
+-- '* * * * *',
+-- $$INSERT INTO linehop.avgarchive (restaurantid, monthcount, monthclean, monthbusy) select restaurantid, 1, cleanavg, busyavg FROM linehop.restaurant$$
+-- );
 
 
