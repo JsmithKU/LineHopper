@@ -11,11 +11,11 @@ services:
     environment:
       - ACCESS_TOKEN_SECRET=THEHAPPYDOGWALKSFAST@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@d
       - REFRESH_TOKEN_SECRET=THESADCATWALKSSLOW!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!q
-      - user=linehop
+      - user=postgres
       - pass=admin123
       - port=5432
       - host=db
-      - pgdb=linehoptest
+      - pgdb=postgres
       - url=localhost
       - MJ_APIKEY_PUBLIC = 6c9ea700e37a55dbbeb6346560d06b49
       - MJ_APIKEY_PRIVATE = 9964dd6e37b655df814b213403bf5dd8
