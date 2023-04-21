@@ -18,6 +18,7 @@ const corsOptions = {
     origin: 'http://localhost:8080',
     // origin: ['www.linehopperku.com','linehopperku.com','http://linehopperku.com','https://linehopperku.com', 'http://www.linehopperku.com','https://www.linehopperku.com'], 
     //origin: 'http://localhost',
+    origin: 'http://localhost:8080',
     exposedHeaders: ['set-cookie'],
     //methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH']
 }
