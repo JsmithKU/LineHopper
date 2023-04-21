@@ -2,9 +2,10 @@
   <div class="aligner">
     <div class="row">
       <div class="aligner-item">
-        <BarChart v-if="loaded" :chartData="xchartData" />
+        <BarChart v-if="loadedchart" :chartData="xchartData" />
+        <p v-else>Chart has limited data or no data.</p>
       </div>
-      <div class="aligner-item">
+      <div v-if="loadedavg" class="aligner-item">
         <h1>Average Stats</h1>
         <div v-for="s in status" v-bind:key="s.restaurantid">
           <p>Cleanliness Score: {{ s.cleanavg }} / 5</p>
@@ -13,14 +14,22 @@
           <br />
         </div>
       </div>
-      <div class="aligner-item">
+      <div v-else class="aligner-item">
+        <h1>Average Stats</h1>
+        <p>Lacking Enough Data. Submit a report to help.</p>
+      </div>
+      <div v-if="loadeddow" class="aligner-item">
         <div v-for="r in dowreport" v-bind:key="r.restaurantid">
           <h1>{{ r.cday }} Averages</h1>
           <p>Cleanliness: {{ r.cleanavg }} / 5</p>
           <p>Busyness: {{ r.busyavg }} / 5</p>
         </div>
       </div>
-      <div class="aligner-item">
+      <div v-else class="aligner-item">
+        <h1>Daily Stats</h1>
+        <p>Lacking Enough Data. Submit a report to help.</p>
+      </div>
+      <div v-if="loadedlastest" class="aligner-item">
         <div v-for="l in latest" v-bind:key="l.restaurantid">
           <h1>Latest Report</h1>
           <p>Latest Cleanliness: {{ l.cleanrank }} / 5</p>
@@ -31,13 +40,21 @@
           </p>
         </div>
       </div>
-      <div class="aligner-item">
+      <div v-else class="aligner-item">
+        <h1>Latest Report</h1>
+        <p>Lacking Enough Data. Submit a report to help.</p>
+      </div>
+      <div v-if="loadedhistory" class="aligner-item">
         <h1>Report History</h1>
         <div v-for="l in historyreport.data" v-bind:key="l.archid">
           <p>{{ l.monthcount }} month(s) ago</p>
           <p>Cleanliness: {{ l.monthclean }} / 5</p>
           <p>Busyness: {{ l.monthbusy }} / 5</p>
         </div>
+      </div>
+      <div v-else class="aligner-item">
+        <h1>History</h1>
+        <p>Lacking Enough Data.</p>
       </div>
     </div>
   </div>
@@ -65,23 +82,37 @@ export default {
       dowreport: [],
       historyreport: [],
       xchartData: {},
-      loaded: false,
+      loadedchart: false,
+      loadedavg: false,
+      loadeddow: false,
+      loadedlastest: false,
+      loadedhistory: false,
     };
   },
   async created() {
     try {
-      // do stuff
       this.status = await api.getlocationstat(this.token, this.rid);
+      this.loadedavg = true
+    } catch (e) {
+      console.log(e);
+    }
+    try {
       this.latest = await api.getlocationlatest(this.token, this.rid);
+      this.loadedlastest = true
+    } catch (e) {
+      console.log(e);
+    }
+    try {
       this.dowreport = await api.getlocationdowreport(this.token, this.rid);
+      this.loadeddow = true
+    } catch (e) {
+      console.log(e);
+    }
+    try {
       this.historyreport = await api.getlocationhistory(this.token, this.rid);
-      // if(this.status[0].cleanavg == 0){
-      //   this.status[0].cleanavg = 0
-      // }
-      // this.cleanbar(this.status[0].cleanavg)
-      // this.busybar(this.status[0].busyavg)
-    } catch (err) {
-      this.error = "borked.";
+      this.loadedhistory = true
+    } catch (e) {
+      console.log(e);
     }
   },
   async mounted() {
@@ -114,9 +145,10 @@ export default {
           },
         ],
       };
-      this.loaded = true;
+      this.loadedchart = true;
       //console.log(this.xchartData)
     } catch (e) {
+
       console.log(e);
     }
   },

@@ -8,21 +8,22 @@
       <div class="" v-for="l in slocation" v-bind:key="l.restaurantid">
         <p class="name">{{ l.restaurantname }}</p>
         <p>Address: {{ l.address }}</p>
-        <p>Busy Avg: {{ l.busyavg }} / 5</p>
-      <p>Clean Avg: {{ l.cleanavg }} / 5</p>
-      <p>Open:{{ l.hoursopen }}</p>
-      <p>Close:{{ l.hoursclose }}</p>
+        <p v-if="l.busyavg != null">Busy Avg: {{ l.busyavg }} / 5</p>
+        <p v-if="l.cleanavg != null">Clean Avg: {{ l.cleanavg }} / 5</p>
+        <p>Open:{{ l.openhour }}</p>
+        <p>Close:{{ l.closehour }}</p>
+        <div>
+          <button class="btn-report" @click="toggleshowform()">
+            Submit Report
+          </button>
+          <addreport
+            :rid="l.restaurantid"
+            :uuid="userid"
+            v-show="showForm"
+            @submit-report="postReport"
+          />
+        </div>
         <locationStat :rid="l.restaurantid" :token="token" />
-
-        <button class="btn-report" @click="toggleshowform()">
-          Submit Report
-        </button>
-        <addreport
-          :rid="l.restaurantid"
-          :uuid="userid"
-          v-show="showForm"
-          @submit-report="postReport"
-        />
       </div>
     </div>
   </div>
@@ -45,12 +46,15 @@
       v-bind:key="location.restaurantid"
     >
       <p class="name">{{ location.restaurantname }}</p>
-      <p>Busy Avg: {{ location.busyavg }} / 5</p>
-      <p>Clean Avg: {{ location.cleanavg }} / 5</p>
+      <p v-if="location.busyavg != null">
+        Busy Avg: {{ location.busyavg }} / 5
+      </p>
+      <p v-if="location.cleanavg != null">
+        Clean Avg: {{ location.cleanavg }} / 5
+      </p>
       <p>{{ location.address }}</p>
-      <p>Open:{{ location.hoursopen }}</p>
-      <p>Close:{{ location.hoursclose }}</p>
-
+      <p>Open:{{ location.openhour }}</p>
+      <p>Close:{{ location.closehour }}</p>
     </div>
   </div>
 </template>
@@ -163,7 +167,7 @@ a {
   justify-content: center;
 }
 .locations {
-  border: 2px solid #C3DAF8;
+  border: 2px solid #c3daf8;
   border-radius: 44px;
   float: left;
   width: 150px;
@@ -172,14 +176,14 @@ a {
   background-color: white;
   overflow: hidden;
 }
-.locations:hover{
-  background-color: #C3DAF8;
+.locations:hover {
+  background-color: #c3daf8;
   cursor: pointer;
 }
 .name {
   font-size: 1.8rem;
-  background-color: #C3DAF8;
-  color: #3284F0;
+  background-color: #c3daf8;
+  color: #3284f0;
   overflow: hidden;
   width: 100%;
   margin-top: 0;
@@ -195,13 +199,13 @@ a {
   z-index: 9999;
   background: rgba(0, 0, 0, 0.4);
 }
-.dia-content{
+.dia-content {
   position: absolute;
   z-index: 10000;
   width: 100%;
   height: 100%;
   max-height: 100%;
   overflow: auto;
-  background-color: #C3DAF8;
+  background-color: #c3daf8;
 }
 </style>
