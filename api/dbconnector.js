@@ -154,6 +154,34 @@ select restaurantid, cleanavg, busyavg, dowtime, to_char(CURRENT_TIMESTAMP, 'Day
 from countday
 where dowtime = to_char(CURRENT_TIMESTAMP, 'ID') AND restaurantid = $1;
 `;
+let getdowChart = `
+with reportsCTE as(
+select restaurantid, cleanrank as crank, busyrank as brank, submissiontime as stime,
+  to_char(submissiontime, 'ID') as dowtime, -- Monday(1) Sunday(7)
+  to_char(submissiontime, 'HH24') as timeofday,
+  to_char(submissiontime, 'Day') as Dayname -- 00 - 24 | 05 - 11 Breakfast, 11 - 17 Lunch, 18 - 22 Dinner, 23-04 Other
+from reports
+where trusted is True
+),
+countday as (
+  select restaurantid,
+    round(avg(crank),2) as cleanavg, 
+    round(avg(brank),2) as busyavg,
+    dowtime,
+    Dayname
+  from reportsCTE
+  group by dowtime, restaurantid, Dayname
+  order by restaurantid, dowtime
+)
+select restaurantid, cleanavg, busyavg, dowtime, Dayname
+from countday
+where restaurantid = $1;
+`;
+
+
+
+
+
 let historyweight = `
 select * from linehop.avgarchive where restaurantid = $1;
 `;
@@ -214,5 +242,6 @@ module.exports = {
     restaurantCreate,
     locationCreate,
     historyweight,
-    
+    getdowChart
+
 }
