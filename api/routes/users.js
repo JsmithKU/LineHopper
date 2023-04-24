@@ -295,6 +295,20 @@ const updateroleuser = async(req,res) => {
     }
 }
 
+const updatetrusted = async(req,res) => {
+    const userid = req.params.userid
+    try{
+        const trusting = await dbconnectorJs.pool.query(
+            dbconnectorJs.updateaccounttrust,
+            [userid]
+        )
+    console.log(trusting)
+        res.json({role: ' Updated. '})
+    }catch(error){
+        res.status(500).json({Error: error.message})
+    }
+}
+
 module.exports = {
 
   createUser,
@@ -309,5 +323,6 @@ module.exports = {
   emailcheck,
   verifyroleCheck,
   updateroleuser,
-  trustcodeCheck
+  trustcodeCheck,
+  updatetrusted
 }

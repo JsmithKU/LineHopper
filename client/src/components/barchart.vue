@@ -1,7 +1,5 @@
 <template>
-  <div class="sizing">
     <Bar :data="chartData" :options="chartOptions" />
-  </div>
 </template>
 
 <script>
@@ -27,7 +25,9 @@ export default {
 </script>
 
 <style scoped>
-.sizing{
+canvas{
+  height: fit-content;
+  width: fit-content;
 }
 </style>
 

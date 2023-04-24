@@ -160,7 +160,7 @@ select restaurantid, cleanrank as crank, busyrank as brank, submissiontime as st
   to_char(submissiontime, 'ID') as dowtime, -- Monday(1) Sunday(7)
   to_char(submissiontime, 'HH24') as timeofday,
   to_char(submissiontime, 'Day') as Dayname -- 00 - 24 | 05 - 11 Breakfast, 11 - 17 Lunch, 18 - 22 Dinner, 23-04 Other
-from reports
+from linehop.reports
 where trusted is True
 ),
 countday as (
@@ -206,6 +206,13 @@ set usercode = $2
 where email = $1
 `)
 
+let updateaccounttrust = (`
+UPDATE linehop.useraccount
+set role = 'trusted'
+where userid = $1
+`)
+
+
 let restaurantCreate = (`
 insert into linehop.restaurant(restaurantid, restaurantname) 
 values ($1,$2)
@@ -242,6 +249,7 @@ module.exports = {
     restaurantCreate,
     locationCreate,
     historyweight,
-    getdowChart
+    getdowChart,
+    updateaccounttrust
 
 }

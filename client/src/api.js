@@ -60,15 +60,15 @@ class api {
         return dataPromise
     }
     static locationarray() {
-            const promise = axios.get(`${url}location/`)
+        const promise = axios.get(`${url}location/`)
 
-            // using .then, create a new promise which extracts the data
-            const dataPromise = promise.then((response) => response.data)
+        // using .then, create a new promise which extracts the data
+        const dataPromise = promise.then((response) => response.data)
 
-            // return it
-            return dataPromise
-        }
-        // post content
+        // return it
+        return dataPromise
+    }
+    // post content
     static postreport(token, form) {
         const res = axios.post(`${url}uncheckedreports`, form, {
             headers: {
@@ -213,13 +213,13 @@ class api {
         return dataPromise
     }
     static signout() {
-            const promise = axios.delete(`${url}signout`, {
+        const promise = axios.delete(`${url}signout`, {
 
-            })
-            const dataPromise = promise.then((response) => response.data)
-            return dataPromise
-        }
-        // FORGOT NEEDS CODE 
+        })
+        const dataPromise = promise.then((response) => response.data)
+        return dataPromise
+    }
+    // FORGOT NEEDS CODE 
     static forgot(password, email, code) { //, usercode) {
         //const verifycode = axios.get('')
         const promise = axios.put(`${url}useraccount/forgotpassword`, {
@@ -279,6 +279,17 @@ class api {
             }
         })
         return res.data.data
+    }
+    static rtrust(userid) {
+        // create a promise for the axios request
+        const promise = axios.put(`${url}userrequesttrust/${userid}`,{}, {
+        })
+
+        // using .then, create a new promise which extracts the data
+        const dataPromise = promise.then((response) => response.data)
+
+        // return it
+        return dataPromise
     }
 }
 
