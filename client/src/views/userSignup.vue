@@ -54,6 +54,7 @@ export default {
       try {
         if (this.password == this.password2) {
           if (this.validateEmail(this.email)) {
+            
             await api.signUp(this.email, this.password);
             let crypted = btoa(this.email);
             this.$router.push(`/confirm/${crypted}`);

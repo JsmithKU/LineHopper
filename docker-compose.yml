@@ -42,7 +42,7 @@ services:
     ports:
       - '8080:8080'
     environment: 
-      - url=localhost
+      - url=127.0.0.1
       - CHOKIDAR_USEPOLLING=true # <---- this enables the hot reloading
 volumes:
   pgdata: {}

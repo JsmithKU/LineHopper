@@ -57,6 +57,7 @@ export default {
   methods: {
     async handleSubmit() {
       try {
+        
         const logmode = await api.login(this.email, this.password);
         //console.log(logmode)
         if (logmode.mode == "trusted") {
