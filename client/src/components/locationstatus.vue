@@ -1,8 +1,8 @@
 <template>
   <div class="aligner">
     <div class="row">
-      <div class="aligner-item">
-        <BarChart v-if="loadedchart" :chartData="xchartData" />
+     <div>  <!--class="aligner-item"> -->
+        <BarChart v-if="loadedchart" :chartData="xchartData" :chartOptions="xoptions" />
         <p v-else>Chart has limited data or no data.</p>
       </div>
       <div v-if="loadedavg" class="aligner-item">
@@ -82,6 +82,7 @@ export default {
       dowreport: [],
       historyreport: [],
       xchartData: {},
+      xoption: {},
       loadedchart: false,
       loadedavg: false,
       loadeddow: false,
@@ -145,6 +146,10 @@ export default {
           },
         ],
       };
+      this.xoption = {
+        responsive: true,
+        maintainAspectRatio: false
+      }
       this.loadedchart = true;
       //console.log(this.xchartData)
     } catch (e) {

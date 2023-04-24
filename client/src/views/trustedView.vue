@@ -1,6 +1,6 @@
 <template>
-<router-link to="/"> Normal View </router-link>
-<adminPage msg="Trusted View"/>
+<router-link to="/"> Home View </router-link>
+<adminPage msg="Report Trust"/>
 <addlocation />
 </template>
 

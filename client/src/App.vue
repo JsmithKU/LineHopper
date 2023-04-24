@@ -1,16 +1,15 @@
 <template>
-
-  <!-- <img alt="logo or something" src="./assets/logo.png"> -->
-  <router-view ></router-view>
+  <div class="logo">
+    <img alt="logo or something" src="./assets/logo1.png" />
+  </div>
+  <router-view></router-view>
 </template>
 
 <script>
-
 export default {
-  name: 'App',
-  components: {
-  }
-}
+  name: "App",
+  components: {},
+};
 </script>
 
 <style lang="scss">
@@ -22,8 +21,17 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-img{
-  height: 25%;
-  width: 25%;
+.logo {
+  height: 250px;
+}
+img {
+  height: 250px;
+  width: 300px;
+}
+@media (max-width: 600px) {
+  img {
+    height: 150px;
+    width: 200px;
+  }
 }
 </style>
