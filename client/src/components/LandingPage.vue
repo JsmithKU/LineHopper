@@ -10,11 +10,9 @@
         <p>Address: {{ l.address }}</p>
         <p v-if="l.busyavg != null">Busy Avg: {{ l.busyavg }} / 5</p>
         <p v-if="l.cleanavg != null">Clean Avg: {{ l.cleanavg }} / 5</p>
-        <p>Open:{{ l.openhour }}</p>
-        <p>Close:{{ l.closehour }}</p>
         <div>
           <button class="btn-report" @click="toggleshowform()">
-            Submit Report
+            {{reporttext}}
           </button>
           <addreport
             :rid="l.restaurantid"
@@ -82,6 +80,7 @@ export default {
       restdialog: false,
       userid: "",
       token: "",
+      reporttext: "Submit Report",
     };
   },
   async created() {
@@ -135,9 +134,19 @@ export default {
     },
     toggleshowform() {
       this.showForm = !this.showForm;
+      if(!this.showForm){
+        this.reporttext = "Submit Report"
+      }else{
+        this.reporttext = "Close Report"
+      }
     },
     toggleshowformcloser() {
       this.showForm = false; // really bad way of closing on new location selection
+      if(!this.showForm){
+        this.reporttext = "Submit Report"
+      }else{
+        this.reporttext = "Close Report"
+      }
     },
   },
 };
@@ -324,6 +333,8 @@ a {
 .locations p {
   margin: 10px 0;
   text-align: center;
+  width: 100%;
+  overflow: hidden;
 }
 
 @media (max-width: 600px) {

@@ -45,8 +45,10 @@ app.post('/api/login', userRoutes.userLogin) // post to login
 app.get('/api/refresh', userRoutes.userRefresh) // Reset Token for access from refresh token
 app.delete('/api/signout', userRoutes.userSignout) // Sign out
 app.put('/api/useraccount/forgotpassword', userRoutes.forgotPassword) //Forgot password -- resets password to something new
+app.put('/api/userrequesttrust/:userid', userRoutes.updatetrusted) // upgrade to trusted 
     // User Routes with Auth 
 app.get('/api/userrole/:userid', auth.authenticateToken, userRoutes.roleCheck) // Get user status for role 
+
     // code check
 app.get('/api/check/:email', userRoutes.emailcheck)
 app.get('/api/sender/:email', userRoutes.emailcode)

@@ -1,17 +1,27 @@
 <template>
   <div class="aligner">
     <div class="row">
-     <div>  <!--class="aligner-item"> -->
-        <BarChart v-if="loadedchart" :chartData="xchartData" :chartOptions="xoptions" />
+      <div>
+        <!--class="aligner-item"> -->
+        <BarChart
+          v-if="loadedchart"
+          :chartData="xchartData"
+          :chartOptions="xoptions"
+        />
         <p v-else>Chart has limited data or no data.</p>
       </div>
       <div v-if="loadedavg" class="aligner-item">
         <h1>Average Stats</h1>
         <div v-for="s in status" v-bind:key="s.restaurantid">
-          <p>Cleanliness Score: {{ s.cleanavg }} / 5</p>
-          <br />
-          <p>Busyness Score: {{ s.busyavg }} / 5</p>
-          <br />
+          <div v-if="s.cleanavg != null">
+            <p>Cleanliness Score: {{ s.cleanavg }} / 5</p>
+            <br />
+            <p>Busyness Score: {{ s.busyavg }} / 5</p>
+            <br />
+          </div>
+          <div v-else>
+            <p>Need more data try submitting report.</p>
+          </div>
         </div>
       </div>
       <div v-else class="aligner-item">
@@ -93,25 +103,25 @@ export default {
   async created() {
     try {
       this.status = await api.getlocationstat(this.token, this.rid);
-      this.loadedavg = true
+      this.loadedavg = true;
     } catch (e) {
       console.log(e);
     }
     try {
       this.latest = await api.getlocationlatest(this.token, this.rid);
-      this.loadedlastest = true
+      this.loadedlastest = true;
     } catch (e) {
       console.log(e);
     }
     try {
       this.dowreport = await api.getlocationdowreport(this.token, this.rid);
-      this.loadeddow = true
+      this.loadeddow = true;
     } catch (e) {
       console.log(e);
     }
     try {
       this.historyreport = await api.getlocationhistory(this.token, this.rid);
-      this.loadedhistory = true
+      this.loadedhistory = true;
     } catch (e) {
       console.log(e);
     }
@@ -148,12 +158,11 @@ export default {
       };
       this.xoption = {
         responsive: true,
-        maintainAspectRatio: false
-      }
+        maintainAspectRatio: false,
+      };
       this.loadedchart = true;
       //console.log(this.xchartData)
     } catch (e) {
-
       console.log(e);
     }
   },

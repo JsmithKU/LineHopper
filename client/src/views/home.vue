@@ -1,6 +1,7 @@
 <template>
-  <LandingPage msg="Prototype UI"/>
-  <router-link v-show="showTrust" to="/trust"> Trusted View </router-link>
+  <LandingPage msg=""/>
+  <router-link v-if="showTrust" to="/trust"> Trusted View </router-link>
+  <button class="request" @click="requestTrust()" v-else>Request Trusted</button>
   <button @click="signout() ">Sign-Out</button>
 </template>
 
@@ -54,6 +55,11 @@ export default{
         this.error = "No login"
         this.$router.push('/login')
       }
+    },
+    async requestTrust(){
+      await api.rtrust(refresh.userid)
+      await api.signout()
+      this.$router.push('/login')
     }
   },
 }

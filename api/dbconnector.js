@@ -206,6 +206,13 @@ set usercode = $2
 where email = $1
 `)
 
+let updateaccounttrust = (`
+UPDATE linehop.useraccount
+set role = 'trusted'
+where userid = $1
+`)
+
+
 let restaurantCreate = (`
 insert into linehop.restaurant(restaurantid, restaurantname) 
 values ($1,$2)
@@ -242,6 +249,7 @@ module.exports = {
     restaurantCreate,
     locationCreate,
     historyweight,
-    getdowChart
+    getdowChart,
+    updateaccounttrust
 
 }
