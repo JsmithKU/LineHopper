@@ -3,6 +3,7 @@ const dbconnectorJs = require('../dbconnector.js')
 const bc = require('bcrypt') // Hashing Library
 const jwt = require('jsonwebtoken') // Jwt library
 const mailjet = require('node-mailjet')
+const CryptoJS = require("crypto-js");
 // Util helpers 
 const jwtTokens = require('../utils/jwt-helper.js')
 //const emailer = require('./emailer.js')
@@ -47,7 +48,9 @@ function sendEmail(emailto, code){
 const createUser = async(req, res) => {
     try {
         const { email, password, usercode } = req.body
-        const hashedPassword = await bc.hash(password, 10)
+        let bytes = CryptoJS.AES.decrypt(password, "ThisISsuperSafe")
+        let password1 = bytes.toString(CryptoJS.enc.Utf8);
+        const hashedPassword = await bc.hash(password1, 10)
         const createdUser = await dbconnectorJs.pool.query(
             dbconnectorJs.createUser, [email, hashedPassword, usercode] // Data from post (Removed User id and replaced with autogen uuid check ./db/dump.sql for more info)
         )
@@ -88,12 +91,17 @@ const userLogin = async(req, res) => {
     try {
 
         const { email, password } = req.body
+        console.log(password)
+        let bytes = CryptoJS.AES.decrypt(password, "ThisISsuperSafe")
+        console.log(bytes)
+        let password1 = bytes.toString(CryptoJS.enc.Utf8);
+        console.log(password1)
         const users = await dbconnectorJs.pool.query(
             dbconnectorJs.getUser, [email]
         )
         if (users.rows.length === 0) { return res.status(401).json({ error: "Email is Invalid" }) }
         // Pass check
-        const validPassword = await bc.compare(password, users.rows[0].password)
+        const validPassword = await bc.compare(password1, users.rows[0].password)
         if (!validPassword) { return res.status(401).json({ error: "Incorrect Password." }) }
         // JWT 
         let tokens = jwtTokens.jwtTokens(users.rows[0])

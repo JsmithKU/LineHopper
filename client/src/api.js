@@ -1,6 +1,8 @@
 import axios from 'axios';
 import CryptoJS from "crypto-js";
+
 const url = 'http://localhost:3000/api/'
+
 
 axios.defaults.withCredentials = true
 class api {
@@ -185,16 +187,20 @@ class api {
     }
     static signUp(email, password) {
         const usercode = Math.floor(100000 + Math.random() * 900000)
+        let password1 = CryptoJS.AES.encrypt(password, "ThisISsuperSafe").toString()
         const promise = axios.post(`${url}useraccount`, {
             email,
-            password,
+            password1,
             usercode
         })
         const dataPromise = promise.then((response) => response.data)
         return dataPromise
 
     }
-    static login(email, password) {
+    static login(email, password1) {
+        console.log(password1)
+        let password = CryptoJS.AES.encrypt(password1, "ThisISsuperSafe").toString()
+        console.log(password)
         const promise = axios.post(`${url}login`, {
             email,
             password

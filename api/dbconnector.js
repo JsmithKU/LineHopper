@@ -150,9 +150,9 @@ countday as (
   group by dowtime, restaurantid
   order by restaurantid, dowtime
 )
-select restaurantid, cleanavg, busyavg, dowtime, to_char(CURRENT_TIMESTAMP, 'Day') as cday
+select restaurantid, cleanavg, busyavg, dowtime, to_char(CURRENT_TIMESTAMP - INTERVAL '1 Day', 'Day') as cday
 from countday
-where dowtime = to_char(CURRENT_TIMESTAMP, 'ID') AND restaurantid = $1;
+where dowtime = to_char(CURRENT_TIMESTAMP - INTERVAL '1 Day', 'ID') AND restaurantid = $1;
 `;
 let getdowChart = `
 with reportsCTE as(
