@@ -1,11 +1,5 @@
 import axios from 'axios';
-<<<<<<< Updated upstream
-
-// const url = 'http://linehopperku.com/api/'
-=======
 import CryptoJS from "crypto-js";
-//const url = 'https://linehopperku.com/api/'
->>>>>>> Stashed changes
 const url = 'http://localhost:3000/api/'
 
 axios.defaults.withCredentials = true
