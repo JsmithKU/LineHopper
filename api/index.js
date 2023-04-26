@@ -15,13 +15,6 @@ const app = express()
 const port = 3000
 const corsOptions = {
     credentials: true,
-<<<<<<< Updated upstream
-    origin: 'http://localhost:8080',
-    // origin: ['www.linehopperku.com','linehopperku.com','http://linehopperku.com','https://linehopperku.com', 'http://www.linehopperku.com','https://www.linehopperku.com'], 
-    //origin: 'http://localhost',
-=======
-    //origin: ['www.linehopperku.com','linehopperku.com','http://linehopperku.com','https://linehopperku.com', 'http://www.linehopperku.com','https://www.linehopperku.com'], 
->>>>>>> Stashed changes
     origin: 'http://localhost:8080',
     exposedHeaders: ['set-cookie'],
     //methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH']
