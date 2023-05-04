@@ -9,16 +9,16 @@ services:
     ports:
       - '3000:3000'
     environment:
-      - ACCESS_TOKEN_SECRET=THEHAPPYDOGWALKSFAST@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@d
-      - REFRESH_TOKEN_SECRET=THESADCATWALKSSLOW!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!q
+      - ACCESS_TOKEN_SECRET=
+      - REFRESH_TOKEN_SECRET=
       - user=postgres
       - pass=admin123
       - port=5432
       - host=db
       - pgdb=postgres
       - url=linehopperku.com
-      - MJ_APIKEY_PUBLIC = 6c9ea700e37a55dbbeb6346560d06b49
-      - MJ_APIKEY_PRIVATE = 9964dd6e37b655df814b213403bf5dd8
+      - MJ_APIKEY_PUBLIC = 
+      - MJ_APIKEY_PRIVATE = 
     depends_on:
       - db
 
@@ -28,9 +28,9 @@ services:
     ports:
       - '5432:5432'
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=admin123
-      - POSTGRES_DB=linehoptest
+      - POSTGRES_USER=
+      - POSTGRES_PASSWORD=
+      - POSTGRES_DB=
     volumes:
       - pgdata:/var/lib/postgresql/data # fully q path over rel path
 
