@@ -1,3 +1,7 @@
+# Kutztown CSC CapStone Project 2023 
+LineHopper is a crowd source application used to collect data submitted by users to track how busy and clean each Dinning Hall is.
+We then display this data to the user so they can route their short time between classes in order to get food quickly or have a place to sit that is not dirty. 
+
 # Dev Environment 
 
 ## Project Set-up 
