@@ -18,12 +18,3 @@
 4. When working on the project and loading changes within your environment currently the process is:
   - Save changes to files 
   - Run ``` docker-compose up -d --build client --build api ```
-
-## VPS 
-- navigate to linehopperku.com
-- Sign-up Using email (If using KU EDU email check security.microsoft.com and report as not phishing.)
-
-## MISC 
-On linux base if port for pg is bound:
-- You can stop the process by finding the PID with ```lsof -i :5432```
-- and then killing it with ```kill -9 <PID>```
