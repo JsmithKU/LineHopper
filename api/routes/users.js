@@ -11,8 +11,6 @@ const jwtTokens = require('../utils/jwt-helper.js')
 const mj = mailjet.apiConnect(
     // process.env.MJ_APIKEY_PUBLIC,
     // process.env.MJ_APIKEY_PRIVATE
-    '6c9ea700e37a55dbbeb6346560d06b49',
-    '9964dd6e37b655df814b213403bf5dd8'
 )
 
 function sendEmail(emailto, code){
